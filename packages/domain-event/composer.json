@@ -1,6 +1,15 @@
 {
     "name": "rekalogika/domain-event",
-    "description": "Domain Event Library",
+    "description": "Domain Event Implementation for Symfony and Doctrine",
+    "keywords": [
+        "domain-event",
+        "domain",
+        "event",
+        "symfony",
+        "doctrine",
+        "event-dispatcher",
+        "event-listener"
+    ],
     "type": "symfony-bundle",
     "license": "MIT",
     "authors": [

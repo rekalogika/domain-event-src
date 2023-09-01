@@ -1,6 +1,15 @@
 {
     "name": "rekalogika/domain-event-contracts",
-    "description": "Domain Event Contracts",
+    "description": "Interfaces, Traits and Nominal Classes used by Domain Entities Implementing Domain Events",
+    "keywords": [
+        "domain-event",
+        "domain",
+        "event",
+        "symfony",
+        "doctrine",
+        "event-dispatcher",
+        "event-listener"
+    ],
     "type": "library",
     "license": "MIT",
     "authors": [
