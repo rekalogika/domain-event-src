@@ -24,7 +24,7 @@
         "doctrine/orm": "^2.16",
         "doctrine/persistence": "^3.2",
         "psr/event-dispatcher": "^1.0",
-        "rekalogika/domain-event-contracts": "^1.0",
+        "rekalogika/domain-event-contracts": "^1.1",
         "symfony/config": "6.3.*",
         "symfony/event-dispatcher": "6.3.*",
         "symfony/dependency-injection": "6.3.*",
@@ -38,7 +38,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "1.0-dev"
+            "dev-main": "1.1-dev"
         }
     }
 }
