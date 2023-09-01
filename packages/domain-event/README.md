@@ -19,6 +19,11 @@ implementation for Symfony & Doctrine.
 * Separated contracts & framework. Useful for enforcing architectural
   boundaries. Your domain doesn't have to depend on the framework.
 
+## Contributing
+
+Issues and pull requests should be submitted to the
+[rekalogika/domain-event-src](https://github.com/rekalogika/domain-event-src) monorepo.
+
 ## Installation
 
 ```bash
