@@ -1,0 +1,45 @@
+{
+    "name": "rekalogika/domain-event-src",
+    "description": "Domain Event Framework for Symfony",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Priyadi Iman Nurcahyo",
+            "email": "priyadi@rekalogika.com"
+        }
+    ],
+    "require": {
+        "doctrine/doctrine-bundle": "^2.10",
+        "doctrine/orm": "^2.16",
+        "doctrine/persistence": "^3.2",
+        "psr/event-dispatcher": "^1.0",
+        "symfony/config": "6.3.*",
+        "symfony/dependency-injection": "6.3.*",
+        "symfony/event-dispatcher": "6.3.*",
+        "symfony/http-kernel": "6.3.*"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^9.5",
+        "symfony/uid": "6.3.*",
+        "symplify/monorepo-builder": "^11.2",
+        "vimeo/psalm": "^5.15"
+    },
+    "autoload": {
+        "psr-4": {
+            "Rekalogika\\Contracts\\DomainEvent\\": "packages/domain-event-contracts/src/",
+            "Rekalogika\\DomainEvent\\": "packages/domain-event/src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Rekalogika\\DomainEvent\\Tests\\": "packages/domain-event/tests/"
+        }
+    },
+    "replace": {
+        "rekalogika/domain-event": "1.0.0",
+        "rekalogika/domain-event-contracts": "1.0.0"
+    },
+    "minimum-stability": "stable"
+}

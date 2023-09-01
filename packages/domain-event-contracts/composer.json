@@ -1,0 +1,25 @@
+{
+    "name": "rekalogika/domain-event-contracts",
+    "description": "Domain Event Contracts",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Priyadi Iman Nurcahyo",
+            "email": "priyadi@rekalogika.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Rekalogika\\Contracts\\DomainEvent\\": "src/"
+        }
+    },
+    "require": {
+        "psr/event-dispatcher": "^1.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.0-dev"
+        }
+    }
+}
