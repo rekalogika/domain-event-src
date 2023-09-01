@@ -32,10 +32,6 @@ final class DomainEventImmediateDispatcher
      */
     public static function install(EventDispatcherInterface $eventDispatcher): void
     {
-        if (self::$eventDispatcher) {
-            throw new \RuntimeException(sprintf('Event dispatcher "%s" is already installed', get_class(self::$eventDispatcher)));
-        }
-
         self::$eventDispatcher = $eventDispatcher;
     }
 
