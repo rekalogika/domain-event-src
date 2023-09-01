@@ -1,0 +1,70 @@
+name: 'Packages Split'
+
+on:
+    push:
+        branches:
+            - main
+        tags:
+            - '*'
+
+env:
+    GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
+jobs:
+    packages_split:
+        runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: false
+            matrix:
+                # define package to repository map
+                package:
+                    -
+                        local_path: 'domain-event'
+                        split_repository: 'domain-event'
+                    -
+                        local_path: 'domain-event-contracts'
+                        split_repository: 'domain-event-contracts'
+
+        steps:
+            -   uses: actions/checkout@v2
+
+            # no tag
+            -
+                if: "!startsWith(github.ref, 'refs/tags/')"
+                uses: "danharrin/monorepo-split-github-action@v2.3.0"
+                with:
+                    # ↓ split "packages/easy-coding-standard" directory
+                    package_directory: 'packages/${{ matrix.package.local_path }}'
+
+                    # ↓ into https://github.com/symplify/easy-coding-standard repository
+                    repository_organization: 'rekalogika'
+                    repository_name: '${{ matrix.package.split_repository }}'
+
+                    # [optional, with "github.com" as default]
+                    repository_host: github.com
+
+                    # ↓ the user signed under the split commit
+                    user_name: "Priyadi Iman Nurcahyo"
+                    user_email: "1102197+priyadi@users.noreply.github.com"
+
+            # with tag
+            -
+                if: "startsWith(github.ref, 'refs/tags/')"
+                uses: "danharrin/monorepo-split-github-action@v2.3.0"
+                with:
+                    tag: ${GITHUB_REF#refs/tags/}
+
+                    # ↓ split "packages/easy-coding-standard" directory
+                    package_directory: 'packages/${{ matrix.package.local_path }}'
+
+                    # ↓ into https://github.com/symplify/easy-coding-standard repository
+                    repository_organization: 'rekalogika'
+                    repository_name: '${{ matrix.package.split_repository }}'
+
+                    # [optional, with "github.com" as default]
+                    repository_host: github.com
+
+                    # ↓ the user signed under the split commit
+                    user_name: "Priyadi Iman Nurcahyo"
+                    user_email: "1102197+priyadi@users.noreply.github.com"
