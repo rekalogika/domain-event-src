@@ -22,7 +22,8 @@ implementation for Symfony & Doctrine.
 ## Contributing
 
 Issues and pull requests should be submitted to the
-[rekalogika/domain-event-src](https://github.com/rekalogika/domain-event-src) monorepo.
+[rekalogika/domain-event-src](https://github.com/rekalogika/domain-event-src)
+monorepo.
 
 ## Installation
 
@@ -273,10 +274,63 @@ $entityManager->clearDomainEvents();
 
 **Note**: In the event of an uncaught error, the framework will automatically
 clear undispatched events using the `kernel.exception` event, so in such cases,
-you don't have to handle that manually. But if you catch an event that caused
-pending events not being dispatched, you need to manually clear the events.
+you don't have to handle that manually. But if you catch an exception that
+previously caused pending events not to be dispatched, you need to manually
+clear the events.
 
-## Best Practice
+## Immediate Dispatcher Installation
+
+Immediate event dispatcher works by installing the event dispatcher to a static
+variable. This installation happens on several opportunities:
+
+* In `kernel.request` event.
+* When `ManagerRegistry` is initialized.
+* When an `EntityManagerInterface` is initialized.
+
+When any of these don't occur, there is no opportunity to install the event
+dispatcher. This usually happens only in isolated unit tests. To fix the
+problem, you can install a stub event dispatcher manually like the following.
+
+```php
+use PHPUnit\Framework\TestCase;
+use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherInstaller;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+
+class SomeTest extends TestCase
+{
+    public function setUp(): void
+    {
+        $installer = new ImmediateDomainEventDispatcherInstaller(new EventDispatcher);
+        $installer->install();
+
+    }
+
+    // ...
+}
+```
+
+In integration tests where you have access to the service container, but the
+tests don't involve `EntityManager` or `ManagerRegistry`, you can pull the
+installer from the container to install the immediate dispatcher:
+
+```php
+use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherInstaller;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+
+class SomeTest extends KernelTestCase
+{
+    public function setUp(): void
+    {
+        self::bootKernel();
+        static::getContainer()
+          ->get(ImmediateDomainEventDispatcherInstaller::class)->install();
+    }
+
+    // ...
+}
+```
+
+## Best Practices
 
 This explains our best practices that others might find useful, but not strictly
 required.
@@ -290,7 +344,8 @@ as you can easily pass the events anywhere without alteration.
 Use pre-flush events to make alterations to your domain that will be
 `flush()`-ed together along with the other changes.
 
-Use post-flush for things that should occur only if the change is successful, like notifications, etc.
+Use post-flush for things that should occur only if the change is successful,
+like notifications, etc.
 
 ## Caveats
 
