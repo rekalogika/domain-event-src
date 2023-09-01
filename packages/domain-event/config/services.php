@@ -84,6 +84,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->args([
             service('.inner'),
             service(DomainEventManagerInterface::class),
+            service(ImmediateDomainEventDispatcherInstaller::class),
         ])
         ->decorate(EntityManagerInterface::class);
 
@@ -91,6 +92,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->args([
             service('.inner'),
             service(DomainEventManagerInterface::class),
+            service(ImmediateDomainEventDispatcherInstaller::class),
         ])
         ->decorate(ManagerRegistry::class);
 

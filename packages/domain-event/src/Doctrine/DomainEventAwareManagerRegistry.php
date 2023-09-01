@@ -16,14 +16,18 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
 use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
+use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherInstaller;
 
 final class DomainEventAwareManagerRegistry extends AbstractManagerRegistryDecorator
 {
     public function __construct(
         ManagerRegistry $wrapped,
-        private DomainEventManagerInterface $domainEventManager
+        private DomainEventManagerInterface $domainEventManager,
+        private ImmediateDomainEventDispatcherInstaller $installer,
     ) {
         parent::__construct($wrapped);
+
+        $installer->install();
     }
 
     /**
@@ -40,7 +44,11 @@ final class DomainEventAwareManagerRegistry extends AbstractManagerRegistryDecor
         }
 
         if ($manager instanceof EntityManagerInterface) {
-            return new DomainEventAwareEntityManager($manager, $this->domainEventManager);
+            return new DomainEventAwareEntityManager(
+                $manager,
+                $this->domainEventManager,
+                $this->installer,
+            );
         } else {
             return $manager;
         }

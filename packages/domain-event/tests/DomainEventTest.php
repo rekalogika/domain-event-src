@@ -45,6 +45,7 @@ final class DomainEventTest extends TestCase
     protected EventDispatcher $defaultEventDispatcher;
     protected DomainEventManager $domainEventManager;
     protected EntityManagerInterface $entityManager;
+    protected ImmediateDomainEventDispatcherInstaller $installer;
 
     public function setUp(): void
     {
@@ -59,8 +60,8 @@ final class DomainEventTest extends TestCase
             preFlushEventDispatcher: $this->preFlushEventDispatcher,
         );
 
-        $installer = new ImmediateDomainEventDispatcherInstaller($this->immediateEventDispatcher);
-        $installer->install();
+        $this->installer = new ImmediateDomainEventDispatcherInstaller($this->immediateEventDispatcher);
+        $this->installer->install();
     }
 
     /**
@@ -201,6 +202,7 @@ final class DomainEventTest extends TestCase
         $entityManager = new DomainEventAwareEntityManager(
             $entityManager,
             $this->domainEventManager,
+            $this->installer,
             $collector
         );
 
@@ -303,7 +305,8 @@ final class DomainEventTest extends TestCase
 
         $managerRegistry = new DomainEventAwareManagerRegistry(
             $managerRegistry,
-            $this->domainEventManager
+            $this->domainEventManager,
+            $this->installer
         );
 
         $this->assertInstanceOf(
