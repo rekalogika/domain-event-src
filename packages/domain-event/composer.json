@@ -34,16 +34,16 @@
         "doctrine/persistence": "^3.2",
         "psr/event-dispatcher": "^1.0",
         "rekalogika/domain-event-contracts": "^1.2",
-        "symfony/config": "6.3.*",
-        "symfony/event-dispatcher": "6.3.*",
-        "symfony/dependency-injection": "6.3.*",
-        "symfony/http-kernel": "6.3.*"
+        "symfony/config": "^6.0",
+        "symfony/event-dispatcher": "^6.0",
+        "symfony/dependency-injection": "^6.0",
+        "symfony/http-kernel": "^6.0"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^9.5",
         "vimeo/psalm": "^5.15",
-        "symfony/uid": "6.3.*"
+        "symfony/uid": "^6.0"
     },
     "extra": {
         "branch-alias": {
