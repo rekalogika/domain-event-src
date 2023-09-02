@@ -9,9 +9,7 @@
         findUnusedCode="false">
 
     <projectFiles>
-        <directory name="packages/domain-event-contracts/src" />
-        <directory name="packages/domain-event/src" />
-        <directory name="packages/domain-event/tests" />
+        <directory name="packages" />
         <ignoreFiles>
             <directory name="vendor" />
         </ignoreFiles>
