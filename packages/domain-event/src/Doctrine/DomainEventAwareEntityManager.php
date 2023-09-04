@@ -117,8 +117,14 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
             throw new FlushNotAllowedException();
         }
 
-        $this->dispatchPreFlushDomainEvents();
+        if ($this->autodispatch) {
+            $this->dispatchPreFlushDomainEvents();
+        }
+
         parent::flush($entity);
-        $this->dispatchPostFlushDomainEvents();
+
+        if ($this->autodispatch) {
+            $this->dispatchPostFlushDomainEvents();
+        }
     }
 }
