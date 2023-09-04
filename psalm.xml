@@ -12,6 +12,7 @@
         <directory name="packages" />
         <ignoreFiles>
             <directory name="vendor" />
+            <directory name="**/var/*" allowMissingFiles="true" />
         </ignoreFiles>
     </projectFiles>
 

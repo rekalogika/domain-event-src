@@ -2,3 +2,6 @@ parameters:
     level: max
     paths:
         - packages
+    excludePaths:
+        analyseAndScan:
+            - packages/domain-event/var

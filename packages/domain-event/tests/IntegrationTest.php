@@ -29,12 +29,8 @@ final class IntegrationTest extends TestCase
 
     public function setUp(): void
     {
-        $entityManager = $this->createMock(EntityManagerInterface::class);
-
         $kernel = new Kernel('test', true);
-        $kernel->getContainer()->set(EntityManagerInterface::class, $entityManager);
         $kernel->boot();
-
         $this->container = $kernel->getContainer();
     }
 
