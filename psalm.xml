@@ -12,7 +12,6 @@
         <directory name="packages" />
         <ignoreFiles>
             <directory name="vendor" />
-            <directory name="packages/domain-event/var/" allowMissingFiles="true" />
         </ignoreFiles>
     </projectFiles>
 

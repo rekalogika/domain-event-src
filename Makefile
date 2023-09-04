@@ -1,5 +1,9 @@
 .PHONY: test
-test: phpstan psalm phpunit
+test: clean phpstan psalm phpunit
+
+.PHONY: clean
+clean:
+	rm -rf packages/*/var
 
 .PHONY: monorepo
 monorepo: validate merge
