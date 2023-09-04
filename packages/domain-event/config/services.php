@@ -80,7 +80,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             service(DomainEventManagerInterface::class),
         ]);
 
-    $services->set(DomainEventAwareEntityManager::class)
+    $services->set(
+        DomainEventAwareEntityManagerInterface::class,
+        DomainEventAwareEntityManager::class
+    )
         ->args([
             service('.inner'),
             service(DomainEventManagerInterface::class),
@@ -96,16 +99,14 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ])
         ->decorate(ManagerRegistry::class);
 
-    $services->alias(
-        DomainEventAwareEntityManagerInterface::class,
-        DomainEventAwareEntityManager::class
-    );
-
     //
     // event manager
     //
 
-    $services->set(DomainEventManager::class)
+    $services->set(
+        DomainEventManagerInterface::class,
+        DomainEventManager::class
+    )
         ->args([
             '$defaultEventDispatcher'
             => service(EventDispatcherInterface::class),
@@ -114,11 +115,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             '$preFlushEventDispatcher'
             => service(Constants::EVENT_DISPATCHER_PRE_FLUSH),
         ]);
-
-    $services->alias(
-        DomainEventManagerInterface::class,
-        DomainEventManager::class
-    );
 
     $services->set(ImmediateDomainEventDispatcherInstaller::class)
         ->args([
