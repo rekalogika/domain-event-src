@@ -273,19 +273,19 @@ $entityManager->clearDomainEvents();
 ```
 
 **Note**: In the event of an uncaught error, the framework will automatically
-clear undispatched events using the `kernel.exception` event, so in such cases,
-you don't have to handle that manually. But if you catch an exception that
-previously caused pending events not to be dispatched, you need to manually
-clear the events.
+clear undispatched events using the `kernel.exception` and `console.error`
+events, so in such cases, you don't have to handle that manually. But if you
+catch an exception that previously caused pending events not to be dispatched,
+you need to manually clear the events.
 
 ## Immediate Dispatcher Installation
 
 Immediate event dispatcher works by installing the event dispatcher to a static
 variable. This installation happens on several opportunities:
 
-* In `kernel.request` event.
-* When `ManagerRegistry` is initialized.
-* When an `EntityManagerInterface` is initialized.
+* In these events: `kernel.request` and `console.command`.
+* During the initialization of `ManagerRegistry`.
+* During the initialization of an `EntityManagerInterface`.
 
 When any of these don't occur, there is no opportunity to install the event
 dispatcher. This usually happens only in isolated unit tests. To fix the

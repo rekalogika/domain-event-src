@@ -116,15 +116,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             => service(Constants::EVENT_DISPATCHER_PRE_FLUSH),
         ]);
 
-    $services->set(ImmediateDomainEventDispatcherInstaller::class)
-        ->args([
-            '$eventDispatcher' =>
-            service(Constants::EVENT_DISPATCHER_IMMEDIATE),
-        ])
-        ->tag('kernel.event_listener', [
-            'event' => 'kernel.request',
-            'method' => 'install',
-        ]);
+    //
+    // error handler / domain event reaper
+    //
 
     $services->set(DomainEventReaper::class)
         ->args([
@@ -133,5 +127,27 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->tag('kernel.event_listener', [
             'event' => 'kernel.exception',
             'method' => 'onKernelException',
+        ])
+        ->tag('kernel.event_listener', [
+            'event' => 'console.error',
+            'method' => 'onKernelException',
+        ]);
+
+    //
+    // immediate event dispatcher installer
+    //
+
+    $services->set(ImmediateDomainEventDispatcherInstaller::class)
+        ->args([
+            '$eventDispatcher' =>
+            service(Constants::EVENT_DISPATCHER_IMMEDIATE),
+        ])
+        ->tag('kernel.event_listener', [
+            'event' => 'kernel.request',
+            'method' => 'install',
+        ])
+        ->tag('kernel.event_listener', [
+            'event' => 'console.command',
+            'method' => 'install',
         ]);
 };
