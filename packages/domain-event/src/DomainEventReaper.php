@@ -27,7 +27,7 @@ final class DomainEventReaper
     ) {
     }
 
-    public function onKernelException(ExceptionEvent $event): void
+    public function onKernelException(): void
     {
         $this->domainEventManager->clear();
     }
