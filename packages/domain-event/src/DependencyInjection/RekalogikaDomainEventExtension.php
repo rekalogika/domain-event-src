@@ -24,7 +24,7 @@ use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 class RekalogikaDomainEventExtension extends Extension
 {
     /**
-     * @param array<array-key,array<array-key,mixed>> $configs
+     * @param array<array-key,mixed> $configs
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
