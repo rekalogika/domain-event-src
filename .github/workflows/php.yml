@@ -1,8 +1,8 @@
-name: PHP Composer
+name: Test
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "test" ]
   pull_request:
     branches: [ "main" ]
 
@@ -12,7 +12,16 @@ permissions:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest]
+        php: [ '8.1', '8.2' ]
+        symfony: [ '6.*' ]
+        dep: [highest,lowest]
+
+    runs-on: ${{ matrix.operating-system }}
+
+    name: Symfony ${{ matrix.symfony }}, ${{ matrix.dep }} deps, PHP ${{ matrix.php }}, ${{ matrix.operating-system }}
 
     steps:
     - uses: actions/checkout@v3
@@ -30,7 +39,12 @@ jobs:
           ${{ runner.os }}-php-
 
     - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
+      uses: ramsey/composer-install@v2
+      with:
+        dependency-versions: ${{ matrix.dep }}
+        composer-options: --prefer-dist --no-progress
+      env:
+        SYMFONY_REQUIRE: ${{ matrix.symfony }}
 
     - name: Run psalm
       run: vendor/bin/psalm
@@ -39,5 +53,6 @@ jobs:
       run: vendor/bin/phpstan analyse
 
     - name: Run phpunit
-      run: vendor/bin/phpunit --testdox -v
-
+      run: |
+        export SYMFONY_DEPRECATIONS_HELPER='max[direct]=0'
+        vendor/bin/phpunit --testdox -v

@@ -43,8 +43,7 @@
         "mockery/mockery": "^1.6",
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^9.5",
-        "vimeo/psalm": "^5.15",
-        "symfony/uid": "^6.0"
+        "vimeo/psalm": "^5.15"
     },
     "extra": {
         "branch-alias": {

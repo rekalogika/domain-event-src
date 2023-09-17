@@ -23,7 +23,6 @@
         "mockery/mockery": "^1.6",
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^9.5",
-        "symfony/uid": "^6.0",
         "symplify/monorepo-builder": "^11.2",
         "vimeo/psalm": "^5.15"
     },

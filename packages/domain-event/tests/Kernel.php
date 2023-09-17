@@ -11,7 +11,6 @@
 
 namespace Rekalogika\DomainEvent\Tests;
 
-use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Rekalogika\DomainEvent\RekalogikaDomainEventBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel as HttpKernelKernel;
@@ -25,7 +24,7 @@ class Kernel extends HttpKernelKernel
         ];
     }
 
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
     }
 }
