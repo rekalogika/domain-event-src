@@ -18,7 +18,6 @@ use Rekalogika\DomainEvent\Tests\Event\EntityNameChanged;
 use Rekalogika\DomainEvent\Tests\Event\EntityRemoved;
 use Rekalogika\DomainEvent\Tests\Event\EquatableEvent;
 use Rekalogika\DomainEvent\Tests\Event\NonEquatableEvent;
-use Symfony\Component\Uid\Uuid;
 
 final class Entity implements DomainEventEmitterInterface
 {
@@ -29,7 +28,7 @@ final class Entity implements DomainEventEmitterInterface
     public function __construct(
         private string $name,
     ) {
-        $this->id = (Uuid::v7())->toRfc4122();
+        $this->id = \bin2hex(\random_bytes(16));
 
         $this->recordEvent(new EntityCreated($this));
     }
