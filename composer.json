@@ -38,8 +38,8 @@
         }
     },
     "replace": {
-        "rekalogika/domain-event": "1.1.7",
-        "rekalogika/domain-event-contracts": "1.1.7"
+        "rekalogika/domain-event": "1.1.11",
+        "rekalogika/domain-event-contracts": "1.1.11"
     },
     "minimum-stability": "stable"
 }
