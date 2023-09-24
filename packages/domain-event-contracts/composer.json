@@ -1,6 +1,7 @@
 {
     "name": "rekalogika/domain-event-contracts",
     "description": "Interfaces, Traits and Nominal Classes used by Domain Entities Implementing Domain Events",
+    "homepage": "https://rekalogika.dev/domain-event",
     "keywords": [
         "domain-event",
         "domain",
