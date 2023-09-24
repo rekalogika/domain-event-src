@@ -3,7 +3,9 @@
 Interfaces, traits, attributes, and nominal classes to be used by domain objects
 utilizing the `rekalogika/domain-event` framework.
 
-[Documentation](https://rekalogika.dev/domain-event)
+## Documentation
+
+[rekalogika.dev/domain-event](https://rekalogika.dev/domain-event).
 
 ## Contributing
 

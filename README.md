@@ -5,4 +5,4 @@ This is a monorepo for `rekalogika/domain-events` and
 
 ## Documentation
 
-See [rekalogika/domain-event](packages/domain-event/README.md).
+[rekalogika.dev/domain-event](https://rekalogika.dev/domain-event).

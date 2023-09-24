@@ -2,7 +2,9 @@
 
 A domain event pattern implementation for Symfony & Doctrine.
 
-[Documentation](https://rekalogika.dev/domain-event)
+## Documentation
+
+[rekalogika.dev/domain-event](https://rekalogika.dev/domain-event).
 
 ## Contributing
 
