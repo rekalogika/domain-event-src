@@ -1,6 +1,7 @@
 {
     "name": "rekalogika/domain-event",
     "description": "Domain Event Implementation for Symfony and Doctrine",
+    "homepage": "https://rekalogika.dev/domain-event",
     "keywords": [
         "domain-event",
         "domain",
