@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /*
- * This file is part of rekalogika/domain-event package.
+ * This file is part of rekalogika/domain-event-src package.
  *
  * (c) Priyadi Iman Nurcahyo <https://rekalogika.dev>
  *
@@ -53,7 +55,7 @@ interface DomainEventAwareEntityManagerInterface extends EntityManagerInterface
      * is added to both the pre-flush and post-flush queues.
      */
     public function recordDomainEvent(object $event): void;
-    
+
     /**
      * Manually adds several domain events to the queue. They will be added to
      * both the pre-flush and post-flush queues.

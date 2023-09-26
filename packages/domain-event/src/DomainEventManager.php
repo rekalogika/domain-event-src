@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /*
- * This file is part of rekalogika/domain-event package.
+ * This file is part of rekalogika/domain-event-src package.
  *
  * (c) Priyadi Iman Nurcahyo <https://rekalogika.dev>
  *
@@ -49,7 +51,7 @@ final class DomainEventManager implements DomainEventManagerInterface
     {
         if ($event instanceof EquatableDomainEventInterface) {
             $signature = $event->getSignature();
-    
+
             $this->preFlushDomainEvents[$signature] = $event;
             $this->postFlushDomainEvents[$signature] = $event;
         } else {

@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /*
- * This file is part of rekalogika/domain-event-contracts package.
+ * This file is part of rekalogika/domain-event-src package.
  *
  * (c) Priyadi Iman Nurcahyo <https://rekalogika.dev>
  *
@@ -19,7 +21,7 @@ interface DomainEventEmitterInterface
 {
     /**
      * Returns all domain events recorded by the entity, and delete them.
-     * 
+     *
      * @return array<int|string,object>
      */
     public function popRecordedEvents(): array;

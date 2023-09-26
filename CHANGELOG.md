@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.9
+
+* php-cs-fixer run
 ## 1.1.8
 
 * Improve CI
