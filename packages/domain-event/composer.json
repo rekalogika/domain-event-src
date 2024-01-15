@@ -35,10 +35,10 @@
         "doctrine/persistence": "^3.2",
         "psr/event-dispatcher": "^1.0",
         "rekalogika/domain-event-contracts": "^1.2",
-        "symfony/config": "^6.0",
-        "symfony/event-dispatcher": "^6.0",
-        "symfony/dependency-injection": "^6.0",
-        "symfony/http-kernel": "^6.0"
+        "symfony/config": "^6.0 || ^7.0",
+        "symfony/event-dispatcher": "^6.0 || ^7.0",
+        "symfony/dependency-injection": "^6.0 || ^7.0",
+        "symfony/http-kernel": "^6.0 || ^7.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.6",
