@@ -17,4 +17,12 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class RekalogikaDomainEventBundle extends Bundle
 {
+    public function boot(): void
+    {
+        $installer = $this->container?->get(ImmediateDomainEventDispatcherInstaller::class);
+
+        if ($installer instanceof ImmediateDomainEventDispatcherInstaller) {
+            $installer->install();
+        }
+    }
 }

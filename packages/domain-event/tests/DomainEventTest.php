@@ -204,7 +204,6 @@ final class DomainEventTest extends TestCase
         $entityManager = new DomainEventAwareEntityManager(
             $entityManager,
             $this->domainEventManager,
-            $this->installer,
             $collector
         );
 
@@ -308,7 +307,6 @@ final class DomainEventTest extends TestCase
         $managerRegistry = new DomainEventAwareManagerRegistry(
             $managerRegistry,
             $this->domainEventManager,
-            $this->installer
         );
 
         $this->assertInstanceOf(

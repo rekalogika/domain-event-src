@@ -4,6 +4,8 @@
 
 * build: Bump minimal Symfony version to 6.4.
 * build: Update `php-cs-fixer` and config.
+* refactor(`ImmediateDomainEventDispatcherInstaller`): now installs only in
+  bundle's `boot()`, remove installation from other services.
 
 ## 1.2.0
 
