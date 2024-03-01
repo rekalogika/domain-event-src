@@ -31,6 +31,7 @@ class RekalogikaDomainEventExtension extends Extension
     public function load(array $configs, ContainerBuilder $container): void
     {
         $env = $container->getParameter('kernel.environment');
+        $debug = (bool) $container->getParameter('kernel.debug');
 
         $loader = new PhpFileLoader(
             $container,
@@ -40,6 +41,10 @@ class RekalogikaDomainEventExtension extends Extension
 
         if ('test' === $env) {
             $loader->load('services_test.php');
+        }
+
+        if ($debug) {
+            $loader->load('debug.php');
         }
 
         $container->registerAttributeForAutoconfiguration(

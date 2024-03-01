@@ -5,6 +5,7 @@
 * refactor(`ImmediateDomainEventDispatcherInstaller`): remove installation from
   `kernel.request` & `console.command` events.
 * test: Require `symfony/framework-bundle`.
+* feat: Data collector integration.
 
 ## 1.2.1
 
