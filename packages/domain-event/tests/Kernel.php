@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent\Tests;
 
 use Rekalogika\DomainEvent\RekalogikaDomainEventBundle;
+use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel as HttpKernelKernel;
 
@@ -22,6 +23,7 @@ class Kernel extends HttpKernelKernel
     public function registerBundles(): iterable
     {
         return [
+            new FrameworkBundle(),
             new RekalogikaDomainEventBundle(),
         ];
     }

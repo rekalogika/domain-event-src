@@ -4,6 +4,7 @@
 
 * refactor(`ImmediateDomainEventDispatcherInstaller`): remove installation from
   `kernel.request` & `console.command` events.
+* test: Require `symfony/framework-bundle`.
 
 ## 1.2.1
 

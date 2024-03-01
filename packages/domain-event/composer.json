@@ -44,6 +44,7 @@
         "mockery/mockery": "^1.6",
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^9.5",
+        "symfony/framework-bundle": "^6.0 || ^7.0",
         "vimeo/psalm": "^5.15"
     },
     "extra": {
