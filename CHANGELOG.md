@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.2
+
+* refactor(`ImmediateDomainEventDispatcherInstaller`): remove installation from
+  `kernel.request` & `console.command` events.
+
 ## 1.2.1
 
 * build: Bump minimal Symfony version to 6.4.
