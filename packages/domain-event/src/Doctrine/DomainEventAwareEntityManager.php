@@ -19,7 +19,6 @@ use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
 use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
 use Rekalogika\DomainEvent\Exception\FlushNotAllowedException;
-use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherInstaller;
 
 /**
  * Decorates entity manager so it dispatches domain events after flush.
@@ -34,7 +33,6 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
     public function __construct(
         EntityManagerInterface $wrapped,
         private DomainEventManagerInterface $domainEventManager,
-        ImmediateDomainEventDispatcherInstaller $installer,
         ?DomainEventEmitterCollectorInterface $collector = null,
     ) {
         parent::__construct($wrapped);
@@ -44,8 +42,6 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         } else {
             $this->collector = $collector;
         }
-
-        $installer->install();
     }
 
     public function setAutoDispatchDomainEvents(bool $autoDispatch): void
