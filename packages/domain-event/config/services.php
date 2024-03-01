@@ -140,13 +140,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             '$eventDispatcher' =>
             service(Constants::EVENT_DISPATCHER_IMMEDIATE),
         ])
-        ->tag('kernel.event_listener', [
-            'event' => 'kernel.request',
-            'method' => 'install',
-        ])
-        ->tag('kernel.event_listener', [
-            'event' => 'console.command',
-            'method' => 'install',
-        ])
         ->public();
 };
