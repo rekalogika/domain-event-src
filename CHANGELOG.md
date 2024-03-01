@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+* build: Bump minimal Symfony version to 6.4.
+
 ## 1.2.0
 
 * Supports Symfony 7
