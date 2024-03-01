@@ -3,6 +3,7 @@
 ## 1.2.1
 
 * build: Bump minimal Symfony version to 6.4.
+* build: Update `php-cs-fixer` and config.
 
 ## 1.2.0
 
