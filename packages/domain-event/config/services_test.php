@@ -32,13 +32,16 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services = $containerConfigurator->services();
 
-    $services->set(EntityManagerInterface::class)
+    $services
+        ->set(EntityManagerInterface::class)
         ->factory([Factory::class, 'mockEntityManager']);
 
-    $services->set(ManagerRegistry::class)
+    $services
+        ->set(ManagerRegistry::class)
         ->factory([Factory::class, 'mockManagerRegistry']);
 
-    $services->set(EventDispatcherInterface::class)
+    $services
+        ->set(EventDispatcherInterface::class)
         ->factory([Factory::class, 'mockEventDispatcher']);
 
     $serviceIds = [
