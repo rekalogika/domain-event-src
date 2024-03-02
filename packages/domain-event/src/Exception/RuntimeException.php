@@ -13,10 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Exception;
 
-class FlushNotAllowedException extends LogicException
+class RuntimeException extends \RuntimeException implements ExceptionInterface
 {
-    public function __construct()
-    {
-        parent::__construct('"flush()" is not allowed inside a pre-flush domain event listener.');
-    }
 }

@@ -4,6 +4,7 @@
 
 * fix: Properly implement `ResetInterface` on applicable services.
 * test: Add tests for Symfony 7 & PHP 8.3
+* refactor: Refactor exceptions
 
 ## 1.2.4
 

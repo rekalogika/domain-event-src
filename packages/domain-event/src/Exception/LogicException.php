@@ -13,6 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Exception;
 
-abstract class DomainEventException extends \RuntimeException
+class LogicException extends \LogicException implements ExceptionInterface
 {
 }
