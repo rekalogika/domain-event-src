@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.4
+
+* build: Fix monorepo build.
+
 ## 1.2.2
 
 * refactor(`ImmediateDomainEventDispatcherInstaller`): remove installation from
