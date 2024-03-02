@@ -16,7 +16,7 @@ namespace Rekalogika\DomainEvent\Doctrine;
 use Doctrine\ORM\UnitOfWork;
 use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
 
-final class DomainEventEmitterCollector implements
+final readonly class DomainEventEmitterCollector implements
     DomainEventEmitterCollectorInterface
 {
     /**

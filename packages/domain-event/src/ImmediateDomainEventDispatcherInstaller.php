@@ -16,7 +16,7 @@ namespace Rekalogika\DomainEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Rekalogika\Contracts\DomainEvent\DomainEventImmediateDispatcher;
 
-final class ImmediateDomainEventDispatcherInstaller
+final readonly class ImmediateDomainEventDispatcherInstaller
 {
     public function __construct(
         private EventDispatcherInterface $eventDispatcher,

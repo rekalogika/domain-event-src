@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent;
 
 use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
-use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 
 /**
  * Clears domain events from DomainEventManager if an exception bubbles up to
@@ -22,7 +21,7 @@ use Symfony\Component\HttpKernel\Event\ExceptionEvent;
  * possibly confusing error due to the fact there are undispatched events in its
  * queue.
  */
-final class DomainEventReaper
+final readonly class DomainEventReaper
 {
     public function __construct(
         private DomainEventManagerInterface $domainEventManager

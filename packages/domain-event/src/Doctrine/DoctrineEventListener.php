@@ -20,7 +20,7 @@ use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
 use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
 
-final class DoctrineEventListener
+final readonly class DoctrineEventListener
 {
     public function __construct(
         private DomainEventManagerInterface $domainEventManager

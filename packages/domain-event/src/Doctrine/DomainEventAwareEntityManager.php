@@ -34,7 +34,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
 
     public function __construct(
         EntityManagerInterface $wrapped,
-        private DomainEventManagerInterface $domainEventManager,
+        private readonly DomainEventManagerInterface $domainEventManager,
         ?DomainEventEmitterCollectorInterface $collector = null,
     ) {
         parent::__construct($wrapped);

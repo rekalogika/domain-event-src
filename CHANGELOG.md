@@ -3,6 +3,7 @@
 ## 1.2.5
 
 * fix: Properly implement `ResetInterface` on applicable services.
+* chore: Add `final` and/or `readonly` where applicable.
 
 ## 1.2.4
 

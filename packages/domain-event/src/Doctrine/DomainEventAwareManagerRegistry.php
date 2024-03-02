@@ -23,7 +23,7 @@ final class DomainEventAwareManagerRegistry extends AbstractManagerRegistryDecor
 {
     public function __construct(
         ManagerRegistry $wrapped,
-        private DomainEventManagerInterface $domainEventManager,
+        private readonly DomainEventManagerInterface $domainEventManager,
     ) {
         parent::__construct($wrapped);
     }

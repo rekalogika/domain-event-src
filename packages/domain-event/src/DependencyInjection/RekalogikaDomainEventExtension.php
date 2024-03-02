@@ -23,7 +23,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 
-class RekalogikaDomainEventExtension extends Extension
+final class RekalogikaDomainEventExtension extends Extension
 {
     /**
      * @param array<array-key,mixed> $configs

@@ -15,7 +15,7 @@ namespace Rekalogika\DomainEvent;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class RekalogikaDomainEventBundle extends Bundle
+final class RekalogikaDomainEventBundle extends Bundle
 {
     public function boot(): void
     {

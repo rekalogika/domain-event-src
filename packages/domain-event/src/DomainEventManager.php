@@ -33,9 +33,9 @@ final class DomainEventManager implements DomainEventManagerInterface, ResetInte
     private array $postFlushDomainEvents = [];
 
     public function __construct(
-        private EventDispatcherInterface $defaultEventDispatcher,
-        private EventDispatcherInterface $postFlushEventDispatcher,
-        private EventDispatcherInterface $preFlushEventDispatcher,
+        private readonly EventDispatcherInterface $defaultEventDispatcher,
+        private readonly EventDispatcherInterface $postFlushEventDispatcher,
+        private readonly EventDispatcherInterface $preFlushEventDispatcher,
     ) {
     }
 

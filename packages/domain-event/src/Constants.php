@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent;
 
-final class Constants
+final readonly class Constants
 {
     public const EVENT_DISPATCHER_IMMEDIATE = 'rekalogika.domain_event.dispatcher.immediate';
     public const EVENT_DISPATCHER_PRE_FLUSH = 'rekalogika.domain_event.dispatcher.pre_flush';
