@@ -17,6 +17,8 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Rekalogika\Contracts\DomainEvent\EquatableDomainEventInterface;
 use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
 use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
+use Rekalogika\DomainEvent\Event\DomainEventPostFlushDispatch;
+use Rekalogika\DomainEvent\Event\DomainEventPreFlushDispatch;
 use Rekalogika\DomainEvent\Exception\UndispatchedEventsException;
 use Symfony\Contracts\Service\ResetInterface;
 
@@ -74,6 +76,8 @@ final class DomainEventManager implements DomainEventManagerInterface, ResetInte
 
         foreach ($events as $event) {
             $this->preFlushEventDispatcher->dispatch($event);
+            $this->defaultEventDispatcher
+                ->dispatch(new DomainEventPreFlushDispatch($event));
         }
 
         return $num;
@@ -90,6 +94,8 @@ final class DomainEventManager implements DomainEventManagerInterface, ResetInte
         foreach ($events as $event) {
             $this->postFlushEventDispatcher->dispatch($event);
             $this->defaultEventDispatcher->dispatch($event);
+            $this->defaultEventDispatcher
+                ->dispatch(new DomainEventPostFlushDispatch($event));
         }
 
         return $num;

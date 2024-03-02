@@ -5,6 +5,8 @@
 * fix: Properly implement `ResetInterface` on applicable services.
 * test: Add tests for Symfony 7 & PHP 8.3
 * refactor: Refactor exceptions
+* feat: Dispatch `DomainEventPostFlushDispatch` or
+  `DomainEventPostFlushDispatch` every time a domain event is dispatched.
 
 ## 1.2.4
 
