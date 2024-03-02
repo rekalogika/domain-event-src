@@ -93,7 +93,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             service('.inner'),
             service(DomainEventManagerInterface::class),
         ])
-        ->decorate(EntityManagerInterface::class);
+        ->decorate(EntityManagerInterface::class)
+        ->tag('kernel.reset', [
+            'method' => 'reset',
+        ]);
 
     $services
         ->set(DomainEventAwareManagerRegistry::class)
@@ -119,6 +122,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             => service(Constants::EVENT_DISPATCHER_POST_FLUSH),
             '$preFlushEventDispatcher'
             => service(Constants::EVENT_DISPATCHER_PRE_FLUSH),
+        ])
+        ->tag('kernel.reset', [
+            'method' => 'reset',
         ]);
 
     //

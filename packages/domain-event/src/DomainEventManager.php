@@ -18,8 +18,9 @@ use Rekalogika\Contracts\DomainEvent\EquatableDomainEventInterface;
 use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
 use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
 use Rekalogika\DomainEvent\Exception\UndispatchedEventsException;
+use Symfony\Contracts\Service\ResetInterface;
 
-final class DomainEventManager implements DomainEventManagerInterface
+final class DomainEventManager implements DomainEventManagerInterface, ResetInterface
 {
     /**
      * @var array<int|string,object>
@@ -36,6 +37,11 @@ final class DomainEventManager implements DomainEventManagerInterface
         private EventDispatcherInterface $postFlushEventDispatcher,
         private EventDispatcherInterface $preFlushEventDispatcher,
     ) {
+    }
+
+    public function reset(): void
+    {
+        $this->clear();
     }
 
     public function collect(DomainEventEmitterInterface $domainEventEmitter): void
