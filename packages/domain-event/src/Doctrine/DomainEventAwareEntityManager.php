@@ -19,12 +19,14 @@ use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
 use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
 use Rekalogika\DomainEvent\Exception\FlushNotAllowedException;
+use Symfony\Contracts\Service\ResetInterface;
 
 /**
  * Decorates entity manager so it dispatches domain events after flush.
  */
 final class DomainEventAwareEntityManager extends EntityManagerDecorator implements
-    DomainEventAwareEntityManagerInterface
+    DomainEventAwareEntityManagerInterface,
+    ResetInterface
 {
     private bool $flushEnabled = true;
     private bool $autodispatch = true;
@@ -42,6 +44,12 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         } else {
             $this->collector = $collector;
         }
+    }
+
+    public function reset(): void
+    {
+        $this->flushEnabled = true;
+        $this->autodispatch = true;
     }
 
     public function setAutoDispatchDomainEvents(bool $autoDispatch): void

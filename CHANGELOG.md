@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.5
+
+* fix: Properly implement `ResetInterface` on applicable services.
+
 ## 1.2.4
 
 * build: Fix monorepo build.
