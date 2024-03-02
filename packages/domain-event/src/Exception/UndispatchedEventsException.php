@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Exception;
 
-class UndispatchedEventsException extends DomainEventException
+class UndispatchedEventsException extends LogicException
 {
     /**
      * @param array<int|string,object> $events
