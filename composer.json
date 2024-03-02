@@ -25,7 +25,7 @@
         "phpunit/phpunit": "^9.5",
         "symfony/framework-bundle": "^6.4 || ^7.0",
         "symfony/stopwatch": "^6.4 || ^7.0",
-        "symplify/monorepo-builder": "^11.2",
+        "symplify/monorepo-builder": "^11.2.20 || ^11.3",
         "vimeo/psalm": "^5.15"
     },
     "autoload": {
@@ -40,8 +40,8 @@
         }
     },
     "replace": {
-        "rekalogika/domain-event": "1.2.2",
-        "rekalogika/domain-event-contracts": "1.2.2"
+        "rekalogika/domain-event": "1.2.4",
+        "rekalogika/domain-event-contracts": "1.2.4"
     },
     "minimum-stability": "stable"
 }
