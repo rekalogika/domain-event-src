@@ -22,7 +22,10 @@ use Rekalogika\DomainEvent\Doctrine\DomainEventAwareEntityManager;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\DomainEventManager;
 use Rekalogika\DomainEvent\DomainEventReaper;
-use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherDecorator;
+use Rekalogika\DomainEvent\Event\DomainEventImmediateDispatchEvent;
+use Rekalogika\DomainEvent\Event\DomainEventPostFlushDispatchEvent;
+use Rekalogika\DomainEvent\Event\DomainEventPreFlushDispatchEvent;
+use Rekalogika\DomainEvent\EventDispatchingDomainEventDispatcher;
 use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherInstaller;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -64,16 +67,35 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ]);
 
     //
-    // immediate event dispatcher decorator
+    // event dispatcher decorator
     //
 
     $services
-        ->set(ImmediateDomainEventDispatcherDecorator::class)
+        ->set(EventDispatchingDomainEventDispatcher::class)
         ->args([
             '$decorated' => service('.inner'),
             '$defaultEventDispatcher' => service(EventDispatcherInterface::class),
+            '$eventClass' => DomainEventImmediateDispatchEvent::class,
         ])
         ->decorate(Constants::EVENT_DISPATCHER_IMMEDIATE);
+
+    $services
+        ->set(EventDispatchingDomainEventDispatcher::class)
+        ->args([
+            '$decorated' => service('.inner'),
+            '$defaultEventDispatcher' => service(EventDispatcherInterface::class),
+            '$eventClass' => DomainEventPreFlushDispatchEvent::class,
+        ])
+        ->decorate(Constants::EVENT_DISPATCHER_PRE_FLUSH);
+
+    $services
+        ->set(EventDispatchingDomainEventDispatcher::class)
+        ->args([
+            '$decorated' => service('.inner'),
+            '$defaultEventDispatcher' => service(EventDispatcherInterface::class),
+            '$eventClass' => DomainEventPostFlushDispatchEvent::class,
+        ])
+        ->decorate(Constants::EVENT_DISPATCHER_POST_FLUSH);
 
     //
     // doctrine
