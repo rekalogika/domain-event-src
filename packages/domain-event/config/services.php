@@ -22,6 +22,7 @@ use Rekalogika\DomainEvent\Doctrine\DomainEventAwareEntityManager;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\DomainEventManager;
 use Rekalogika\DomainEvent\DomainEventReaper;
+use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherDecorator;
 use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherInstaller;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -61,6 +62,18 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->tag('event_dispatcher.dispatcher', [
             'name' => Constants::EVENT_DISPATCHER_POST_FLUSH
         ]);
+
+    //
+    // immediate event dispatcher decorator
+    //
+
+    $services
+        ->set(ImmediateDomainEventDispatcherDecorator::class)
+        ->args([
+            '$decorated' => service('.inner'),
+            '$defaultEventDispatcher' => service(EventDispatcherInterface::class),
+        ])
+        ->decorate(Constants::EVENT_DISPATCHER_IMMEDIATE);
 
     //
     // doctrine

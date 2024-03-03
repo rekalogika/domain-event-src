@@ -7,6 +7,8 @@
 * refactor: Refactor exceptions
 * feat: Dispatch `DomainEventPostFlushDispatch` or
   `DomainEventPostFlushDispatch` every time a domain event is dispatched.
+* feat: Dispatch `DomainEventImmediateDispatch` every time a domain event is
+  dispatched.
 
 ## 1.2.4
 
