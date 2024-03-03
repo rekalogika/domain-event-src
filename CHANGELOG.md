@@ -9,6 +9,8 @@
   `DomainEventPostFlushDispatch` every time a domain event is dispatched.
 * feat: Dispatch `DomainEventImmediateDispatch` every time a domain event is
   dispatched.
+* refactor: The dispatch events are now dispatched by decorating the event
+  dispatchers.
 
 ## 1.2.4
 

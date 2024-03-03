@@ -13,14 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Event;
 
-class DomainEventPreFlushDispatch
+class DomainEventImmediateDispatchEvent extends AbstractDomainEventDispatchEvent
 {
-    public function __construct(private object $domainEvent)
-    {
-    }
-
-    public function getDomainEvent(): object
-    {
-        return $this->domainEvent;
-    }
 }
