@@ -11,10 +11,10 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\DomainEvent\Tests\EventListener;
+namespace Rekalogika\DomainEvent\Tests\Integration\EventListener;
 
-use Rekalogika\DomainEvent\Tests\Event\EquatableEvent;
-use Rekalogika\DomainEvent\Tests\Event\NonEquatableEvent;
+use Rekalogika\DomainEvent\Tests\Integration\Event\EquatableEvent;
+use Rekalogika\DomainEvent\Tests\Integration\Event\NonEquatableEvent;
 
 final class EquatableEventListener
 {

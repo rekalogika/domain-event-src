@@ -21,8 +21,8 @@ use Rekalogika\DomainEvent\Doctrine\DoctrineEventListener;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\DomainEventReaper;
 use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherInstaller;
-use Rekalogika\DomainEvent\Tests\Factory;
-use Rekalogika\DomainEvent\Tests\Kernel;
+use Rekalogika\DomainEvent\Tests\Framework\Kernel;
+use Rekalogika\DomainEvent\Tests\Integration\Factory;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {

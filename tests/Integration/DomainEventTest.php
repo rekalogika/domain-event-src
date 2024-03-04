@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\DomainEvent\Tests;
+namespace Rekalogika\DomainEvent\Tests\Integration;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\UnitOfWork;
@@ -23,16 +23,16 @@ use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\DomainEventManager;
 use Rekalogika\DomainEvent\Exception\FlushNotAllowedException;
 use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherInstaller;
-use Rekalogika\DomainEvent\Tests\Event\EntityCreated;
-use Rekalogika\DomainEvent\Tests\Event\EntityNameChanged;
-use Rekalogika\DomainEvent\Tests\Event\EntityRemoved;
-use Rekalogika\DomainEvent\Tests\Event\EquatableEvent;
-use Rekalogika\DomainEvent\Tests\Event\NonEquatableEvent;
-use Rekalogika\DomainEvent\Tests\EventListener\DomainEventListener;
-use Rekalogika\DomainEvent\Tests\EventListener\EquatableEventListener;
-use Rekalogika\DomainEvent\Tests\EventListener\FlushingDomainEventListener;
-use Rekalogika\DomainEvent\Tests\Model\Entity;
-use Rekalogika\DomainEvent\Tests\Service\DomainEventEmitterCollectorStub;
+use Rekalogika\DomainEvent\Tests\Integration\Event\EntityCreated;
+use Rekalogika\DomainEvent\Tests\Integration\Event\EntityNameChanged;
+use Rekalogika\DomainEvent\Tests\Integration\Event\EntityRemoved;
+use Rekalogika\DomainEvent\Tests\Integration\Event\EquatableEvent;
+use Rekalogika\DomainEvent\Tests\Integration\Event\NonEquatableEvent;
+use Rekalogika\DomainEvent\Tests\Integration\EventListener\DomainEventListener;
+use Rekalogika\DomainEvent\Tests\Integration\EventListener\EquatableEventListener;
+use Rekalogika\DomainEvent\Tests\Integration\EventListener\FlushingDomainEventListener;
+use Rekalogika\DomainEvent\Tests\Integration\Model\Entity;
+use Rekalogika\DomainEvent\Tests\Integration\Service\DomainEventEmitterCollectorStub;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**

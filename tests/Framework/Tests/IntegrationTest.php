@@ -11,11 +11,8 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\DomainEvent\Tests;
+namespace Rekalogika\DomainEvent\Tests\Framework\Tests;
 
-use Doctrine\ORM\EntityManagerInterface;
-use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Rekalogika\DomainEvent\Constants;
 use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface;
@@ -25,17 +22,8 @@ use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\DomainEventReaper;
 use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherInstaller;
 
-final class IntegrationTest extends TestCase
+final class IntegrationTest extends FrameworkTestCase
 {
-    private ?ContainerInterface $container = null;
-
-    public function setUp(): void
-    {
-        $kernel = new Kernel('test', true);
-        $kernel->boot();
-        $this->container = $kernel->getContainer();
-    }
-
     public function testServiceWiring(): void
     {
         $serviceIds = [
@@ -48,7 +36,7 @@ final class IntegrationTest extends TestCase
         ];
 
         foreach ($serviceIds as $serviceId) {
-            $this->assertInstanceOf($serviceId, $this->container?->get('test.' . $serviceId));
+            $this->assertInstanceOf($serviceId, $this->get('test.' . $serviceId));
         }
     }
 
@@ -63,7 +51,7 @@ final class IntegrationTest extends TestCase
         foreach ($serviceIds as $serviceId) {
             $this->assertInstanceOf(
                 EventDispatcherInterface::class,
-                $this->container?->get('test.' . $serviceId)
+                $this->get('test.' . $serviceId)
             );
         }
     }

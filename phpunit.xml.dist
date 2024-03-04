@@ -15,7 +15,7 @@
 
     <testsuites>
         <testsuite name="default">
-            <directory>packages/domain-event/tests</directory>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
 

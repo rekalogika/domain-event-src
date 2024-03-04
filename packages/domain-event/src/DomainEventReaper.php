@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent;
 
 use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
-use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 
 /**
  * Clears domain events from DomainEventManager if an exception bubbles up to

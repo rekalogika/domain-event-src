@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\DomainEvent\Tests\EventListener;
+namespace Rekalogika\DomainEvent\Tests\Integration\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
 

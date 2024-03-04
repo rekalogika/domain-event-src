@@ -17,7 +17,9 @@
         "symfony/config": "^6.4 || ^7.0",
         "symfony/dependency-injection": "^6.4 || ^7.0",
         "symfony/event-dispatcher": "^6.4 || ^7.0",
-        "symfony/http-kernel": "^6.4 || ^7.0"
+        "symfony/http-kernel": "^6.4 || ^7.0",
+        "symfony/service-contracts": "^3.0",
+        "symfony/uid": "^6.4 || ^7.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.6",
@@ -25,6 +27,7 @@
         "phpunit/phpunit": "^9.5",
         "symfony/framework-bundle": "^6.4 || ^7.0",
         "symfony/stopwatch": "^6.4 || ^7.0",
+        "symfony/yaml": "^6.4 || ^7.0",
         "symplify/monorepo-builder": "^11.2.20 || ^11.3",
         "vimeo/psalm": "^5.15"
     },
@@ -36,7 +39,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Rekalogika\\DomainEvent\\Tests\\": "packages/domain-event/tests/"
+            "Rekalogika\\DomainEvent\\Tests\\": "tests/"
         }
     },
     "replace": {
