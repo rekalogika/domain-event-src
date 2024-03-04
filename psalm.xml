@@ -10,6 +10,7 @@
 
     <projectFiles>
         <directory name="packages" />
+        <directory name="tests" />
         <ignoreFiles>
             <directory name="vendor" />
         </ignoreFiles>

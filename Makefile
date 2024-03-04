@@ -3,7 +3,7 @@ test: clean phpstan psalm phpunit
 
 .PHONY: clean
 clean:
-	rm -rf packages/*/var
+	rm -rf var
 
 .PHONY: monorepo
 monorepo: validate merge
@@ -25,7 +25,7 @@ psalm:
 	vendor/bin/psalm
 
 .PHONY: phpunit
-phpunit:
+phpunit: clean
 	vendor/bin/phpunit --testdox -v
 
 .PHONY: php-cs-fixer

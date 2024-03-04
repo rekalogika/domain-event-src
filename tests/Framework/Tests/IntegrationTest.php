@@ -22,7 +22,7 @@ use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\DomainEventReaper;
 use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherInstaller;
 
-final class IntegrationTest extends FrameworkTestCase
+final class IntegrationTest extends DomainEventTestCase
 {
     public function testServiceWiring(): void
     {
@@ -36,7 +36,7 @@ final class IntegrationTest extends FrameworkTestCase
         ];
 
         foreach ($serviceIds as $serviceId) {
-            $this->assertInstanceOf($serviceId, $this->get('test.' . $serviceId));
+            $this->assertInstanceOf($serviceId, static::getContainer()->get('test.' . $serviceId));
         }
     }
 
@@ -51,7 +51,7 @@ final class IntegrationTest extends FrameworkTestCase
         foreach ($serviceIds as $serviceId) {
             $this->assertInstanceOf(
                 EventDispatcherInterface::class,
-                $this->get('test.' . $serviceId)
+                static::getContainer()->get('test.' . $serviceId)
             );
         }
     }

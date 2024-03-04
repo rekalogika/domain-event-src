@@ -2,6 +2,17 @@ parameters:
     level: max
     paths:
         - packages
-    excludePaths:
-        analyseAndScan:
-            - packages/domain-event/var
+        - tests
+    checkBenevolentUnionTypes: true
+    checkExplicitMixedMissingReturn: true
+    checkFunctionNameCase: true
+    checkInternalClassCaseSensitivity: true
+    reportMaybesInPropertyPhpDocTypes: true
+    treatPhpDocTypesAsCertain: false
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - vendor/bnf/phpstan-psr-container/extension.neon
+    - vendor/ekino/phpstan-banned-code/extension.neon
+    - phar://phpstan.phar/conf/bleedingEdge.neon

@@ -11,8 +11,6 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Rekalogika\DomainEvent\Constants;
 use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface;

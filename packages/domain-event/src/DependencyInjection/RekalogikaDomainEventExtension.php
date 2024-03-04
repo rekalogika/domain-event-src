@@ -30,7 +30,6 @@ class RekalogikaDomainEventExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $env = $container->getParameter('kernel.environment');
         $debug = (bool) $container->getParameter('kernel.debug');
 
         $loader = new PhpFileLoader(
@@ -38,10 +37,6 @@ class RekalogikaDomainEventExtension extends Extension
             new FileLocator(__DIR__ . '/../../config')
         );
         $loader->load('services.php');
-
-        if ('test' === $env) {
-            $loader->load('services_test.php');
-        }
 
         if ($debug) {
             $loader->load('debug.php');
@@ -98,6 +93,7 @@ class RekalogikaDomainEventExtension extends Extension
                     }
                     $tagAttributes['method'] = $reflector->getName();
                 }
+
                 $definition->addTag(
                     'kernel.event_listener',
                     $tagAttributes
