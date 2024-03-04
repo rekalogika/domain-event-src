@@ -10,6 +10,7 @@
 * test: test flush in preflush.
 * test: record event inside event listener.
 * feat: infinite loop safeguard
+* feat: uninstall immediate dispatcher when the kernel is shut down.
 
 ## 1.2.5
 

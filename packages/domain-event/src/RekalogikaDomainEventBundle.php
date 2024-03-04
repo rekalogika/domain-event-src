@@ -34,4 +34,13 @@ class RekalogikaDomainEventBundle extends Bundle
             $installer->install();
         }
     }
+
+    public function shutdown(): void
+    {
+        $installer = $this->container?->get(ImmediateDomainEventDispatcherInstaller::class);
+
+        if ($installer instanceof ImmediateDomainEventDispatcherInstaller) {
+            $installer->uninstall();
+        }
+    }
 }
