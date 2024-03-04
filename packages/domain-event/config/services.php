@@ -16,7 +16,6 @@ use Rekalogika\DomainEvent\Constants;
 use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
 use Rekalogika\DomainEvent\Doctrine\DoctrineEventListener;
-use Rekalogika\DomainEvent\Doctrine\DomainEventAwareEntityManager;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\DomainEventManager;
 use Rekalogika\DomainEvent\DomainEventReaper;
@@ -117,19 +116,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             service(DomainEventManagerInterface::class),
         ]);
 
-    $services
-        ->set(
-            DomainEventAwareEntityManagerInterface::class,
-            DomainEventAwareEntityManager::class
-        )
-        ->args([
-            service('.inner'),
-            service(DomainEventManagerInterface::class),
-        ])
-        ->decorate('doctrine.orm.entity_manager')
-        ->tag('kernel.reset', [
-            'method' => 'reset',
-        ]);
+    $services->alias(
+        DomainEventAwareEntityManagerInterface::class,
+        'doctrine.orm.entity_manager'
+    );
 
     $services
         ->set(DomainEventAwareManagerRegistry::class)

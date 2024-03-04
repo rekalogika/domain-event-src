@@ -13,10 +13,19 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent;
 
+use Rekalogika\DomainEvent\DependencyInjection\CompilerPass\EntityManagerDecoratorPass;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class RekalogikaDomainEventBundle extends Bundle
 {
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        $container->addCompilerPass(new EntityManagerDecoratorPass());
+    }
+
     public function boot(): void
     {
         $installer = $this->container?->get(ImmediateDomainEventDispatcherInstaller::class);
