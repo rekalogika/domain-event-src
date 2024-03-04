@@ -22,6 +22,7 @@ use Rekalogika\Contracts\DomainEvent\DomainEventEmitterTrait;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookChanged;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookChecked;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookCreated;
+use Rekalogika\DomainEvent\Tests\Framework\Event\BookDummyMethodForFlushCalled;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookRemoved;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookReviewAdded;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookReviewRemoved;
@@ -81,6 +82,11 @@ class Book implements DomainEventEmitterInterface
     {
         $this->lastChecked = new \DateTimeImmutable();
         $this->recordEvent(new BookChecked($this));
+    }
+
+    public function dummyMethodForFlush(): void
+    {
+        $this->recordEvent(new BookDummyMethodForFlushCalled($this));
     }
 
     public function getId(): Uuid

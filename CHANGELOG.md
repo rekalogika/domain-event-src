@@ -7,6 +7,7 @@
 * fix: Use `callable|array` typehint when decorating event dispatchers. See https://github.com/symfony/symfony/issues/48130
 * test: refactor tests
 * feat: supports multiple entity managers.
+* test: test flush in preflush.
 
 ## 1.2.5
 
