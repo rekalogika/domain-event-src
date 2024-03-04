@@ -3,6 +3,8 @@
 ## 1.3.0
 
 * test: Overhaul tests
+* fix: Decorates the main Doctrine service IDs, not the aliases.
+* fix: Use `callable|array` typehint when decorating event dispatchers. See https://github.com/symfony/symfony/issues/48130
 
 ## 1.2.5
 
