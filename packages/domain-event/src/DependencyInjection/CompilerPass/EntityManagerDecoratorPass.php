@@ -21,7 +21,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @internal
  */
-final readonly class EntityManagerDecoratorPass implements CompilerPassInterface
+final class EntityManagerDecoratorPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
