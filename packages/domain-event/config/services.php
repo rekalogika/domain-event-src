@@ -128,7 +128,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             service('.inner'),
             service(DomainEventManagerInterface::class),
         ])
-        ->decorate(EntityManagerInterface::class)
+        ->decorate('doctrine.orm.entity_manager')
         ->tag('kernel.reset', [
             'method' => 'reset',
         ]);
@@ -139,7 +139,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             service('.inner'),
             service(DomainEventManagerInterface::class),
         ])
-        ->decorate(ManagerRegistry::class);
+        ->decorate('doctrine');
 
     //
     // event manager
