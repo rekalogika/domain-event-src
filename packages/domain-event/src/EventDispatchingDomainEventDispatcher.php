@@ -31,8 +31,10 @@ final class EventDispatchingDomainEventDispatcher implements
     ) {
     }
 
-    public function addListener(string $eventName, callable $listener, int $priority = 0): void
+    // @phpstan-ignore-next-line
+    public function addListener(string $eventName, callable|array $listener, int $priority = 0): void
     {
+        /** @psalm-suppress MixedArgumentTypeCoercion @phpstan-ignore-next-line */
         $this->decorated->addListener($eventName, $listener, $priority);
     }
 
@@ -41,8 +43,10 @@ final class EventDispatchingDomainEventDispatcher implements
         $this->decorated->addSubscriber($subscriber);
     }
 
-    public function removeListener(string $eventName, callable $listener): void
+    // @phpstan-ignore-next-line
+    public function removeListener(string $eventName, callable|array $listener): void
     {
+        /** @psalm-suppress MixedArgumentTypeCoercion @phpstan-ignore-next-line */
         $this->decorated->removeListener($eventName, $listener);
     }
 
@@ -56,8 +60,10 @@ final class EventDispatchingDomainEventDispatcher implements
         return $this->decorated->getListeners($eventName);
     }
 
-    public function getListenerPriority(string $eventName, callable $listener): ?int
+    // @phpstan-ignore-next-line
+    public function getListenerPriority(string $eventName, callable|array $listener): ?int
     {
+        /** @psalm-suppress MixedArgumentTypeCoercion @phpstan-ignore-next-line */
         return $this->decorated->getListenerPriority($eventName, $listener);
     }
 
