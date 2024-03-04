@@ -8,6 +8,7 @@
 * test: refactor tests
 * feat: supports multiple entity managers.
 * test: test flush in preflush.
+* test: record event inside event listener.
 
 ## 1.2.5
 

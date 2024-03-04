@@ -22,7 +22,9 @@ use Rekalogika\Contracts\DomainEvent\DomainEventEmitterTrait;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookChanged;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookChecked;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookCreated;
+use Rekalogika\DomainEvent\Tests\Framework\Event\BookDummyMethodCalled;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookDummyMethodForFlushCalled;
+use Rekalogika\DomainEvent\Tests\Framework\Event\BookDummyMethodForNestedRecordEventCalled;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookRemoved;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookReviewAdded;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookReviewRemoved;
@@ -87,6 +89,16 @@ class Book implements DomainEventEmitterInterface
     public function dummyMethodForFlush(): void
     {
         $this->recordEvent(new BookDummyMethodForFlushCalled($this));
+    }
+
+    public function dummyMethodForNestedRecordEvent(): void
+    {
+        $this->recordEvent(new BookDummyMethodForNestedRecordEventCalled($this));
+    }
+
+    public function dummyMethod(): void
+    {
+        $this->recordEvent(new BookDummyMethodCalled($this));
     }
 
     public function getId(): Uuid
