@@ -29,7 +29,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->args([
             service('.inner'),
             service('debug.stopwatch'),
-            service('logger')->nullOnInvalid(),
+            null,
             service('.virtual_request_stack')->nullOnInvalid(),
         ])
         ->tag('monolog.logger', ['channel' => 'event'])
@@ -44,7 +44,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->args([
             service('.inner'),
             service('debug.stopwatch'),
-            service('logger')->nullOnInvalid(),
+            null,
             service('.virtual_request_stack')->nullOnInvalid(),
         ])
         ->tag('monolog.logger', ['channel' => 'event'])
@@ -59,7 +59,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->args([
             service('.inner'),
             service('debug.stopwatch'),
-            service('logger')->nullOnInvalid(),
+            null,
             service('.virtual_request_stack')->nullOnInvalid(),
         ])
         ->tag('monolog.logger', ['channel' => 'event'])

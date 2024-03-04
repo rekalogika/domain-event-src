@@ -14,12 +14,19 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent\Tests\Framework\Tests;
 
 use Rekalogika\DomainEvent\Exception\FlushNotAllowedException;
+use Rekalogika\DomainEvent\Exception\SafeguardTriggeredException;
 use Rekalogika\DomainEvent\Tests\Framework\Entity\Book;
 use Rekalogika\DomainEvent\Tests\Framework\EventListener\BookDummyMethodCalledListener;
 use Rekalogika\DomainEvent\Tests\Framework\EventListener\BookDummyMethodForNestedRecordEventListener;
 
 final class PreFlushTest extends DomainEventTestCase
 {
+    public function tearDown(): void
+    {
+        static::getEntityManager()->clearDomainEvents();
+        parent::tearDown();
+    }
+
     public function testFlushInPreFlush(): void
     {
         $book = new Book('title', 'description');
@@ -48,5 +55,15 @@ final class PreFlushTest extends DomainEventTestCase
 
         $this->assertTrue($dummyMethodCalledListener->isDummyMethodCalled());
         $this->assertTrue($dummyMethodForNestedRecordEventListener->isDummyMethodForNestedRecordEventCalled());
+    }
+
+    public function testInfiniteLoopSafeguard(): void
+    {
+        $book = new Book('title', 'description');
+        static::getEntityManager()->persist($book);
+
+        $book->dummyMethodForInfiniteLoop();
+        $this->expectException(SafeguardTriggeredException::class);
+        static::getEntityManager()->flush();
     }
 }

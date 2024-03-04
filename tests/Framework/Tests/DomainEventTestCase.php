@@ -16,7 +16,6 @@ namespace Rekalogika\DomainEvent\Tests\Framework\Tests;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\Persistence\ObjectManager;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareEntityManager;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\Tests\Framework\Kernel;
@@ -43,7 +42,7 @@ abstract class DomainEventTestCase extends KernelTestCase
         $schemaTool->createSchema($entityManager->getMetadataFactory()->getAllMetadata());
     }
 
-    public static function getEntityManager(): ObjectManager
+    public static function getEntityManager(): DomainEventAwareEntityManager
     {
         $managerRegistry = static::getContainer()->get(ManagerRegistry::class);
         self::assertInstanceOf(ManagerRegistry::class, $managerRegistry);
