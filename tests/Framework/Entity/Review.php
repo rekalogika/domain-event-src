@@ -14,13 +14,20 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent\Tests\Framework\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
+use Rekalogika\Contracts\DomainEvent\DomainEventEmitterTrait;
+use Rekalogika\DomainEvent\Tests\Framework\Event\ReviewChanged;
+use Rekalogika\DomainEvent\Tests\Framework\Event\ReviewCreated;
+use Rekalogika\DomainEvent\Tests\Framework\Event\ReviewRemoved;
 use Rekalogika\DomainEvent\Tests\Framework\Repository\ReviewRepository;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
-class Review
+class Review implements DomainEventEmitterInterface
 {
+    use DomainEventEmitterTrait;
+
     #[ORM\Id]
     #[ORM\Column(type: UuidType::NAME, unique: true, nullable: false)]
     private Uuid $id;
@@ -43,8 +50,13 @@ class Review
     public function __construct()
     {
         $this->id = Uuid::v7();
+        $this->recordEvent(new ReviewCreated($this));
     }
 
+    public function __remove(): void
+    {
+        $this->recordEvent(new ReviewRemoved($this));
+    }
 
     public function getId(): Uuid
     {
@@ -58,7 +70,12 @@ class Review
 
     public function setBook(?Book $book): self
     {
+        $originalBook = $this->book;
         $this->book = $book;
+
+        if ($originalBook !== $book) {
+            $this->recordEvent(new ReviewChanged($this));
+        }
 
         return $this;
     }
@@ -70,7 +87,12 @@ class Review
 
     public function setBody(?string $body): self
     {
+        $originalBody = $this->body;
         $this->body = $body;
+
+        if ($originalBody !== $body) {
+            $this->recordEvent(new ReviewChanged($this));
+        }
 
         return $this;
     }
@@ -88,7 +110,12 @@ class Review
      */
     public function setRating(int $rating): self
     {
+        $originalRating = $this->rating;
         $this->rating = $rating;
+
+        if ($originalRating !== $rating) {
+            $this->recordEvent(new ReviewChanged($this));
+        }
 
         return $this;
     }

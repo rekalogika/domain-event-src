@@ -17,13 +17,23 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
+use Rekalogika\Contracts\DomainEvent\DomainEventEmitterTrait;
+use Rekalogika\DomainEvent\Tests\Framework\Event\BookChanged;
+use Rekalogika\DomainEvent\Tests\Framework\Event\BookChecked;
+use Rekalogika\DomainEvent\Tests\Framework\Event\BookCreated;
+use Rekalogika\DomainEvent\Tests\Framework\Event\BookRemoved;
+use Rekalogika\DomainEvent\Tests\Framework\Event\BookReviewAdded;
+use Rekalogika\DomainEvent\Tests\Framework\Event\BookReviewRemoved;
 use Rekalogika\DomainEvent\Tests\Framework\Repository\BookRepository;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
-class Book
+class Book implements DomainEventEmitterInterface
 {
+    use DomainEventEmitterTrait;
+
     #[ORM\Id]
     #[ORM\Column(type: UuidType::NAME, unique: true, nullable: false)]
     private Uuid $id;
@@ -50,10 +60,18 @@ class Book
     )]
     private Collection $reviews;
 
-    public function __construct()
+    public function __construct(string $title, string $description)
     {
         $this->id = Uuid::v7();
         $this->reviews = new ArrayCollection();
+        $this->recordEvent(new BookCreated($this));
+        $this->setTitle($title);
+        $this->setDescription($description);
+    }
+
+    public function __remove(): void
+    {
+        $this->recordEvent(new BookRemoved($this));
     }
 
     /**
@@ -62,6 +80,7 @@ class Book
     public function check(): void
     {
         $this->lastChecked = new \DateTimeImmutable();
+        $this->recordEvent(new BookChecked($this));
     }
 
     public function getId(): Uuid
@@ -76,7 +95,12 @@ class Book
 
     public function setTitle(?string $title): self
     {
+        $oldTitle = $this->title;
         $this->title = $title;
+
+        if ($oldTitle !== $title) {
+            $this->recordEvent(new BookChanged($this));
+        }
 
         return $this;
     }
@@ -88,7 +112,12 @@ class Book
 
     public function setDescription(?string $description): self
     {
+        $oldDescription = $this->description;
         $this->description = $description;
+
+        if ($oldDescription !== $description) {
+            $this->recordEvent(new BookChanged($this));
+        }
 
         return $this;
     }
@@ -106,6 +135,7 @@ class Book
         if (!$this->reviews->contains($review)) {
             $this->reviews[] = $review;
             $review->setBook($this);
+            $this->recordEvent(new BookReviewAdded($this, $review));
         }
 
         return $this;
@@ -118,6 +148,7 @@ class Book
             if ($review->getBook() === $this) {
                 $review->setBook(null);
             }
+            $this->recordEvent(new BookReviewRemoved($this, $review));
         }
 
         return $this;
