@@ -19,6 +19,7 @@ use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
 use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
 use Rekalogika\DomainEvent\Exception\FlushNotAllowedException;
+use Rekalogika\DomainEvent\Exception\SafeguardTriggeredException;
 use Symfony\Contracts\Service\ResetInterface;
 
 /**
@@ -31,6 +32,11 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
     private bool $flushEnabled = true;
     private bool $autodispatch = true;
     private DomainEventEmitterCollectorInterface $collector;
+
+    /**
+     * Safeguard for infinite loop
+     */
+    public static int $preflushLoopLimit = 100;
 
     public function __construct(
         EntityManagerInterface $wrapped,
@@ -66,11 +72,17 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
     {
         $this->flushEnabled = false;
         $totalDispatched = 0;
+        $i = 0;
 
         do {
             $this->collectEvents();
             $num = $this->domainEventManager->preFlushDispatch();
             $totalDispatched += $num;
+            ++$i;
+
+            if ($i > self::$preflushLoopLimit) {
+                throw new SafeguardTriggeredException(sprintf('Pre-flush loop limit reached (%d)', self::$preflushLoopLimit));
+            }
         } while ($num > 0);
 
         $this->flushEnabled = true;

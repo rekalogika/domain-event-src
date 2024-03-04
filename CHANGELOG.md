@@ -9,6 +9,7 @@
 * feat: supports multiple entity managers.
 * test: test flush in preflush.
 * test: record event inside event listener.
+* feat: infinite loop safeguard
 
 ## 1.2.5
 
