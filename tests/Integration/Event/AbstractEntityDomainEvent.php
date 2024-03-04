@@ -11,15 +11,18 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\DomainEvent\Tests\Event;
+namespace Rekalogika\DomainEvent\Tests\Integration\Event;
 
-use Rekalogika\Contracts\DomainEvent\EquatableDomainEventInterface;
+use Rekalogika\DomainEvent\Tests\Integration\Model\Entity;
 
-final class EquatableEvent extends AbstractEntityDomainEvent implements
-    EquatableDomainEventInterface
+abstract class AbstractEntityDomainEvent
 {
-    public function getSignature(): string
+    final public function __construct(private Entity $entity)
     {
-        return sha1(serialize($this));
+    }
+
+    public function getEntity(): Entity
+    {
+        return $this->entity;
     }
 }

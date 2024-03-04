@@ -3,8 +3,8 @@
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__ . '/packages/domain-event/config')
     ->in(__DIR__ . '/packages/domain-event/src')
-    ->in(__DIR__ . '/packages/domain-event/tests')
-    ->in(__DIR__ . '/packages/domain-event-contracts/src');
+    ->in(__DIR__ . '/packages/domain-event-contracts/src')
+    ->in(__DIR__ . '/tests');
 
 $config = new PhpCsFixer\Config();
 return $config->setRules([

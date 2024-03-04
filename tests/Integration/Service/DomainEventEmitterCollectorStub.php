@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\DomainEvent\Tests\Service;
+namespace Rekalogika\DomainEvent\Tests\Integration\Service;
 
 use Doctrine\ORM\UnitOfWork;
 use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;

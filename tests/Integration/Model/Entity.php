@@ -11,15 +11,15 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\DomainEvent\Tests\Model;
+namespace Rekalogika\DomainEvent\Tests\Integration\Model;
 
 use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
 use Rekalogika\Contracts\DomainEvent\DomainEventEmitterTrait;
-use Rekalogika\DomainEvent\Tests\Event\EntityCreated;
-use Rekalogika\DomainEvent\Tests\Event\EntityNameChanged;
-use Rekalogika\DomainEvent\Tests\Event\EntityRemoved;
-use Rekalogika\DomainEvent\Tests\Event\EquatableEvent;
-use Rekalogika\DomainEvent\Tests\Event\NonEquatableEvent;
+use Rekalogika\DomainEvent\Tests\Integration\Event\EntityCreated;
+use Rekalogika\DomainEvent\Tests\Integration\Event\EntityNameChanged;
+use Rekalogika\DomainEvent\Tests\Integration\Event\EntityRemoved;
+use Rekalogika\DomainEvent\Tests\Integration\Event\EquatableEvent;
+use Rekalogika\DomainEvent\Tests\Integration\Event\NonEquatableEvent;
 
 final class Entity implements DomainEventEmitterInterface
 {

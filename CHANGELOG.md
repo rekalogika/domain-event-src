@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0
+
+* test: Overhaul tests
+
 ## 1.2.5
 
 * fix: Properly implement `ResetInterface` on applicable services.

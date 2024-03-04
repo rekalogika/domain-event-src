@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\DomainEvent\Tests\Event;
+namespace Rekalogika\DomainEvent\Tests\Integration\Event;
 
 final class EntityRemoved extends AbstractEntityDomainEvent
 {
