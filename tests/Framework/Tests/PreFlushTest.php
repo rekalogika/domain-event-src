@@ -15,6 +15,8 @@ namespace Rekalogika\DomainEvent\Tests\Framework\Tests;
 
 use Rekalogika\DomainEvent\Exception\FlushNotAllowedException;
 use Rekalogika\DomainEvent\Tests\Framework\Entity\Book;
+use Rekalogika\DomainEvent\Tests\Framework\EventListener\BookDummyMethodCalledListener;
+use Rekalogika\DomainEvent\Tests\Framework\EventListener\BookDummyMethodForNestedRecordEventListener;
 
 final class PreFlushTest extends DomainEventTestCase
 {
@@ -25,5 +27,26 @@ final class PreFlushTest extends DomainEventTestCase
         static::getEntityManager()->persist($book);
         $this->expectException(FlushNotAllowedException::class);
         static::getEntityManager()->flush();
+    }
+
+    public function testNestedRecordEvent(): void
+    {
+        $dummyMethodCalledListener = static::getContainer()->get(BookDummyMethodCalledListener::class);
+        $this->assertInstanceOf(BookDummyMethodCalledListener::class, $dummyMethodCalledListener);
+
+        $dummyMethodForNestedRecordEventListener = static::getContainer()->get(BookDummyMethodForNestedRecordEventListener::class);
+        $this->assertInstanceOf(BookDummyMethodForNestedRecordEventListener::class, $dummyMethodForNestedRecordEventListener);
+
+        $this->assertFalse($dummyMethodCalledListener->isDummyMethodCalled());
+        $this->assertFalse($dummyMethodForNestedRecordEventListener->isDummyMethodForNestedRecordEventCalled());
+
+        $book = new Book('title', 'description');
+        static::getEntityManager()->persist($book);
+
+        $book->dummyMethodForNestedRecordEvent();
+        static::getEntityManager()->flush();
+
+        $this->assertTrue($dummyMethodCalledListener->isDummyMethodCalled());
+        $this->assertTrue($dummyMethodForNestedRecordEventListener->isDummyMethodForNestedRecordEventCalled());
     }
 }
