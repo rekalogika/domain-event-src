@@ -46,9 +46,9 @@ final class DomainEventAwareManagerRegistry extends AbstractManagerRegistryDecor
                 $manager,
                 $this->domainEventManager,
             );
-        } else {
-            return $manager;
         }
+        return $manager;
+
     }
 
     public function getManager(?string $name = null): ObjectManager

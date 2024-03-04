@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Tests\Framework\Entity;
 
-use Rekalogika\DomainEvent\Tests\Framework\Repository\ReviewRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Rekalogika\DomainEvent\Tests\Framework\Repository\ReviewRepository;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 

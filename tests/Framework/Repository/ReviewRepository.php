@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Tests\Framework\Repository;
 
-use Rekalogika\DomainEvent\Tests\Framework\Entity\Review;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Rekalogika\DomainEvent\Tests\Framework\Entity\Review;
 
 /**
  * @extends ServiceEntityRepository<Review>

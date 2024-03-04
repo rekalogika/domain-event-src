@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Tests\Framework\Entity;
 
-use Rekalogika\DomainEvent\Tests\Framework\Repository\BookRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Rekalogika\DomainEvent\Tests\Framework\Repository\BookRepository;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 

@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
 use Rekalogika\Contracts\DomainEvent\EquatableDomainEventInterface;
 use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
-use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
 use Rekalogika\DomainEvent\Exception\UndispatchedEventsException;
 use Symfony\Contracts\Service\ResetInterface;
 

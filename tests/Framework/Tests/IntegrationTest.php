@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Tests\Framework\Tests;
 
-use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Rekalogika\DomainEvent\Constants;
 use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface;

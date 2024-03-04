@@ -17,8 +17,8 @@ use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\ORM\Event\PostRemoveEventArgs;
 use Doctrine\ORM\Event\PostUpdateEventArgs;
 use Doctrine\ORM\Event\PreRemoveEventArgs;
-use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
 use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
+use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
 
 final class DoctrineEventListener
 {
