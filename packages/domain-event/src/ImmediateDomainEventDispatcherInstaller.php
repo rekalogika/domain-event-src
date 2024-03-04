@@ -27,4 +27,9 @@ final class ImmediateDomainEventDispatcherInstaller
     {
         DomainEventImmediateDispatcher::install($this->eventDispatcher);
     }
+
+    public function uninstall(): void
+    {
+        DomainEventImmediateDispatcher::uninstall();
+    }
 }

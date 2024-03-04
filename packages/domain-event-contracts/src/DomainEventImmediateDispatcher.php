@@ -37,6 +37,11 @@ final class DomainEventImmediateDispatcher
         self::$eventDispatcher = $eventDispatcher;
     }
 
+    public static function uninstall(): void
+    {
+        self::$eventDispatcher = null;
+    }
+
     /**
      * Dispatches an event using the installed event dispatcher
      *
