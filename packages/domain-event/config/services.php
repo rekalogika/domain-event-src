@@ -14,26 +14,39 @@ declare(strict_types=1);
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Rekalogika\DomainEvent\Constants;
 use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface;
-use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
 use Rekalogika\DomainEvent\Doctrine\DoctrineEventListener;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
-use Rekalogika\DomainEvent\DomainEventManager;
 use Rekalogika\DomainEvent\DomainEventReaper;
 use Rekalogika\DomainEvent\Event\DomainEventImmediateDispatchEvent;
 use Rekalogika\DomainEvent\Event\DomainEventPostFlushDispatchEvent;
 use Rekalogika\DomainEvent\Event\DomainEventPreFlushDispatchEvent;
+use Rekalogika\DomainEvent\EventDispatchers;
 use Rekalogika\DomainEvent\EventDispatchingDomainEventDispatcher;
 use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherInstaller;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
 
     //
     // event dispatchers
+    //
+
+    $services
+        ->set(EventDispatchers::class)
+        ->args([
+            '$defaultEventDispatcher' => service(EventDispatcherInterface::class),
+            '$immediateEventDispatcher' => service(Constants::EVENT_DISPATCHER_IMMEDIATE),
+            '$preFlushEventDispatcher' => service(Constants::EVENT_DISPATCHER_PRE_FLUSH),
+            '$postFlushEventDispatcher' => service(Constants::EVENT_DISPATCHER_POST_FLUSH),
+        ]);
+
+    //
+    // individual event dispatchers
     //
 
     $services
@@ -100,6 +113,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services
         ->set(DoctrineEventListener::class)
+        ->args([
+            service(DomainEventAwareEntityManagerInterface::class),
+        ])
         ->tag('doctrine.event_listener', [
             'event' => 'postPersist',
         ])
@@ -111,9 +127,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ])
         ->tag('doctrine.event_listener', [
             'event' => 'postUpdate',
-        ])
-        ->args([
-            service(DomainEventManagerInterface::class),
         ]);
 
     $services->alias(
@@ -124,31 +137,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services
         ->set(DomainEventAwareManagerRegistry::class)
         ->args([
-            service('.inner'),
-            service(DomainEventManagerInterface::class),
+            '$wrapped' => service('.inner'),
+            '$eventDispatchers' => service(EventDispatchers::class),
         ])
         ->decorate('doctrine')
-        ->tag('kernel.reset', [
-            'method' => 'reset',
-        ]);
-
-    //
-    // event manager
-    //
-
-    $services
-        ->set(
-            DomainEventManagerInterface::class,
-            DomainEventManager::class
-        )
-        ->args([
-            '$defaultEventDispatcher'
-            => service(EventDispatcherInterface::class),
-            '$postFlushEventDispatcher'
-            => service(Constants::EVENT_DISPATCHER_POST_FLUSH),
-            '$preFlushEventDispatcher'
-            => service(Constants::EVENT_DISPATCHER_PRE_FLUSH),
-        ])
         ->tag('kernel.reset', [
             'method' => 'reset',
         ]);
@@ -160,7 +152,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services
         ->set(DomainEventReaper::class)
         ->args([
-            '$domainEventManager' => service(DomainEventManagerInterface::class),
+            '$entityManagers' => tagged_iterator('rekalogika.domain_event.entity_manager')
         ])
         ->tag('kernel.event_listener', [
             'event' => 'kernel.exception',

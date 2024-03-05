@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent\Contracts;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
 
 interface DomainEventAwareEntityManagerInterface extends EntityManagerInterface
 {
@@ -64,4 +65,6 @@ interface DomainEventAwareEntityManagerInterface extends EntityManagerInterface
      * @return void
      */
     public function recordDomainEvents(iterable $events): void;
+
+    public function collect(DomainEventEmitterInterface $domainEventEmitter): void;
 }

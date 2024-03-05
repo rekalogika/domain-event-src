@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\DependencyInjection\CompilerPass;
 
-use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareEntityManager;
+use Rekalogika\DomainEvent\EventDispatchers;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -28,7 +28,7 @@ final class EntityManagerDecoratorPass implements CompilerPassInterface
         $entityManagers = $container->getParameter('doctrine.entity_managers');
         assert(is_array($entityManagers));
 
-        $domainEventManager = $container->getDefinition(DomainEventManagerInterface::class);
+        $eventDispatchers = $container->getDefinition(EventDispatchers::class);
 
         /**
          * @var string $name
@@ -41,10 +41,11 @@ final class EntityManagerDecoratorPass implements CompilerPassInterface
             $container->register($decoratedServiceId, DomainEventAwareEntityManager::class)
                 ->setDecoratedService($id)
                 ->setArguments([
-                    $service,
-                    $domainEventManager,
+                    '$wrapped' => $service,
+                    '$eventDispatchers' => $eventDispatchers,
                 ])
-                ->addTag('kernel.reset', ['method' => 'reset']);
+                ->addTag('kernel.reset', ['method' => 'reset'])
+                ->addTag('rekalogika.domain_event.entity_manager');
         }
     }
 }

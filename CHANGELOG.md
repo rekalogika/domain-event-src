@@ -12,6 +12,7 @@
 * feat: infinite loop safeguard
 * feat: uninstall immediate dispatcher when the kernel is shut down.
 * fix: Add `ResetInterface` to `DomainEventAwareManagerRegistry`
+* refactor: Merge `DomainEventManager` with `DomainEventAwareEntityManager`
 
 ## 1.2.5
 

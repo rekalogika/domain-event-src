@@ -16,10 +16,12 @@ namespace Rekalogika\DomainEvent\Doctrine;
 use Doctrine\ORM\Decorator\EntityManagerDecorator;
 use Doctrine\ORM\EntityManagerInterface;
 use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
+use Rekalogika\Contracts\DomainEvent\EquatableDomainEventInterface;
 use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface;
-use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
+use Rekalogika\DomainEvent\EventDispatchers;
 use Rekalogika\DomainEvent\Exception\FlushNotAllowedException;
 use Rekalogika\DomainEvent\Exception\SafeguardTriggeredException;
+use Rekalogika\DomainEvent\Exception\UndispatchedEventsException;
 use Symfony\Contracts\Service\ResetInterface;
 
 /**
@@ -34,13 +36,23 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
     private DomainEventEmitterCollectorInterface $collector;
 
     /**
+     * @var array<int|string,object>
+     */
+    private array $preFlushDomainEvents = [];
+
+    /**
+     * @var array<int|string,object>
+     */
+    private array $postFlushDomainEvents = [];
+
+    /**
      * Safeguard for infinite loop
      */
     public static int $preflushLoopLimit = 100;
 
     public function __construct(
         EntityManagerInterface $wrapped,
-        private DomainEventManagerInterface $domainEventManager,
+        private EventDispatchers $eventDispatchers,
         ?DomainEventEmitterCollectorInterface $collector = null,
     ) {
         parent::__construct($wrapped);
@@ -56,6 +68,14 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
     {
         $this->flushEnabled = true;
         $this->autodispatch = true;
+        $this->clear();
+    }
+
+    public function collect(DomainEventEmitterInterface $domainEventEmitter): void
+    {
+        $events = $domainEventEmitter->popRecordedEvents();
+
+        $this->recordDomainEvents($events);
     }
 
     public function setAutoDispatchDomainEvents(bool $autoDispatch): void
@@ -76,7 +96,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
 
         do {
             $this->collectEvents();
-            $num = $this->domainEventManager->preFlushDispatch();
+            $num = $this->preFlushDispatch();
             $totalDispatched += $num;
             ++$i;
 
@@ -90,30 +110,76 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         return $totalDispatched;
     }
 
+    private function preFlushDispatch(): int
+    {
+        $events = $this->preFlushDomainEvents;
+        $num = count($events);
+        $this->preFlushDomainEvents = [];
+
+        foreach ($events as $event) {
+            $this->eventDispatchers
+                ->getPreFlushEventDispatcher()
+                ->dispatch($event);
+        }
+
+        return $num;
+    }
+
     public function dispatchPostFlushDomainEvents(): int
     {
-        return $this->domainEventManager->postFlushDispatch();
+        $events = $this->postFlushDomainEvents;
+        $num = count($events);
+        // for safeguard we also clear preflush events here
+        $this->preFlushDomainEvents = [];
+        $this->postFlushDomainEvents = [];
+
+        foreach ($events as $event) {
+            $this->eventDispatchers
+                ->getPostFlushEventDispatcher()
+                ->dispatch($event);
+
+            $this->eventDispatchers
+                ->getDefaultEventDispatcher()
+                ->dispatch($event);
+        }
+
+        return $num;
     }
 
     public function clearDomainEvents(): void
     {
-        $this->domainEventManager->clear();
+        $this->preFlushDomainEvents = [];
+        $this->postFlushDomainEvents = [];
     }
 
     public function popDomainEvents(): iterable
     {
-        return $this->domainEventManager->popEvents();
+        $events = $this->postFlushDomainEvents;
+        $this->preFlushDomainEvents = [];
+        $this->postFlushDomainEvents = [];
+
+        foreach ($events as $event) {
+            yield $event;
+        }
     }
 
     public function recordDomainEvent(object $event): void
     {
-        $this->domainEventManager->recordEvent($event);
+        if ($event instanceof EquatableDomainEventInterface) {
+            $signature = $event->getSignature();
+
+            $this->preFlushDomainEvents[$signature] = $event;
+            $this->postFlushDomainEvents[$signature] = $event;
+        } else {
+            $this->preFlushDomainEvents[] = $event;
+            $this->postFlushDomainEvents[] = $event;
+        }
     }
 
     public function recordDomainEvents(iterable $events): void
     {
         foreach ($events as $event) {
-            $this->domainEventManager->recordEvent($event);
+            $this->recordDomainEvent($event);
         }
     }
 
@@ -123,7 +189,8 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
 
         foreach ($entities as $entity) {
             if ($entity instanceof DomainEventEmitterInterface) {
-                $this->domainEventManager->collect($entity);
+                $events = $entity->popRecordedEvents();
+                $this->recordDomainEvents($events);
             }
         }
     }
@@ -131,7 +198,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
     public function flush(mixed $entity = null): void
     {
         if (!$this->flushEnabled) {
-            $this->domainEventManager->clear();
+            $this->clear();
             throw new FlushNotAllowedException();
         }
 
@@ -143,6 +210,22 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
 
         if ($this->autodispatch) {
             $this->dispatchPostFlushDomainEvents();
+        }
+    }
+
+    private function hasPendingEvents(): bool
+    {
+        return count($this->preFlushDomainEvents) > 0
+            || count($this->postFlushDomainEvents) > 0;
+    }
+
+    public function __destruct()
+    {
+        if ($this->hasPendingEvents()) {
+            throw new UndispatchedEventsException([
+                ...$this->preFlushDomainEvents,
+                ...$this->postFlushDomainEvents,
+            ]);
         }
     }
 }
