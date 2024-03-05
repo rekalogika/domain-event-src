@@ -11,6 +11,7 @@
 * test: record event inside event listener.
 * feat: infinite loop safeguard
 * feat: uninstall immediate dispatcher when the kernel is shut down.
+* fix: Add `ResetInterface` to `DomainEventAwareManagerRegistry`
 
 ## 1.2.5
 
