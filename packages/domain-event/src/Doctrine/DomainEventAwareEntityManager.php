@@ -52,6 +52,11 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         }
     }
 
+    public function isUninitializedObject(mixed $value): bool
+    {
+        return $this->wrapped->isUninitializedObject($value);
+    }
+
     public function reset(): void
     {
         $this->flushEnabled = true;
