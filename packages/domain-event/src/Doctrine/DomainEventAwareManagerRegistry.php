@@ -18,14 +18,22 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
 use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
+use Symfony\Contracts\Service\ResetInterface;
 
-final class DomainEventAwareManagerRegistry extends AbstractManagerRegistryDecorator
+final class DomainEventAwareManagerRegistry extends AbstractManagerRegistryDecorator implements ResetInterface
 {
     public function __construct(
-        ManagerRegistry $wrapped,
+        private ManagerRegistry $wrapped,
         private DomainEventManagerInterface $domainEventManager,
     ) {
         parent::__construct($wrapped);
+    }
+
+    public function reset(): void
+    {
+        if ($this->wrapped instanceof ResetInterface) {
+            $this->wrapped->reset();
+        }
     }
 
     /**
@@ -48,7 +56,6 @@ final class DomainEventAwareManagerRegistry extends AbstractManagerRegistryDecor
             );
         }
         return $manager;
-
     }
 
     public function getManager(?string $name = null): ObjectManager
