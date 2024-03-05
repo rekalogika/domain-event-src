@@ -13,23 +13,28 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent;
 
-use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
+use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface;
 
 /**
- * Clears domain events from DomainEventManager if an exception bubbles up to
- * the kernel. This will prevent DomainEventManager from adding another,
- * possibly confusing error due to the fact there are undispatched events in its
- * queue.
+ * Clears domain events from DomainEventAwareEntityManager if an exception
+ * bubbles up to the kernel. This will prevent DomainEventAwareEntityManager
+ * from adding another, possibly confusing error due to the fact there are
+ * undispatched events in its queue.
  */
 final class DomainEventReaper
 {
+    /**
+     * @param iterable<DomainEventAwareEntityManagerInterface> $entityManagers
+     */
     public function __construct(
-        private DomainEventManagerInterface $domainEventManager
+        private iterable $entityManagers,
     ) {
     }
 
     public function onKernelException(): void
     {
-        $this->domainEventManager->clear();
+        foreach ($this->entityManagers as $entityManager) {
+            $entityManager->clearDomainEvents();
+        }
     }
 }

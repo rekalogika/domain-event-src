@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 use Rekalogika\DomainEvent\Constants;
 use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface;
-use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
 use Rekalogika\DomainEvent\Doctrine\DoctrineEventListener;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\DomainEventReaper;
@@ -35,7 +34,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         DoctrineEventListener::class,
         DomainEventAwareManagerRegistry::class,
         DomainEventAwareEntityManagerInterface::class,
-        DomainEventManagerInterface::class,
         ImmediateDomainEventDispatcherInstaller::class,
         DomainEventReaper::class,
     ];

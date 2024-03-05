@@ -16,7 +16,6 @@ namespace Rekalogika\DomainEvent\Tests\Framework\Tests;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Rekalogika\DomainEvent\Constants;
 use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface;
-use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
 use Rekalogika\DomainEvent\Doctrine\DoctrineEventListener;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\DomainEventReaper;
@@ -30,7 +29,6 @@ final class IntegrationTest extends DomainEventTestCase
             DoctrineEventListener::class,
             DomainEventAwareManagerRegistry::class,
             DomainEventAwareEntityManagerInterface::class,
-            DomainEventManagerInterface::class,
             ImmediateDomainEventDispatcherInstaller::class,
             DomainEventReaper::class,
         ];

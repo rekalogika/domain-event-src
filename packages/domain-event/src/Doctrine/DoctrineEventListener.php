@@ -18,12 +18,15 @@ use Doctrine\ORM\Event\PostRemoveEventArgs;
 use Doctrine\ORM\Event\PostUpdateEventArgs;
 use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
-use Rekalogika\DomainEvent\Contracts\DomainEventManagerInterface;
+use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface;
 
 final class DoctrineEventListener
 {
+    /**
+     * @todo fix to support multiple entity managers
+     */
     public function __construct(
-        private DomainEventManagerInterface $domainEventManager
+        private DomainEventAwareEntityManagerInterface $entityManager
     ) {
     }
 
@@ -51,7 +54,7 @@ final class DoctrineEventListener
     private function collectEvents(object $entity): void
     {
         if ($entity instanceof DomainEventEmitterInterface) {
-            $this->domainEventManager->collect($entity);
+            $this->entityManager->collect($entity);
         }
     }
 
