@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent\Doctrine;
 
 use Doctrine\Persistence\ObjectManager;
+use Rekalogika\DomainEvent\DomainEventManagerInterface;
 
 /**
  * Takes an object manager instance, and returns our decorated version of it.
@@ -22,5 +23,5 @@ interface ObjectManagerDecoratorResolverInterface
 {
     public function getDecoratedObjectManager(
         ObjectManager $objectManager
-    ): ObjectManager;
+    ): ObjectManager&DomainEventManagerInterface;
 }

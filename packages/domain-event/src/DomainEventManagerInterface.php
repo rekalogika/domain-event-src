@@ -13,8 +13,16 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent;
 
+use Doctrine\Persistence\ObjectManager;
+
 interface DomainEventManagerInterface
 {
+    /**
+     * Gets the original object manager associated with this domain event
+     * manager
+     */
+    public function getObjectManager(): ObjectManager;
+
     /**
      * Enables or disables auto dispatch
      */

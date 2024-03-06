@@ -16,6 +16,8 @@ use Rekalogika\DomainEvent\Constants;
 use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface as ContractsDomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\Doctrine\DoctrineEventListener;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
+use Rekalogika\DomainEvent\Doctrine\ObjectManagerDecoratorResolver;
+use Rekalogika\DomainEvent\Doctrine\ObjectManagerDecoratorResolverInterface;
 use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\DomainEventReaper;
 use Rekalogika\DomainEvent\Event\DomainEventImmediateDispatchEvent;
@@ -115,7 +117,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services
         ->set(DoctrineEventListener::class)
         ->args([
-            service(DomainEventAwareEntityManagerInterface::class),
+            service(ObjectManagerDecoratorResolverInterface::class),
         ])
         ->tag('doctrine.event_listener', [
             'event' => 'postPersist',
@@ -151,6 +153,15 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->decorate('doctrine')
         ->tag('kernel.reset', [
             'method' => 'reset',
+        ]);
+
+    $services
+        ->set(
+            ObjectManagerDecoratorResolverInterface::class,
+            ObjectManagerDecoratorResolver::class
+        )
+        ->args([
+            '$decoratedObjectManagers' => tagged_iterator('rekalogika.domain_event.entity_manager')
         ]);
 
     //

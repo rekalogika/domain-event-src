@@ -15,6 +15,7 @@ namespace Rekalogika\DomainEvent\Doctrine;
 
 use Doctrine\ORM\Decorator\EntityManagerDecorator;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
 use Rekalogika\Contracts\DomainEvent\EquatableDomainEventInterface;
 use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
@@ -54,6 +55,11 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         private EventDispatchers $eventDispatchers,
     ) {
         parent::__construct($wrapped);
+    }
+
+    public function getObjectManager(): ObjectManager
+    {
+        return $this->wrapped;
     }
 
     public function reset(): void
