@@ -14,8 +14,8 @@ declare(strict_types=1);
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface as ContractsDomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\DependencyInjection\Constants;
-use Rekalogika\DomainEvent\Doctrine\ConcreteDomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\Doctrine\DoctrineEventListener;
+use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistryImplementation;
 use Rekalogika\DomainEvent\Doctrine\DomainEventReaper;
 use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\DomainEventAwareManagerRegistry;
@@ -146,7 +146,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services
         ->set(
             DomainEventAwareManagerRegistry::class,
-            ConcreteDomainEventAwareManagerRegistry::class
+            DomainEventAwareManagerRegistryImplementation::class
         )
         ->args([
             '$wrapped' => service('.inner'),

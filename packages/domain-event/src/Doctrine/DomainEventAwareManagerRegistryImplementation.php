@@ -20,7 +20,7 @@ use Rekalogika\DomainEvent\DomainEventAwareManagerRegistry as DomainEventDomainE
 use Rekalogika\DomainEvent\DomainEventManagerInterface;
 use Symfony\Contracts\Service\ResetInterface;
 
-final class ConcreteDomainEventAwareManagerRegistry extends AbstractManagerRegistryDecorator implements
+final class DomainEventAwareManagerRegistryImplementation extends AbstractManagerRegistryDecorator implements
     DomainEventDomainEventAwareManagerRegistry,
     ResetInterface
 {
