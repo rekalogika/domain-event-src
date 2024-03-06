@@ -50,13 +50,15 @@ final class DoctrineEventListener
 
     private function collectEvents(object $entity, ObjectManager $objectManager): void
     {
+        if (!$entity instanceof DomainEventEmitterInterface) {
+            return;
+        }
+
         $decoratedObjectManager = $this->objectManagerDecoratorResolver
             ->getDecoratedObjectManager($objectManager);
 
-        if ($entity instanceof DomainEventEmitterInterface) {
-            $events = $entity->popRecordedEvents();
-            $decoratedObjectManager->recordDomainEvent($events);
-        }
+        $events = $entity->popRecordedEvents();
+        $decoratedObjectManager->recordDomainEvent($events);
     }
 
     private function processRemove(object $entity): void
