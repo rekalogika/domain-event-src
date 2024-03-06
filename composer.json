@@ -27,8 +27,8 @@
         "mockery/mockery": "^1.6",
         "phpstan/phpstan": "^1.10",
         "phpstan/phpstan-deprecation-rules": "^1.1",
-        "phpunit/phpunit": "^9.5",
         "phpstan/phpstan-phpunit": "^1.3",
+        "phpunit/phpunit": "^9.5",
         "symfony/doctrine-bridge": "^6.4 || ^7.0",
         "symfony/framework-bundle": "^6.4 || ^7.0",
         "symfony/runtime": "^6.4 || ^7.0",
@@ -49,14 +49,14 @@
         }
     },
     "replace": {
-        "rekalogika/domain-event": "1.2.5",
-        "rekalogika/domain-event-contracts": "1.2.5"
+        "rekalogika/domain-event": "2.0.0",
+        "rekalogika/domain-event-contracts": "2.0.0"
     },
-    "minimum-stability": "stable",
     "config": {
         "sort-packages": true,
         "allow-plugins": {
             "symfony/runtime": true
         }
-    }
+    },
+    "minimum-stability": "stable"
 }
