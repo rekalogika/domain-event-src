@@ -1,5 +1,5 @@
 .PHONY: test
-test: clean phpstan psalm phpunit
+test: clean phpstan psalm lint-container phpunit
 
 .PHONY: clean
 clean:
@@ -15,6 +15,10 @@ merge:
 .PHONY: validate
 validate:
 	vendor/bin/monorepo-builder validate
+
+.PHONY: lint-container
+lint-container:
+	tests/bin/console lint:container
 
 .PHONY: phpstan
 phpstan:
