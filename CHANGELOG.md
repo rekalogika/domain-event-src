@@ -18,6 +18,7 @@
   `DomainEventAwareEntityManagerInterface`
 * refactor: `DomainEventManagerInterface`
 * refactor: move interfaces to top level namespace
+* refactor: remove `DomainEventEmitterCollector`
 
 ## 1.2.5
 
