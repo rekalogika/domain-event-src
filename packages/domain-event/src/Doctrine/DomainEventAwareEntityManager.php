@@ -19,7 +19,7 @@ use Doctrine\Persistence\ObjectManager;
 use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
 use Rekalogika\Contracts\DomainEvent\EquatableDomainEventInterface;
 use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
-use Rekalogika\DomainEvent\EventDispatchers;
+use Rekalogika\DomainEvent\EventDispatcher\EventDispatchers;
 use Rekalogika\DomainEvent\Exception\FlushNotAllowedException;
 use Rekalogika\DomainEvent\Exception\SafeguardTriggeredException;
 use Rekalogika\DomainEvent\Exception\UndispatchedEventsException;

@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent\DependencyInjection\CompilerPass;
 
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareEntityManager;
-use Rekalogika\DomainEvent\EventDispatchers;
+use Rekalogika\DomainEvent\EventDispatcher\EventDispatchers;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
