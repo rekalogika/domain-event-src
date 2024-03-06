@@ -12,14 +12,14 @@ declare(strict_types=1);
  */
 
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Rekalogika\DomainEvent\DependencyInjection\Constants;
 use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface as ContractsDomainEventAwareEntityManagerInterface;
+use Rekalogika\DomainEvent\DependencyInjection\Constants;
 use Rekalogika\DomainEvent\Doctrine\DoctrineEventListener;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
+use Rekalogika\DomainEvent\Doctrine\DomainEventReaper;
 use Rekalogika\DomainEvent\Doctrine\ObjectManagerDecoratorResolver;
 use Rekalogika\DomainEvent\Doctrine\ObjectManagerDecoratorResolverInterface;
 use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
-use Rekalogika\DomainEvent\Doctrine\DomainEventReaper;
 use Rekalogika\DomainEvent\Event\DomainEventImmediateDispatchEvent;
 use Rekalogika\DomainEvent\Event\DomainEventPostFlushDispatchEvent;
 use Rekalogika\DomainEvent\Event\DomainEventPreFlushDispatchEvent;
