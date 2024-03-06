@@ -18,7 +18,7 @@ use Rekalogika\DomainEvent\DependencyInjection\Constants;
 use Rekalogika\DomainEvent\Doctrine\DoctrineEventListener;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
-use Rekalogika\DomainEvent\DomainEventReaper;
+use Rekalogika\DomainEvent\Doctrine\DomainEventReaper;
 use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherInstaller;
 
 final class IntegrationTest extends DomainEventTestCase
