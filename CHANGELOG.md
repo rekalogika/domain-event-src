@@ -23,6 +23,7 @@
 * refactor: assorted cleanups
 * refactor: merge `ObjectManagerDecoratorResolver` to
   `DomainEventAwareManagerRegistry`
+* feat: Pre & PostFlush dispatch events now have the entity manager.
 
 ## 1.2.5
 

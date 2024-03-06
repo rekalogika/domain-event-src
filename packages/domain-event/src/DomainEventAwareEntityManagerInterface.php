@@ -17,6 +17,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 interface DomainEventAwareEntityManagerInterface extends
     EntityManagerInterface,
-    DomainEventManagerInterface
+    DomainEventAwareObjectManager
 {
 }

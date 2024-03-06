@@ -11,16 +11,12 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\DomainEvent\Event;
+namespace Rekalogika\DomainEvent;
 
-abstract class AbstractDomainEventDispatchEvent
+use Doctrine\Persistence\ObjectManager;
+
+interface DomainEventAwareObjectManager extends
+    ObjectManager,
+    DomainEventManagerInterface
 {
-    final public function __construct(private object $domainEvent)
-    {
-    }
-
-    public function getDomainEvent(): object
-    {
-        return $this->domainEvent;
-    }
 }

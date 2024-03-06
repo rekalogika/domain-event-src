@@ -14,20 +14,21 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent\EventDispatcher;
 
 use Psr\EventDispatcher\EventDispatcherInterface as PsrEventDispatcherInterface;
-use Rekalogika\DomainEvent\Event\AbstractDomainEventDispatchEvent;
+use Rekalogika\DomainEvent\Event\DomainEventImmediateDispatchEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class EventDispatchingDomainEventDispatcher implements
+/**
+ * Decorates the immediate event dispatcher, so that the event to be dispatched
+ * is also dispatched to the default event dispatcher, wrapped by the
+ * `DomainEventImmediateDispatchEvent`
+ */
+final class ImmediateEventDispatchingDomainEventDispatcher implements
     EventDispatcherInterface
 {
-    /**
-     * @param class-string<AbstractDomainEventDispatchEvent> $eventClass
-     */
     public function __construct(
         private EventDispatcherInterface $decorated,
         private PsrEventDispatcherInterface $defaultEventDispatcher,
-        private string $eventClass,
     ) {
     }
 
@@ -74,8 +75,7 @@ final class EventDispatchingDomainEventDispatcher implements
 
     public function dispatch(object $event, ?string $eventName = null): object
     {
-        $eventClass = $this->eventClass;
-        $this->defaultEventDispatcher->dispatch(new $eventClass($event));
+        $this->defaultEventDispatcher->dispatch(new DomainEventImmediateDispatchEvent($event));
 
         return $this->decorated->dispatch($event, $eventName);
     }

@@ -19,6 +19,8 @@ use Doctrine\Persistence\ObjectManager;
 use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
 use Rekalogika\Contracts\DomainEvent\EquatableDomainEventInterface;
 use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
+use Rekalogika\DomainEvent\Event\DomainEventPostFlushDispatchEvent;
+use Rekalogika\DomainEvent\Event\DomainEventPreFlushDispatchEvent;
 use Rekalogika\DomainEvent\EventDispatcher\EventDispatchers;
 use Rekalogika\DomainEvent\Exception\FlushNotAllowedException;
 use Rekalogika\DomainEvent\Exception\SafeguardTriggeredException;
@@ -118,6 +120,10 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
             $this->eventDispatchers
                 ->getPreFlushEventDispatcher()
                 ->dispatch($event);
+
+            $this->eventDispatchers
+                ->getDefaultEventDispatcher()
+                ->dispatch(new DomainEventPreFlushDispatchEvent($this, $event));
         }
 
         return $num;
@@ -139,6 +145,10 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
             $this->eventDispatchers
                 ->getDefaultEventDispatcher()
                 ->dispatch($event);
+
+            $this->eventDispatchers
+                ->getDefaultEventDispatcher()
+                ->dispatch(new DomainEventPostFlushDispatchEvent($this, $event));
         }
 
         return $num;
