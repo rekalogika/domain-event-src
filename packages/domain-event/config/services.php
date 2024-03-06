@@ -11,6 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
+use Doctrine\Persistence\ManagerRegistry;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface as ContractsDomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\DependencyInjection\Constants;
@@ -146,6 +147,16 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             DomainEventAwareManagerRegistry::class,
             Constants::MANAGER_REGISTRY
         );
+
+    $services
+        ->set(
+            Constants::REAL_MANAGER_REGISTRY,
+            ManagerRegistry::class,
+        )
+        ->factory([
+            service(Constants::MANAGER_REGISTRY),
+            'getRealRegistry',
+        ]);
 
     //
     // error handler / domain event reaper

@@ -21,4 +21,6 @@ interface DomainEventAwareManagerRegistry extends ManagerRegistry
     public function getDomainEventAwareManager(
         ObjectManager $objectManager
     ): ObjectManager&DomainEventManagerInterface;
+
+    public function getRealRegistry(): ManagerRegistry;
 }

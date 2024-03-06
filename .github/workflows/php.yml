@@ -62,6 +62,9 @@ jobs:
     - name: Run phpstan
       run: vendor/bin/phpstan analyse
 
+    - name: Lint container
+      run: tests/bin/console lint:container
+
     - name: Run phpunit
       run: |
         export SYMFONY_DEPRECATIONS_HELPER='max[direct]=0'
