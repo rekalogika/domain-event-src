@@ -19,9 +19,6 @@ use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistryImplementatio
 use Rekalogika\DomainEvent\Doctrine\DomainEventReaper;
 use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\DomainEventAwareManagerRegistry;
-use Rekalogika\DomainEvent\Event\DomainEventImmediateDispatchEvent;
-use Rekalogika\DomainEvent\Event\DomainEventPostFlushDispatchEvent;
-use Rekalogika\DomainEvent\Event\DomainEventPreFlushDispatchEvent;
 use Rekalogika\DomainEvent\EventDispatcher\EventDispatchers;
 use Rekalogika\DomainEvent\EventDispatcher\ImmediateEventDispatchingDomainEventDispatcher;
 use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherInstaller;

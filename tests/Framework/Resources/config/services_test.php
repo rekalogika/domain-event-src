@@ -45,5 +45,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     }
 
     $services
-        ->load('Rekalogika\DomainEvent\Tests\Framework\EventListener\\', '../../EventListener/');
+        ->load('Rekalogika\DomainEvent\Tests\Framework\EventListener\\', '../../EventListener/')
+        ->load('Rekalogika\DomainEvent\Tests\Framework\Repository\\', '../../Repository/');
 };

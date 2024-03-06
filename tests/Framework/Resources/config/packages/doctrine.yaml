@@ -1,19 +1,37 @@
 doctrine:
     dbal:
-        driver: pdo_sqlite
-        memory: true
-        charset: UTF8
+        connections:
+            default:
+                driver: pdo_sqlite
+                memory: true
+                charset: UTF8
+            other:
+                driver: pdo_sqlite
+                memory: true
+                charset: UTF8
 
     orm:
         auto_generate_proxy_classes: true
-        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
-        auto_mapping: true
         enable_lazy_ghost_objects: true
-        report_fields_where_declared: true
-        mappings:
-            App:
-                is_bundle: false
-                type: attribute
-                dir: "%kernel.project_dir%/tests/Framework/Entity"
-                prefix: 'Rekalogika\DomainEvent\Tests\Framework\Entity'
-                alias: App
+        default_entity_manager: default
+        entity_managers:
+            default:
+                connection: default
+                naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+                report_fields_where_declared: true
+                mappings:
+                    Book:
+                        is_bundle: false
+                        type: attribute
+                        dir: "%kernel.project_dir%/tests/Framework/Entity"
+                        prefix: 'Rekalogika\DomainEvent\Tests\Framework\Entity'
+            other:
+                connection: other
+                naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+                report_fields_where_declared: true
+                mappings:
+                    Post:
+                        is_bundle: false
+                        type: attribute
+                        dir: "%kernel.project_dir%/tests/Framework/Entity2"
+                        prefix: 'Rekalogika\DomainEvent\Tests\Framework\Entity2'

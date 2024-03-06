@@ -31,4 +31,9 @@ class BookRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Book::class);
     }
+
+    public function getEntityManager()
+    {
+        return $this->_em;
+    }
 }
