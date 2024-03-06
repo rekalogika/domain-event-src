@@ -16,6 +16,8 @@ namespace Rekalogika\DomainEvent\Tests\Framework;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Rekalogika\DomainEvent\RekalogikaDomainEventBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
+use Symfony\Bundle\TwigBundle\TwigBundle;
+use Symfony\Bundle\WebProfilerBundle\WebProfilerBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -40,6 +42,8 @@ class Kernel extends HttpKernelKernel
         return [
             new FrameworkBundle(),
             new DoctrineBundle(),
+            new WebProfilerBundle(),
+            new TwigBundle(),
             new RekalogikaDomainEventBundle(),
         ];
     }

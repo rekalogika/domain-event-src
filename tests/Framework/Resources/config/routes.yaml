@@ -1,0 +1,3 @@
+_app:
+    resource: 'routes/*.yaml'
+    type: yaml

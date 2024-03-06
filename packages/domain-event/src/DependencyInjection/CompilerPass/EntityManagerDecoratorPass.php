@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\DependencyInjection\CompilerPass;
 
+use Rekalogika\DomainEvent\DependencyInjection\Constants;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareEntityManager;
-use Rekalogika\DomainEvent\EventDispatcher\EventDispatchers;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -28,7 +28,7 @@ final class EntityManagerDecoratorPass implements CompilerPassInterface
         $entityManagers = $container->getParameter('doctrine.entity_managers');
         assert(is_array($entityManagers));
 
-        $eventDispatchers = $container->getDefinition(EventDispatchers::class);
+        $eventDispatchers = $container->getDefinition(Constants::EVENT_DISPATCHERS);
 
         /**
          * @var string $name

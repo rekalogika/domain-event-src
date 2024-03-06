@@ -36,7 +36,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     //
 
     $services
-        ->set(EventDispatchers::class)
+        ->set(Constants::EVENT_DISPATCHERS, EventDispatchers::class)
         ->args([
             '$defaultEventDispatcher' => service(EventDispatcherInterface::class),
             '$immediateEventDispatcher' => service(Constants::EVENT_DISPATCHER_IMMEDIATE),
@@ -80,7 +80,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     //
 
     $services
-        ->set(ImmediateEventDispatchingDomainEventDispatcher::class)
+        ->set(
+            Constants::IMMEDIATE_EVENT_DISPATCHING_DISPATCHER,
+            ImmediateEventDispatchingDomainEventDispatcher::class
+        )
         ->args([
             '$decorated' => service('.inner'),
             '$defaultEventDispatcher' => service(EventDispatcherInterface::class),
@@ -92,7 +95,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     //
 
     $services
-        ->set(DoctrineEventListener::class)
+        ->set(
+            Constants::DOCTRINE_EVENT_LISTENER,
+            DoctrineEventListener::class
+        )
         ->args([
             service(DomainEventAwareManagerRegistry::class),
         ])
@@ -123,7 +129,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services
         ->set(
-            DomainEventAwareManagerRegistry::class,
+            Constants::MANAGER_REGISTRY,
             DomainEventAwareManagerRegistryImplementation::class
         )
         ->args([
@@ -135,12 +141,21 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             'method' => 'reset',
         ]);
 
+    $services
+        ->alias(
+            DomainEventAwareManagerRegistry::class,
+            Constants::MANAGER_REGISTRY
+        );
+
     //
     // error handler / domain event reaper
     //
 
     $services
-        ->set(DomainEventReaper::class)
+        ->set(
+            Constants::REAPER,
+            DomainEventReaper::class
+        )
         ->args([
             '$entityManagers' => tagged_iterator('rekalogika.domain_event.entity_manager')
         ])
@@ -158,7 +173,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     //
 
     $services
-        ->set(ImmediateDomainEventDispatcherInstaller::class)
+        ->set(
+            Constants::IMMEDIATE_DISPATCHER_INSTALLER,
+            ImmediateDomainEventDispatcherInstaller::class
+        )
         ->args([
             '$eventDispatcher' =>
             service(Constants::EVENT_DISPATCHER_IMMEDIATE),

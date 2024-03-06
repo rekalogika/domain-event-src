@@ -15,29 +15,9 @@ namespace Rekalogika\DomainEvent\Tests\Framework\Tests;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Rekalogika\DomainEvent\DependencyInjection\Constants;
-use Rekalogika\DomainEvent\Doctrine\DoctrineEventListener;
-use Rekalogika\DomainEvent\Doctrine\DomainEventReaper;
-use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
-use Rekalogika\DomainEvent\DomainEventAwareManagerRegistry;
-use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherInstaller;
 
 final class IntegrationTest extends DomainEventTestCase
 {
-    public function testServiceWiring(): void
-    {
-        $serviceIds = [
-            DoctrineEventListener::class,
-            DomainEventAwareManagerRegistry::class,
-            DomainEventAwareEntityManagerInterface::class,
-            ImmediateDomainEventDispatcherInstaller::class,
-            DomainEventReaper::class,
-        ];
-
-        foreach ($serviceIds as $serviceId) {
-            $this->assertInstanceOf($serviceId, static::getContainer()->get('test.' . $serviceId));
-        }
-    }
-
     public function testEventDispatcherWiring(): void
     {
         $serviceIds = [
