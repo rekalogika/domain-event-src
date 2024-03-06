@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-use Rekalogika\DomainEvent\Constants;
+use Rekalogika\DomainEvent\DependencyInjection\Constants;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher;
 

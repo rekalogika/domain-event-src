@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-use Rekalogika\DomainEvent\Constants;
+use Rekalogika\DomainEvent\DependencyInjection\Constants;
 use Rekalogika\DomainEvent\Doctrine\DoctrineEventListener;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;

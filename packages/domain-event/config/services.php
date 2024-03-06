@@ -12,7 +12,7 @@ declare(strict_types=1);
  */
 
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Rekalogika\DomainEvent\Constants;
+use Rekalogika\DomainEvent\DependencyInjection\Constants;
 use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface as ContractsDomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\Doctrine\DoctrineEventListener;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
