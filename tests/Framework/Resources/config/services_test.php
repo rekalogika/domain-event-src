@@ -12,9 +12,9 @@ declare(strict_types=1);
  */
 
 use Rekalogika\DomainEvent\Constants;
-use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\Doctrine\DoctrineEventListener;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
+use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\DomainEventReaper;
 use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherInstaller;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;

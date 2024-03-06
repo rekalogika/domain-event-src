@@ -13,9 +13,10 @@ declare(strict_types=1);
 
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Rekalogika\DomainEvent\Constants;
-use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface;
+use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface as ContractsDomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\Doctrine\DoctrineEventListener;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
+use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\DomainEventReaper;
 use Rekalogika\DomainEvent\Event\DomainEventImmediateDispatchEvent;
 use Rekalogika\DomainEvent\Event\DomainEventPostFlushDispatchEvent;
@@ -131,6 +132,13 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services->alias(
         DomainEventAwareEntityManagerInterface::class,
+        'doctrine.orm.entity_manager'
+    );
+
+    /** @deprecated */
+    $services->alias(
+        // @phpstan-ignore-next-line
+        ContractsDomainEventAwareEntityManagerInterface::class,
         'doctrine.orm.entity_manager'
     );
 

@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3.0
+## 2.0.0
 
 * test: Overhaul tests
 * fix: Decorates the main Doctrine service IDs, not the aliases.
@@ -17,6 +17,7 @@
 * refactor: remove unnecessary `collect()` from
   `DomainEventAwareEntityManagerInterface`
 * refactor: `DomainEventManagerInterface`
+* refactor: move interfaces to top level namespace
 
 ## 1.2.5
 
