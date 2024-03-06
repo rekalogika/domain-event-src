@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Doctrine;
 
+use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
+
 /**
  * Clears domain events from DomainEventAwareEntityManager if an exception
  * bubbles up to the kernel. This will prevent DomainEventAwareEntityManager
