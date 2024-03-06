@@ -33,7 +33,6 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
 {
     private bool $flushEnabled = true;
     private bool $autodispatch = true;
-    private DomainEventEmitterCollectorInterface $collector;
 
     /**
      * @var array<int|string,object>
@@ -53,15 +52,8 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
     public function __construct(
         EntityManagerInterface $wrapped,
         private EventDispatchers $eventDispatchers,
-        ?DomainEventEmitterCollectorInterface $collector = null,
     ) {
         parent::__construct($wrapped);
-
-        if (null === $collector) {
-            $this->collector = new DomainEventEmitterCollector();
-        } else {
-            $this->collector = $collector;
-        }
     }
 
     public function reset(): void
@@ -186,12 +178,12 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
 
     private function collectEvents(): void
     {
-        $entities = $this->collector->collectEntities($this->getUnitOfWork());
-
-        foreach ($entities as $entity) {
-            if ($entity instanceof DomainEventEmitterInterface) {
-                $events = $entity->popRecordedEvents();
-                $this->recordDomainEvent($events);
+        foreach ($this->getUnitOfWork()->getIdentityMap() as $entities) {
+            foreach ($entities as $entity) {
+                if ($entity instanceof DomainEventEmitterInterface) {
+                    $events = $entity->popRecordedEvents();
+                    $this->recordDomainEvent($events);
+                }
             }
         }
     }
