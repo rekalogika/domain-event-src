@@ -35,11 +35,13 @@ abstract class DomainEventTestCase extends KernelTestCase
         $managerRegistry = static::getContainer()->get('doctrine');
         $this->assertInstanceOf(ManagerRegistry::class, $managerRegistry);
 
-        $entityManager = $managerRegistry->getManager();
-        $this->assertInstanceOf(EntityManagerInterface::class, $entityManager);
+        $managers = $managerRegistry->getManagers();
 
-        $schemaTool = new SchemaTool($entityManager);
-        $schemaTool->createSchema($entityManager->getMetadataFactory()->getAllMetadata());
+        foreach ($managers as $manager) {
+            $this->assertInstanceOf(EntityManagerInterface::class, $manager);
+            $schemaTool = new SchemaTool($manager);
+            $schemaTool->createSchema($manager->getMetadataFactory()->getAllMetadata());
+        }
     }
 
     public static function getEntityManager(): DomainEventAwareEntityManager
