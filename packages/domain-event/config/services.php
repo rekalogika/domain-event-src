@@ -14,12 +14,11 @@ declare(strict_types=1);
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface as ContractsDomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\DependencyInjection\Constants;
+use Rekalogika\DomainEvent\Doctrine\ConcreteDomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\Doctrine\DoctrineEventListener;
-use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\Doctrine\DomainEventReaper;
-use Rekalogika\DomainEvent\Doctrine\ObjectManagerDecoratorResolver;
-use Rekalogika\DomainEvent\Doctrine\ObjectManagerDecoratorResolverInterface;
 use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
+use Rekalogika\DomainEvent\DomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\Event\DomainEventImmediateDispatchEvent;
 use Rekalogika\DomainEvent\Event\DomainEventPostFlushDispatchEvent;
 use Rekalogika\DomainEvent\Event\DomainEventPreFlushDispatchEvent;
@@ -117,7 +116,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services
         ->set(DoctrineEventListener::class)
         ->args([
-            service(ObjectManagerDecoratorResolverInterface::class),
+            service(DomainEventAwareManagerRegistry::class),
         ])
         ->tag('doctrine.event_listener', [
             'event' => 'postPersist',
@@ -145,23 +144,17 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     );
 
     $services
-        ->set(DomainEventAwareManagerRegistry::class)
+        ->set(
+            DomainEventAwareManagerRegistry::class,
+            ConcreteDomainEventAwareManagerRegistry::class
+        )
         ->args([
             '$wrapped' => service('.inner'),
-            '$eventDispatchers' => service(EventDispatchers::class),
+            '$decoratedObjectManagers' => tagged_iterator('rekalogika.domain_event.entity_manager')
         ])
         ->decorate('doctrine')
         ->tag('kernel.reset', [
             'method' => 'reset',
-        ]);
-
-    $services
-        ->set(
-            ObjectManagerDecoratorResolverInterface::class,
-            ObjectManagerDecoratorResolver::class
-        )
-        ->args([
-            '$decoratedObjectManagers' => tagged_iterator('rekalogika.domain_event.entity_manager')
         ]);
 
     //

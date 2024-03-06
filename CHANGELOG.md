@@ -21,6 +21,8 @@
 * refactor: remove `DomainEventEmitterCollector`
 * feat: Now should fully support multiple entity managers.
 * refactor: assorted cleanups
+* refactor: merge `ObjectManagerDecoratorResolver` to
+  `DomainEventAwareManagerRegistry`
 
 ## 1.2.5
 
