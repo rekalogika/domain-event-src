@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent;
 
 use Rekalogika\DomainEvent\DependencyInjection\CompilerPass\EntityManagerDecoratorPass;
+use Rekalogika\DomainEvent\DependencyInjection\CompilerPass\ProfilerWorkaroundPass;
 use Rekalogika\DomainEvent\DependencyInjection\Constants;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -25,6 +26,7 @@ class RekalogikaDomainEventBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new EntityManagerDecoratorPass());
+        $container->addCompilerPass(new ProfilerWorkaroundPass());
     }
 
     public function boot(): void

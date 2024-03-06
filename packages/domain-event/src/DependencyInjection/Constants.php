@@ -24,6 +24,7 @@ final class Constants
     public const REAPER = 'rekalogika.domain_event.reaper';
     public const IMMEDIATE_DISPATCHER_INSTALLER = 'rekalogika.domain_event.immediate_dispatcher_installer';
     public const MANAGER_REGISTRY = 'rekalogika.domain_event.doctrine';
+    public const REAL_MANAGER_REGISTRY = 'rekalogika.domain_event.doctrine.real';
 
     private function __construct()
     {

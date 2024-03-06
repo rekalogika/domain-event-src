@@ -49,6 +49,11 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
         }
     }
 
+    public function getRealRegistry(): ManagerRegistry
+    {
+        return $this->wrapped;
+    }
+
     public function reset(): void
     {
         if ($this->wrapped instanceof ResetInterface) {
