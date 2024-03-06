@@ -17,7 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\Persistence\ManagerRegistry;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareEntityManager;
-use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
+use Rekalogika\DomainEvent\DomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\Tests\Framework\Kernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpKernel\KernelInterface;

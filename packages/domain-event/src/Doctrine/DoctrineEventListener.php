@@ -19,11 +19,12 @@ use Doctrine\ORM\Event\PostUpdateEventArgs;
 use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Doctrine\Persistence\ObjectManager;
 use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
+use Rekalogika\DomainEvent\DomainEventAwareManagerRegistry;
 
 final class DoctrineEventListener
 {
     public function __construct(
-        private ObjectManagerDecoratorResolverInterface $objectManagerDecoratorResolver,
+        private DomainEventAwareManagerRegistry $managerRegistry,
     ) {
     }
 
@@ -54,8 +55,8 @@ final class DoctrineEventListener
             return;
         }
 
-        $decoratedObjectManager = $this->objectManagerDecoratorResolver
-            ->getDecoratedObjectManager($objectManager);
+        $decoratedObjectManager = $this->managerRegistry
+            ->getDomainEventAwareManager($objectManager);
 
         $events = $entity->popRecordedEvents();
         $decoratedObjectManager->recordDomainEvent($events);

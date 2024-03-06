@@ -14,7 +14,11 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent;
 
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 
 interface DomainEventAwareManagerRegistry extends ManagerRegistry
 {
+    public function getDomainEventAwareManager(
+        ObjectManager $objectManager
+    ): ObjectManager&DomainEventManagerInterface;
 }
