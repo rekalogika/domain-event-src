@@ -15,9 +15,9 @@ namespace Rekalogika\DomainEvent\Tests\Framework\Tests;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Rekalogika\DomainEvent\Constants;
-use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\Doctrine\DoctrineEventListener;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
+use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\DomainEventReaper;
 use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherInstaller;
 

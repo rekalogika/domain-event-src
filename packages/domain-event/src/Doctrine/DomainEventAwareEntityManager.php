@@ -17,7 +17,7 @@ use Doctrine\ORM\Decorator\EntityManagerDecorator;
 use Doctrine\ORM\EntityManagerInterface;
 use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
 use Rekalogika\Contracts\DomainEvent\EquatableDomainEventInterface;
-use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface;
+use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\EventDispatchers;
 use Rekalogika\DomainEvent\Exception\FlushNotAllowedException;
 use Rekalogika\DomainEvent\Exception\SafeguardTriggeredException;

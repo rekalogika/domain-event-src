@@ -13,10 +13,11 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Contracts;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface as DomainEventDomainEventAwareEntityManagerInterface;
 
-interface DomainEventAwareEntityManagerInterface extends
-    EntityManagerInterface,
-    DomainEventManagerInterface
+/**
+ * @deprecated Please use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface instead
+ */
+interface DomainEventAwareEntityManagerInterface extends DomainEventDomainEventAwareEntityManagerInterface
 {
 }
