@@ -16,7 +16,6 @@ namespace Rekalogika\DomainEvent\DependencyInjection;
 use Rekalogika\Contracts\DomainEvent\Attribute\AsImmediateDomainEventListener;
 use Rekalogika\Contracts\DomainEvent\Attribute\AsPostFlushDomainEventListener;
 use Rekalogika\Contracts\DomainEvent\Attribute\AsPreFlushDomainEventListener;
-use Rekalogika\DomainEvent\DependencyInjection\Constants;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
