@@ -14,6 +14,8 @@
 * fix: Add `ResetInterface` to `DomainEventAwareManagerRegistry`
 * refactor: Merge `DomainEventManager` with `DomainEventAwareEntityManager`
 * test: add remove tests.
+* refactor: remove unnecessary `collect()` from
+  `DomainEventAwareEntityManagerInterface`
 
 ## 1.2.5
 
