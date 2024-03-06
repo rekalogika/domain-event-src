@@ -20,6 +20,7 @@
 * refactor: move interfaces to top level namespace
 * refactor: remove `DomainEventEmitterCollector`
 * feat: Now should fully support multiple entity managers.
+* refactor: assorted cleanups
 
 ## 1.2.5
 

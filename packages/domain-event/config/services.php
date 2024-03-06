@@ -12,19 +12,19 @@ declare(strict_types=1);
  */
 
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Rekalogika\DomainEvent\Constants;
+use Rekalogika\DomainEvent\DependencyInjection\Constants;
 use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface as ContractsDomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\Doctrine\DoctrineEventListener;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\Doctrine\ObjectManagerDecoratorResolver;
 use Rekalogika\DomainEvent\Doctrine\ObjectManagerDecoratorResolverInterface;
 use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
-use Rekalogika\DomainEvent\DomainEventReaper;
+use Rekalogika\DomainEvent\Doctrine\DomainEventReaper;
 use Rekalogika\DomainEvent\Event\DomainEventImmediateDispatchEvent;
 use Rekalogika\DomainEvent\Event\DomainEventPostFlushDispatchEvent;
 use Rekalogika\DomainEvent\Event\DomainEventPreFlushDispatchEvent;
-use Rekalogika\DomainEvent\EventDispatchers;
-use Rekalogika\DomainEvent\EventDispatchingDomainEventDispatcher;
+use Rekalogika\DomainEvent\EventDispatcher\EventDispatchers;
+use Rekalogika\DomainEvent\EventDispatcher\EventDispatchingDomainEventDispatcher;
 use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherInstaller;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\EventDispatcher\EventDispatcher;

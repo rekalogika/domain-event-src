@@ -11,7 +11,9 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\DomainEvent;
+namespace Rekalogika\DomainEvent\Doctrine;
+
+use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
 
 /**
  * Clears domain events from DomainEventAwareEntityManager if an exception

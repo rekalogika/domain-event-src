@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\DomainEvent;
+namespace Rekalogika\DomainEvent\EventDispatcher;
 
 use Psr\EventDispatcher\EventDispatcherInterface as PsrEventDispatcherInterface;
 use Rekalogika\DomainEvent\Event\AbstractDomainEventDispatchEvent;

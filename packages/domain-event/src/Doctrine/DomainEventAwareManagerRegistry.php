@@ -17,7 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
-use Rekalogika\DomainEvent\EventDispatchers;
+use Rekalogika\DomainEvent\EventDispatcher\EventDispatchers;
 use Symfony\Contracts\Service\ResetInterface;
 
 final class DomainEventAwareManagerRegistry extends AbstractManagerRegistryDecorator implements ResetInterface
