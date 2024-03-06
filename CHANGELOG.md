@@ -16,6 +16,7 @@
 * test: add remove tests.
 * refactor: remove unnecessary `collect()` from
   `DomainEventAwareEntityManagerInterface`
+* refactor: `DomainEventManagerInterface`
 
 ## 1.2.5
 

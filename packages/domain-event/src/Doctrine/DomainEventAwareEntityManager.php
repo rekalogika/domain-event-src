@@ -75,7 +75,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
     {
         $events = $domainEventEmitter->popRecordedEvents();
 
-        $this->recordDomainEvents($events);
+        $this->recordDomainEvent($events);
     }
 
     public function setAutoDispatchDomainEvents(bool $autoDispatch): void
@@ -163,8 +163,16 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         }
     }
 
-    public function recordDomainEvent(object $event): void
+    public function recordDomainEvent(object|iterable $event): void
     {
+        if (is_iterable($event)) {
+            foreach ($event as $anEvent) {
+                $this->recordDomainEvent($anEvent);
+            }
+
+            return;
+        }
+
         if ($event instanceof EquatableDomainEventInterface) {
             $signature = $event->getSignature();
 
@@ -176,13 +184,6 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         }
     }
 
-    public function recordDomainEvents(iterable $events): void
-    {
-        foreach ($events as $event) {
-            $this->recordDomainEvent($event);
-        }
-    }
-
     private function collectEvents(): void
     {
         $entities = $this->collector->collectEntities($this->getUnitOfWork());
@@ -190,7 +191,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         foreach ($entities as $entity) {
             if ($entity instanceof DomainEventEmitterInterface) {
                 $events = $entity->popRecordedEvents();
-                $this->recordDomainEvents($events);
+                $this->recordDomainEvent($events);
             }
         }
     }
