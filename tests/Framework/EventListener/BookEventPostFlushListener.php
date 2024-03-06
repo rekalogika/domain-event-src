@@ -15,10 +15,12 @@ namespace Rekalogika\DomainEvent\Tests\Framework\EventListener;
 
 use Rekalogika\Contracts\DomainEvent\Attribute\AsPostFlushDomainEventListener;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookCreated;
+use Rekalogika\DomainEvent\Tests\Framework\Event\BookRemoved;
 
 final class BookEventPostFlushListener
 {
     private bool $onCreateCalled = false;
+    private bool $onRemoveCalled = false;
 
     #[AsPostFlushDomainEventListener()]
     public function onCreate(BookCreated $event): void
@@ -26,8 +28,19 @@ final class BookEventPostFlushListener
         $this->onCreateCalled = true;
     }
 
+    #[AsPostFlushDomainEventListener()]
+    public function onRemove(BookRemoved $event): void
+    {
+        $this->onRemoveCalled = true;
+    }
+
     public function onCreateCalled(): bool
     {
         return $this->onCreateCalled;
+    }
+
+    public function onRemoveCalled(): bool
+    {
+        return $this->onRemoveCalled;
     }
 }
