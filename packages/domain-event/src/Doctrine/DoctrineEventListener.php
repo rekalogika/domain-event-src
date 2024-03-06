@@ -54,7 +54,8 @@ final class DoctrineEventListener
     private function collectEvents(object $entity): void
     {
         if ($entity instanceof DomainEventEmitterInterface) {
-            $this->entityManager->collect($entity);
+            $events = $entity->popRecordedEvents();
+            $this->entityManager->recordDomainEvents($events);
         }
     }
 
