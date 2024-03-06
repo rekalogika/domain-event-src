@@ -23,7 +23,7 @@ use Rekalogika\DomainEvent\Event\DomainEventImmediateDispatchEvent;
 use Rekalogika\DomainEvent\Event\DomainEventPostFlushDispatchEvent;
 use Rekalogika\DomainEvent\Event\DomainEventPreFlushDispatchEvent;
 use Rekalogika\DomainEvent\EventDispatcher\EventDispatchers;
-use Rekalogika\DomainEvent\EventDispatcher\EventDispatchingDomainEventDispatcher;
+use Rekalogika\DomainEvent\EventDispatcher\ImmediateEventDispatchingDomainEventDispatcher;
 use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherInstaller;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -83,31 +83,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     //
 
     $services
-        ->set(EventDispatchingDomainEventDispatcher::class)
+        ->set(ImmediateEventDispatchingDomainEventDispatcher::class)
         ->args([
             '$decorated' => service('.inner'),
             '$defaultEventDispatcher' => service(EventDispatcherInterface::class),
-            '$eventClass' => DomainEventImmediateDispatchEvent::class,
         ])
         ->decorate(Constants::EVENT_DISPATCHER_IMMEDIATE);
-
-    $services
-        ->set(EventDispatchingDomainEventDispatcher::class)
-        ->args([
-            '$decorated' => service('.inner'),
-            '$defaultEventDispatcher' => service(EventDispatcherInterface::class),
-            '$eventClass' => DomainEventPreFlushDispatchEvent::class,
-        ])
-        ->decorate(Constants::EVENT_DISPATCHER_PRE_FLUSH);
-
-    $services
-        ->set(EventDispatchingDomainEventDispatcher::class)
-        ->args([
-            '$decorated' => service('.inner'),
-            '$defaultEventDispatcher' => service(EventDispatcherInterface::class),
-            '$eventClass' => DomainEventPostFlushDispatchEvent::class,
-        ])
-        ->decorate(Constants::EVENT_DISPATCHER_POST_FLUSH);
 
     //
     // doctrine
