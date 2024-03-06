@@ -17,45 +17,45 @@ use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\ORM\Event\PostRemoveEventArgs;
 use Doctrine\ORM\Event\PostUpdateEventArgs;
 use Doctrine\ORM\Event\PreRemoveEventArgs;
+use Doctrine\Persistence\ObjectManager;
 use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
-use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
 
 final class DoctrineEventListener
 {
-    /**
-     * @todo fix to support multiple entity managers
-     */
     public function __construct(
-        private DomainEventAwareEntityManagerInterface $entityManager
+        private ObjectManagerDecoratorResolverInterface $objectManagerDecoratorResolver,
     ) {
     }
 
     public function postPersist(PostPersistEventArgs $args): void
     {
-        $this->collectEvents($args->getObject());
+        $this->collectEvents($args->getObject(), $args->getObjectManager());
     }
 
     public function preRemove(PreRemoveEventArgs $args): void
     {
         $this->processRemove($args->getObject());
-        $this->collectEvents($args->getObject());
+        $this->collectEvents($args->getObject(), $args->getObjectManager());
     }
 
     public function postRemove(PostRemoveEventArgs $args): void
     {
-        $this->collectEvents($args->getObject());
+        $this->collectEvents($args->getObject(), $args->getObjectManager());
     }
 
     public function postUpdate(PostUpdateEventArgs $args): void
     {
-        $this->collectEvents($args->getObject());
+        $this->collectEvents($args->getObject(), $args->getObjectManager());
     }
 
-    private function collectEvents(object $entity): void
+    private function collectEvents(object $entity, ObjectManager $objectManager): void
     {
+        $decoratedObjectManager = $this->objectManagerDecoratorResolver
+            ->getDecoratedObjectManager($objectManager);
+
         if ($entity instanceof DomainEventEmitterInterface) {
             $events = $entity->popRecordedEvents();
-            $this->entityManager->recordDomainEvent($events);
+            $decoratedObjectManager->recordDomainEvent($events);
         }
     }
 
