@@ -12,11 +12,8 @@ declare(strict_types=1);
  */
 
 use Rekalogika\DomainEvent\DependencyInjection\Constants;
-use Rekalogika\DomainEvent\Doctrine\DoctrineEventListener;
-use Rekalogika\DomainEvent\Doctrine\DomainEventReaper;
 use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\DomainEventAwareManagerRegistry;
-use Rekalogika\DomainEvent\ImmediateDomainEventDispatcherInstaller;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
@@ -31,11 +28,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         Constants::EVENT_DISPATCHER_IMMEDIATE,
         Constants::EVENT_DISPATCHER_PRE_FLUSH,
         Constants::EVENT_DISPATCHER_POST_FLUSH,
-        DoctrineEventListener::class,
+        Constants::EVENT_DISPATCHERS,
+        Constants::DOCTRINE_EVENT_LISTENER,
         DomainEventAwareManagerRegistry::class,
         DomainEventAwareEntityManagerInterface::class,
-        ImmediateDomainEventDispatcherInstaller::class,
-        DomainEventReaper::class,
+        Constants::IMMEDIATE_DISPATCHER_INSTALLER,
+        Constants::REAPER,
     ];
 
     foreach ($serviceIds as $serviceId) {

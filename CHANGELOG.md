@@ -3,6 +3,7 @@
 ## 2.0.1
 
 * test: Require `symfony/twig-bundle` & `symfony/web-profiler-bundle` for tests
+* fix: use non-class service ids to prevent auto wiring
 
 ## 2.0.0
 
