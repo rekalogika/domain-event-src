@@ -17,7 +17,8 @@ services.
 A domain event is dispatched from the part of your code where the event is
 actually happening. Different part of your application might call the same
 method on an entity, directly or indirectly. By using domain events, the event
-will be dispatched in all the cases.
+will be dispatched in all the cases. No need to make sure to dispatch the event
+from all the different places where the method is called.
 
 The application layer (controllers, services) can tell an entity to do
 something, but it cannot reliably know if the action is actually performed. A
@@ -27,7 +28,8 @@ happened, it can tell the world about it by dispatching a `BookRemoved` event.
 
 Some problems might tempt you to inject a service into your entity. With domain
 events, you can avoid that. Your entity can dispatch an event, and you can set
-up a listener to react to that event.
+up a listener to react to that event. The relevant services can then act on your
+entity, instead of the other way around.
 
 ## Features
 
@@ -36,6 +38,7 @@ up a listener to react to that event.
   require much from your domain entities.
 * Uses standard Symfony's event dispatcher, with the same dispatching semantics
   & listener registrations.
+* Works with multiple entity managers.
 * Three dispatching strategies: pre-flush, post-flush, and immediate.
 * In pre-flush or post-flush modes, multiple events considered identical are
   dispatched only once.
