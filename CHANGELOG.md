@@ -4,6 +4,7 @@
 
 * feat: Transaction support.
 * test: test equatable events.
+* feat: add DomainEventAware methods in `DomainEventAwareManagerRegistry`.
 
 ## 2.0.1
 

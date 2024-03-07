@@ -18,9 +18,23 @@ use Doctrine\Persistence\ObjectManager;
 
 interface DomainEventAwareManagerRegistry extends ManagerRegistry
 {
+    public function getRealRegistry(): ManagerRegistry;
+
     public function getDomainEventAwareManager(
         ObjectManager $objectManager
-    ): ObjectManager&DomainEventManagerInterface;
+    ): DomainEventAwareObjectManager;
 
-    public function getRealRegistry(): ManagerRegistry;
+    /**
+     * @return array<string,DomainEventAwareObjectManager>
+     */
+    public function getDomainEventAwareManagers(): array;
+
+    /**
+     * @param class-string $class
+     * @return null|DomainEventAwareObjectManager
+     */
+    public function getDomainEventAwareManagerForClass(
+        string $class
+    ): ?DomainEventAwareObjectManager;
+
 }

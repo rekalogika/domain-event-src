@@ -17,6 +17,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
 use Rekalogika\DomainEvent\DomainEventAwareManagerRegistry as DomainEventDomainEventAwareManagerRegistry;
+use Rekalogika\DomainEvent\DomainEventAwareObjectManager;
 use Rekalogika\DomainEvent\DomainEventManagerInterface;
 use Symfony\Contracts\Service\ResetInterface;
 
@@ -49,6 +50,30 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
         }
     }
 
+    public function getDomainEventAwareManagers(): array
+    {
+        $managers = $this->getManagers();
+        $domainEventAwareManagers = [];
+
+        foreach ($managers as $name => $manager) {
+            $domainEventAwareManagers[$name] = $this->getDomainEventAwareManager($manager);
+        }
+
+        return $domainEventAwareManagers;
+    }
+
+    public function getDomainEventAwareManagerForClass(
+        string $class
+    ): ?DomainEventAwareObjectManager {
+        $manager = $this->getManagerForClass($class);
+
+        if ($manager === null) {
+            return null;
+        }
+
+        return $this->getDomainEventAwareManager($manager);
+    }
+
     public function getRealRegistry(): ManagerRegistry
     {
         return $this->wrapped;
@@ -70,8 +95,8 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
 
     public function getDomainEventAwareManager(
         ObjectManager $objectManager
-    ): ObjectManager&DomainEventManagerInterface {
-        if ($objectManager instanceof DomainEventManagerInterface) {
+    ): DomainEventAwareObjectManager {
+        if ($objectManager instanceof DomainEventAwareObjectManager) {
             return $objectManager;
         }
 
@@ -81,7 +106,7 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
             throw new \InvalidArgumentException('Object manager is not decorated');
         }
 
-        if (!$domainEventManager instanceof ObjectManager) {
+        if (!$domainEventManager instanceof DomainEventAwareObjectManager) {
             throw new \InvalidArgumentException('Object manager is not decorated');
         }
 
