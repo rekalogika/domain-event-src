@@ -16,6 +16,10 @@
         </ignoreFiles>
     </projectFiles>
 
+    <plugins>
+        <pluginClass class="Psalm\PhpUnitPlugin\Plugin" />
+    </plugins>
+
     <issueHandlers>
         <MethodSignatureMismatch errorLevel="info" />
         <PropertyNotSetInConstructor errorLevel="info" />

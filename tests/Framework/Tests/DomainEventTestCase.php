@@ -17,6 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\Persistence\ManagerRegistry;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareEntityManager;
+use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\DomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\Tests\Framework\Kernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -24,6 +25,9 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 abstract class DomainEventTestCase extends KernelTestCase
 {
+    protected DomainEventAwareEntityManagerInterface $entityManager;
+    protected DomainEventAwareManagerRegistry $managerRegistry;
+
     // @phpstan-ignore-next-line
     protected static function createKernel(array $options = []): KernelInterface
     {
@@ -32,8 +36,16 @@ abstract class DomainEventTestCase extends KernelTestCase
 
     public function setUp(): void
     {
+        parent::setUp();
+
+        // setup manager registry
+
         $managerRegistry = static::getContainer()->get('doctrine');
-        $this->assertInstanceOf(ManagerRegistry::class, $managerRegistry);
+        $this->assertInstanceOf(DomainEventAwareManagerRegistry::class, $managerRegistry);
+
+        $this->managerRegistry = $managerRegistry;
+
+        // create schema
 
         $managers = $managerRegistry->getManagers();
 
@@ -42,6 +54,13 @@ abstract class DomainEventTestCase extends KernelTestCase
             $schemaTool = new SchemaTool($manager);
             $schemaTool->createSchema($manager->getMetadataFactory()->getAllMetadata());
         }
+
+        // save entity manager to class property
+
+        $entityManager = static::getContainer()->get('doctrine.orm.entity_manager');
+        $this->assertInstanceOf(DomainEventAwareEntityManagerInterface::class, $entityManager);
+
+        $this->entityManager = $entityManager;
     }
 
     public static function getEntityManager(): DomainEventAwareEntityManager
@@ -53,5 +72,17 @@ abstract class DomainEventTestCase extends KernelTestCase
         self::assertInstanceOf(DomainEventAwareEntityManager::class, $entityManager);
 
         return $entityManager;
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
+
+        $managers = $this->managerRegistry->getManagers();
+
+        foreach ($managers as $manager) {
+            $this->assertInstanceOf(DomainEventAwareEntityManagerInterface::class, $manager);
+            $manager->clearDomainEvents();
+        }
     }
 }
