@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0
+
+* test: add a test for equatable domain events.
+
 ## 2.0.1
 
 * test: Require `symfony/twig-bundle` & `symfony/web-profiler-bundle` for tests
