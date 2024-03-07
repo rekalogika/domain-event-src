@@ -38,6 +38,7 @@ entity, instead of the other way around.
   require much from your domain entities.
 * Uses standard Symfony's event dispatcher, with the same dispatching semantics
   & listener registrations.
+* Transaction support.
 * Works with multiple entity managers.
 * Three dispatching strategies: pre-flush, post-flush, and immediate.
 * In pre-flush or post-flush modes, multiple events considered identical are
