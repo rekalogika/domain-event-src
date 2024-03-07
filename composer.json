@@ -29,6 +29,7 @@
         "phpstan/phpstan-deprecation-rules": "^1.1",
         "phpstan/phpstan-phpunit": "^1.3",
         "phpunit/phpunit": "^9.5",
+        "psalm/plugin-phpunit": "^0.18.4",
         "symfony/doctrine-bridge": "^6.4 || ^7.0",
         "symfony/framework-bundle": "^6.4 || ^7.0",
         "symfony/runtime": "^6.4 || ^7.0",

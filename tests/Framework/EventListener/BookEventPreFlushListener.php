@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent\Tests\Framework\EventListener;
 
 use Rekalogika\Contracts\DomainEvent\Attribute\AsPreFlushDomainEventListener;
+use Rekalogika\DomainEvent\Tests\Framework\Event\BookChanged;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookCreated;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookRemoved;
 
@@ -21,11 +22,18 @@ final class BookEventPreFlushListener
 {
     private bool $onCreateCalled = false;
     private bool $onRemoveCalled = false;
+    private int $onChangeCalled = 0;
 
     #[AsPreFlushDomainEventListener()]
     public function onCreate(BookCreated $event): void
     {
         $this->onCreateCalled = true;
+    }
+
+    #[AsPreFlushDomainEventListener()]
+    public function onChange(BookChanged $event): void
+    {
+        $this->onChangeCalled++;
     }
 
     #[AsPreFlushDomainEventListener()]
@@ -42,5 +50,11 @@ final class BookEventPreFlushListener
     public function onRemoveCalled(): bool
     {
         return $this->onRemoveCalled;
+    }
+
+    /** @phpstan-impure */
+    public function onChangeCalled(): int
+    {
+        return $this->onChangeCalled;
     }
 }

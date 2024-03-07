@@ -217,9 +217,25 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
 
         parent::flush($entity);
 
-        if ($this->autodispatch) {
+        if ($this->autodispatch && !$this->getConnection()->isTransactionActive()) {
             $this->dispatchPostFlushDomainEvents();
         }
+    }
+
+    public function commit(): void
+    {
+        parent::commit();
+
+        if ($this->autodispatch && !$this->getConnection()->isTransactionActive()) {
+            $this->dispatchPostFlushDomainEvents();
+        }
+    }
+
+    public function rollback(): void
+    {
+        parent::rollback();
+
+        $this->clearDomainEvents();
     }
 
     private function hasPendingEvents(): bool

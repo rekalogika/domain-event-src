@@ -69,8 +69,8 @@ class Book implements DomainEventEmitterInterface
         $this->id = Uuid::v7();
         $this->reviews = new ArrayCollection();
         $this->recordEvent(new BookCreated($this));
-        $this->setTitle($title);
-        $this->setDescription($description);
+        $this->title = $title;
+        $this->description = $description;
     }
 
     public function __remove(): void
