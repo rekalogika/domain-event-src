@@ -3,6 +3,7 @@
 ## 2.1.0
 
 * feat: Transaction support.
+* test: test equatable events.
 
 ## 2.0.1
 
