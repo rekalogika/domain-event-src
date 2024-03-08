@@ -5,6 +5,7 @@
 * feat: Transaction support.
 * test: test equatable events.
 * feat: add DomainEventAware methods in `DomainEventAwareManagerRegistry`.
+* test: require `symfony/debug-bundle`
 
 ## 2.0.1
 
