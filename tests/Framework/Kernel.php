@@ -15,6 +15,7 @@ namespace Rekalogika\DomainEvent\Tests\Framework;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Rekalogika\DomainEvent\RekalogikaDomainEventBundle;
+use Symfony\Bundle\DebugBundle\DebugBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Bundle\WebProfilerBundle\WebProfilerBundle;
@@ -45,6 +46,7 @@ class Kernel extends HttpKernelKernel
             new WebProfilerBundle(),
             new TwigBundle(),
             new RekalogikaDomainEventBundle(),
+            new DebugBundle(),
         ];
     }
 
