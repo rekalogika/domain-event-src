@@ -5,10 +5,12 @@ doctrine:
                 driver: pdo_sqlite
                 memory: true
                 charset: UTF8
+                use_savepoints: true
             other:
                 driver: pdo_sqlite
                 memory: true
                 charset: UTF8
+                use_savepoints: true
 
     orm:
         auto_generate_proxy_classes: true
