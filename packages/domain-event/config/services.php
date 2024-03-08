@@ -135,7 +135,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         )
         ->args([
             '$wrapped' => service('.inner'),
-            '$decoratedObjectManagers' => tagged_iterator('rekalogika.domain_event.entity_manager')
+            '$decoratedObjectManagers' => tagged_iterator('rekalogika.domain_event.entity_manager', 'name')
         ])
         ->decorate('doctrine')
         ->tag('kernel.reset', [

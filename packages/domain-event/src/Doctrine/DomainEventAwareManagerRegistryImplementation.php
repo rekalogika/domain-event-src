@@ -26,9 +26,14 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
     ResetInterface
 {
     /**
-     * @var \WeakMap<ObjectManager,DomainEventManagerInterface>
+     * @var \WeakMap<ObjectManager,DomainEventAwareObjectManager>
      */
     private \WeakMap $objectManagerToDecoratedObjectManager;
+
+    /**
+     * @var \WeakMap<DomainEventAwareObjectManager,string>
+     */
+    private \WeakMap $objectManagerToName;
 
     /**
      * @param iterable<DomainEventManagerInterface> $decoratedObjectManagers
@@ -39,15 +44,35 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
     ) {
         parent::__construct($wrapped);
 
-        /** @var \WeakMap<ObjectManager,DomainEventManagerInterface> */
+        /** @var \WeakMap<ObjectManager,DomainEventAwareObjectManager> */
         $weakMap = new \WeakMap();
         $this->objectManagerToDecoratedObjectManager = $weakMap;
 
-        foreach ($decoratedObjectManagers as $decoratedObjectManager) {
-            if ($decoratedObjectManager instanceof DomainEventAwareEntityManager) {
+        /** @var \WeakMap<DomainEventAwareObjectManager,string> */
+        $weakMap = new \WeakMap();
+        $this->objectManagerToName = $weakMap;
+
+        foreach ($decoratedObjectManagers as $name => $decoratedObjectManager) {
+            if (!is_string($name)) {
+                throw new \InvalidArgumentException('Decorated object manager name must be a string');
+            }
+
+            if ($decoratedObjectManager instanceof DomainEventAwareObjectManager) {
                 $this->objectManagerToDecoratedObjectManager[$decoratedObjectManager->getObjectManager()] =  $decoratedObjectManager;
+
+                $this->objectManagerToName[$decoratedObjectManager] = $name;
             }
         }
+    }
+
+    public function getManagerName(ObjectManager $manager): string
+    {
+        if (!$manager instanceof DomainEventAwareObjectManager) {
+            $manager = $this->getDomainEventAwareManager($manager);
+        }
+
+        return $this->objectManagerToName[$manager]
+            ?? throw new \InvalidArgumentException(sprintf('Manager "%s" is not registered', get_class($manager)));
     }
 
     public function getDomainEventAwareManagers(): array

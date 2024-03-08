@@ -82,4 +82,16 @@ final class DecorationTest extends DomainEventTestCase
         $this->assertInstanceOf(BookRepository::class, $repository);
         $this->assertInstanceOf(DomainEventAwareEntityManager::class, $repository->getEntityManager());
     }
+
+    public function testGetManagerNameFromManager(): void
+    {
+        $managerRegistry = static::getContainer()->get('doctrine');
+        $this->assertInstanceOf(DomainEventAwareManagerRegistry::class, $managerRegistry);
+
+        $entityManager = $managerRegistry->getManager();
+        $this->assertSame('default', $managerRegistry->getManagerName($entityManager));
+
+        $entityManager = $managerRegistry->getManager('other');
+        $this->assertSame('other', $managerRegistry->getManagerName($entityManager));
+    }
 }
