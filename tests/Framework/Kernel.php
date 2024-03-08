@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent\Tests\Framework;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
+use Rekalogika\DomainEvent\Outbox\RekalogikaDomainEventOutboxBundle;
 use Rekalogika\DomainEvent\RekalogikaDomainEventBundle;
 use Symfony\Bundle\DebugBundle\DebugBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;

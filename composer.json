@@ -45,6 +45,7 @@
     "autoload": {
         "psr-4": {
             "Rekalogika\\Contracts\\DomainEvent\\": "packages/domain-event-contracts/src/",
+            "Rekalogika\\DomainEvent\\Outbox\\": "packages/domain-event-outbox/src/",
             "Rekalogika\\DomainEvent\\": "packages/domain-event/src/"
         }
     },
@@ -55,7 +56,8 @@
     },
     "replace": {
         "rekalogika/domain-event": "2.0.1",
-        "rekalogika/domain-event-contracts": "2.0.1"
+        "rekalogika/domain-event-contracts": "2.0.1",
+        "rekalogika/domain-event-outbox": "2.0.1"
     },
     "config": {
         "sort-packages": true,
