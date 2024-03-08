@@ -47,6 +47,7 @@ class Kernel extends HttpKernelKernel
             new WebProfilerBundle(),
             new TwigBundle(),
             new RekalogikaDomainEventBundle(),
+            new RekalogikaDomainEventOutboxBundle(),
             new DebugBundle(),
         ];
     }

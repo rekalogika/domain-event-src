@@ -1,0 +1,40 @@
+{
+    "name": "rekalogika/domain-event-outbox",
+    "description": "Implementation of the outbox pattern on top of rekalogika/domain-event",
+    "homepage": "https://rekalogika.dev/domain-event",
+    "keywords": [
+        "domain-event",
+        "domain",
+        "event",
+        "symfony",
+        "doctrine",
+        "event-dispatcher",
+        "event-listener",
+        "domain-driven-design",
+        "ddd",
+        "cqrs",
+        "outbox",
+        "microservice"
+    ],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Priyadi Iman Nurcahyo",
+            "email": "priyadi@rekalogika.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Rekalogika\\Contracts\\DomainEvent\\Outbox\\": "src/"
+        }
+    },
+    "require": {
+        "rekalogika/domain-event": "^1.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "2.1-dev"
+        }
+    }
+}
