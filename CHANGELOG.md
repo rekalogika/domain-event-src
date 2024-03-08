@@ -5,6 +5,7 @@
 * feat: Transaction support.
 * test: test equatable events.
 * feat: add DomainEventAware methods in `DomainEventAwareManagerRegistry`.
+* test: enable `use_savepoints` to test nested transactions.
 
 ## 2.0.1
 
