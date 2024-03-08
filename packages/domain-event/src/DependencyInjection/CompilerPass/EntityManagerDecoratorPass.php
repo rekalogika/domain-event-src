@@ -45,7 +45,7 @@ final class EntityManagerDecoratorPass implements CompilerPassInterface
                     '$eventDispatchers' => $eventDispatchers,
                 ])
                 ->addTag('kernel.reset', ['method' => 'reset'])
-                ->addTag('rekalogika.domain_event.entity_manager');
+                ->addTag('rekalogika.domain_event.entity_manager', ['name' => $name]);
         }
     }
 }

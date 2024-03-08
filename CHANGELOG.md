@@ -7,6 +7,7 @@
 * feat: add DomainEventAware methods in `DomainEventAwareManagerRegistry`.
 * test: enable `use_savepoints` to test nested transactions.
 * test: require `symfony/debug-bundle`
+* feat: allow resolving manager name from manager instance.
 
 ## 2.0.1
 
