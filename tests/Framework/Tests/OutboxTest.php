@@ -71,8 +71,7 @@ final class OutboxTest extends DomainEventTestCase
         // default manager
         $outboxReader = $outboxReaderFactory->createOutboxReader('default');
         $messages = $outboxReader->getOutboxMessages(100);
-        /** @psalm-suppress InvalidArgument */
-        $messages = array_values(iterator_to_array($messages));
+        $messages = array_values($messages instanceof \Traversable ? iterator_to_array($messages) : $messages);
         $this->assertInstanceOf(Envelope::class, $messages[0]);
         $this->assertInstanceOf(BookCreated::class, $messages[0]->getMessage());
         $this->assertInstanceOf(Envelope::class, $messages[1]);
@@ -81,8 +80,7 @@ final class OutboxTest extends DomainEventTestCase
         // other manager
         $outboxReader = $outboxReaderFactory->createOutboxReader('other');
         $messages = $outboxReader->getOutboxMessages(100);
-        /** @psalm-suppress InvalidArgument */
-        $messages = array_values(iterator_to_array($messages));
+        $messages = array_values($messages instanceof \Traversable ? iterator_to_array($messages) : $messages);
         $this->assertInstanceOf(Envelope::class, $messages[0]);
         $this->assertInstanceOf(PostCreated::class, $messages[0]->getMessage());
         $this->assertInstanceOf(Envelope::class, $messages[1]);

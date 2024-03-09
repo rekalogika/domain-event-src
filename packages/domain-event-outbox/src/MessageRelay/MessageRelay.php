@@ -23,14 +23,14 @@ use Symfony\Component\Messenger\Handler\HandlersLocatorInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\TransportNamesStamp;
 
-final readonly class MessageRelay implements MessageRelayInterface
+final class MessageRelay implements MessageRelayInterface
 {
     public function __construct(
-        private OutboxReaderFactoryInterface $outboxReaderFactory,
-        private HandlersLocatorInterface $handlersLocator,
-        private MessageBusInterface $domainEventBus,
-        private LockFactory $lockFactory,
-        private int $limit = 100
+        private readonly OutboxReaderFactoryInterface $outboxReaderFactory,
+        private readonly HandlersLocatorInterface $handlersLocator,
+        private readonly MessageBusInterface $domainEventBus,
+        private readonly LockFactory $lockFactory,
+        private readonly int $limit = 100
     ) {
     }
 

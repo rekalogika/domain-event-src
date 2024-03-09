@@ -15,9 +15,9 @@ namespace Rekalogika\DomainEvent\Outbox\Stamp;
 
 use Symfony\Component\Messenger\Stamp\StampInterface;
 
-final readonly class UserIdentifierStamp implements StampInterface
+final class UserIdentifierStamp implements StampInterface
 {
-    public function __construct(private string $userIdentifier)
+    public function __construct(private readonly string $userIdentifier)
     {
     }
 
