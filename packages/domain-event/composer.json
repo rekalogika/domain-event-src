@@ -25,7 +25,7 @@
         }
     },
     "require": {
-        "doctrine/doctrine-bundle": "^2.10",
+        "doctrine/doctrine-bundle": "^2.11.3 || ^2.12",
         "doctrine/orm": "^2.16",
         "doctrine/persistence": "^3.2",
         "psr/event-dispatcher": "^1.0",
