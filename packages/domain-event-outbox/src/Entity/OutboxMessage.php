@@ -20,10 +20,11 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
 use Rekalogika\DomainEvent\Outbox\Exception\LogicException;
 use Rekalogika\DomainEvent\Outbox\Exception\UnserializeFailureException;
+use Symfony\Component\Messenger\Envelope;
 
 #[Entity()]
 #[Table(name: 'rekalogika_event_outbox')]
-class OutgoingEvent
+class OutboxMessage
 {
     #[Id]
     #[Column(type: "integer")]
@@ -33,7 +34,7 @@ class OutgoingEvent
     #[Column(type: "text")]
     private string $event;
 
-    public function __construct(object $event)
+    public function __construct(Envelope $event)
     {
         $this->event = serialize($event);
     }
@@ -47,7 +48,7 @@ class OutgoingEvent
         return $this->id;
     }
 
-    public function getEvent(): object
+    public function getEvent(): Envelope
     {
         $result = unserialize($this->event);
 
@@ -55,7 +56,7 @@ class OutgoingEvent
             throw new UnserializeFailureException($this->event);
         }
 
-        if (!\is_object($result)) {
+        if (!$result instanceof Envelope) {
             throw new UnserializeFailureException($this->event);
         }
 

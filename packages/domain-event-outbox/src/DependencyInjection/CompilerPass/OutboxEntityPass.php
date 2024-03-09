@@ -47,6 +47,8 @@ final class OutboxEntityPass implements CompilerPassInterface
             );
 
             $pass->process($container);
+
+            $container->getParameterBag()->remove($parameterKey);
         }
     }
 }

@@ -26,11 +26,20 @@
     ],
     "autoload": {
         "psr-4": {
-            "Rekalogika\\Contracts\\DomainEvent\\Outbox\\": "src/"
+            "Rekalogika\\DomainEvent\\Outbox\\": "src/"
         }
     },
     "require": {
-        "rekalogika/domain-event": "^1.0"
+        "doctrine/doctrine-bundle": "^2.10",
+        "doctrine/orm": "^2.16",
+        "doctrine/persistence": "^3.2",
+        "rekalogika/domain-event": "^2.1",
+        "rekalogika/domain-event-contracts": "^2.0.1",
+        "symfony/config": "^6.4 || ^7.0",
+        "symfony/dependency-injection": "^6.4 || ^7.0",
+        "symfony/http-kernel": "^6.4 || ^7.0",
+        "symfony/lock": "^6.4 || ^7.0",
+        "symfony/messenger": "^6.4 || ^7.0"
     },
     "extra": {
         "branch-alias": {

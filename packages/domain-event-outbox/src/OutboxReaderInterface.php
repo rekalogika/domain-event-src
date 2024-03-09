@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Outbox;
 
+use Symfony\Component\Messenger\Envelope;
+
 interface OutboxReaderInterface
 {
     /**
@@ -20,9 +22,9 @@ interface OutboxReaderInterface
      * Should implicitly start a transaction, that will be committed using
      * `flush()`.
      * 
-     * @return array<array-key,object>
+     * @return iterable<int|string,Envelope>
      */
-    public function getOutboxMessages(int $limit = 100): array;
+    public function getOutboxMessages(int $limit): iterable;
 
     /**
      * Removes a message from the outbox queue by its id.

@@ -13,7 +13,10 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Outbox\DependencyInjection;
 
+use Rekalogika\Contracts\DomainEvent\Attribute\AsDomainEventBusListener;
+use Rekalogika\DomainEvent\Outbox\MessagePreparerInterface;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
@@ -36,5 +39,39 @@ class RekalogikaDomainEventOutboxExtension extends Extension
         if ($debug) {
             $loader->load('debug.php');
         }
+
+        $container
+            ->registerForAutoconfiguration(MessagePreparerInterface::class)
+            ->addTag('rekalogika.domain_event.outbox.message_preparer');
+
+        $container->registerAttributeForAutoconfiguration(
+            AsDomainEventBusListener::class,
+            static function (
+                ChildDefinition $definition,
+                AsDomainEventBusListener $attribute,
+                \Reflector $reflector
+            ): void {
+                if (
+                    !$reflector instanceof \ReflectionClass
+                    && !$reflector instanceof \ReflectionMethod
+                ) {
+                    return;
+                }
+
+                $tagAttributes = get_object_vars($attribute);
+                $tagAttributes['bus'] = 'rekalogika.domain_event.bus';
+                if ($reflector instanceof \ReflectionMethod) {
+                    if (isset($tagAttributes['method'])) {
+                        throw new \LogicException(sprintf('AsPreFlushDomainEventListener attribute cannot declare a method on "%s::%s()".', $reflector->class, $reflector->name));
+                    }
+                    $tagAttributes['method'] = $reflector->getName();
+                }
+
+                $definition->addTag(
+                    'messenger.message_handler',
+                    $tagAttributes
+                );
+            }
+        );
     }
 }

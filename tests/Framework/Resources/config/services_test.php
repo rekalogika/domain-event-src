@@ -14,6 +14,8 @@ declare(strict_types=1);
 use Rekalogika\DomainEvent\DependencyInjection\Constants;
 use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\DomainEventAwareManagerRegistry;
+use Rekalogika\DomainEvent\Outbox\OutboxReaderFactoryInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
@@ -34,6 +36,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         DomainEventAwareEntityManagerInterface::class,
         Constants::IMMEDIATE_DISPATCHER_INSTALLER,
         Constants::REAPER,
+        OutboxReaderFactoryInterface::class,
+        Security::class,
     ];
 
     foreach ($serviceIds as $serviceId) {
@@ -44,5 +48,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services
         ->load('Rekalogika\DomainEvent\Tests\Framework\EventListener\\', '../../EventListener/')
-        ->load('Rekalogika\DomainEvent\Tests\Framework\Repository\\', '../../Repository/');
+        ->load('Rekalogika\DomainEvent\Tests\Framework\Repository\\', '../../Repository/')
+        ->load('Rekalogika\DomainEvent\Tests\Framework\Security\\', '../../Security/');
 };

@@ -14,11 +14,37 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent\Outbox\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Rekalogika\DomainEvent\DomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\Event\DomainEventPreFlushDispatchEvent;
-use Rekalogika\DomainEvent\Outbox\Entity\OutgoingEvent;
+use Rekalogika\DomainEvent\Outbox\Entity\OutboxMessage;
+use Rekalogika\DomainEvent\Outbox\Message\MessageRelayStartMessage;
+use Rekalogika\DomainEvent\Outbox\MessagePreparerInterface;
+use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Contracts\Service\ResetInterface;
 
-class DomainEventDispatchListener
+/**
+ * Listen when a domain event is dispatched, and save it to the outbox table.
+ */
+class DomainEventDispatchListener implements ResetInterface
 {
+    /**
+     * @var array<string,true>
+     */
+    public array $managerNames = [];
+
+    public function __construct(
+        private MessagePreparerInterface $messagePreparer,
+        private MessageBusInterface $messageBus,
+        private DomainEventAwareManagerRegistry $managerRegistry,
+    ) {
+    }
+
+    public function reset()
+    {
+        $this->managerNames = [];
+    }
+
     public function onPreFlushDispatch(DomainEventPreFlushDispatchEvent $event): void
     {
         $domainEvent = $event->getDomainEvent();
@@ -28,6 +54,23 @@ class DomainEventDispatchListener
             return;
         }
 
-        $objectManager->persist(new OutgoingEvent($domainEvent));
+        $managerName = $this->managerRegistry->getManagerName($objectManager);
+
+        $envelope = new Envelope($domainEvent);
+        $envelope = $this->messagePreparer->prepareMessage($envelope);
+
+        if (null === $envelope) {
+            return;
+        }
+
+        $objectManager->persist(new OutboxMessage($envelope));
+        $this->managerNames[$managerName] = true;
+    }
+
+    public function onTerminate(): void
+    {
+        foreach ($this->managerNames as $managerName => $_) {
+            $this->messageBus->dispatch(new MessageRelayStartMessage($managerName));
+        }
     }
 }

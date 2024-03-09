@@ -18,6 +18,8 @@ use Rekalogika\DomainEvent\Outbox\RekalogikaDomainEventOutboxBundle;
 use Rekalogika\DomainEvent\RekalogikaDomainEventBundle;
 use Symfony\Bundle\DebugBundle\DebugBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
+use Symfony\Bundle\MonologBundle\MonologBundle;
+use Symfony\Bundle\SecurityBundle\SecurityBundle;
 use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Bundle\WebProfilerBundle\WebProfilerBundle;
 use Symfony\Component\Config\FileLocator;
@@ -46,9 +48,11 @@ class Kernel extends HttpKernelKernel
             new DoctrineBundle(),
             new WebProfilerBundle(),
             new TwigBundle(),
+            new DebugBundle(),
+            new SecurityBundle(),
+            new MonologBundle(),
             new RekalogikaDomainEventBundle(),
             new RekalogikaDomainEventOutboxBundle(),
-            new DebugBundle(),
         ];
     }
 

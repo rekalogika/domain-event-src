@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent\Outbox;
 
 use Rekalogika\DomainEvent\Outbox\DependencyInjection\CompilerPass\OutboxEntityPass;
+use Rekalogika\DomainEvent\Outbox\DependencyInjection\CompilerPass\RemoveUnusedPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -24,5 +25,6 @@ class RekalogikaDomainEventOutboxBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new OutboxEntityPass());
+        $container->addCompilerPass(new RemoveUnusedPass());
     }
 }
