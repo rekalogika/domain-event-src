@@ -25,7 +25,10 @@ jobs:
                     -
                         local_path: 'domain-event-contracts'
                         split_repository: 'domain-event-contracts'
-
+                    -
+                        local_path: 'domain-event-outbox'
+                        split_repository: 'domain-event-outbox'
+    
         steps:
             -   uses: actions/checkout@v2
 

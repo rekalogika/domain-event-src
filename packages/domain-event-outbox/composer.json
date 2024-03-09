@@ -1,6 +1,6 @@
 {
     "name": "rekalogika/domain-event-outbox",
-    "description": "Implementation of the outbox pattern on top of rekalogika/domain-event",
+    "description": "Implementation of the transactional outbox pattern on top of rekalogika/domain-event",
     "homepage": "https://rekalogika.dev/domain-event",
     "keywords": [
         "domain-event",
