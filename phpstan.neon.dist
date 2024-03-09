@@ -9,6 +9,10 @@ parameters:
     checkInternalClassCaseSensitivity: true
     reportMaybesInPropertyPhpDocTypes: true
     treatPhpDocTypesAsCertain: false
+    ignoreErrors:
+        -
+            message: '#Attribute class Override does not exist#'
+            reportUnmatched: false
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-phpunit/rules.neon

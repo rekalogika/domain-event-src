@@ -1,6 +1,6 @@
 {
-    "name": "rekalogika/domain-event",
-    "description": "Domain Event Implementation for Symfony and Doctrine",
+    "name": "rekalogika/domain-event-outbox",
+    "description": "Implementation of the outbox pattern on top of rekalogika/domain-event",
     "homepage": "https://rekalogika.dev/domain-event",
     "keywords": [
         "domain-event",
@@ -9,7 +9,12 @@
         "symfony",
         "doctrine",
         "event-dispatcher",
-        "event-listener"
+        "event-listener",
+        "domain-driven-design",
+        "ddd",
+        "cqrs",
+        "outbox",
+        "microservice"
     ],
     "type": "symfony-bundle",
     "license": "MIT",
@@ -21,21 +26,20 @@
     ],
     "autoload": {
         "psr-4": {
-            "Rekalogika\\DomainEvent\\": "src/"
+            "Rekalogika\\DomainEvent\\Outbox\\": "src/"
         }
     },
     "require": {
         "doctrine/doctrine-bundle": "^2.11.3 || ^2.12",
         "doctrine/orm": "^2.16",
         "doctrine/persistence": "^3.2",
-        "psr/event-dispatcher": "^1.0",
+        "rekalogika/domain-event": "^2.1",
         "rekalogika/domain-event-contracts": "^2.0.1",
         "symfony/config": "^6.4 || ^7.0",
-        "symfony/event-dispatcher": "^6.4 || ^7.0",
         "symfony/dependency-injection": "^6.4 || ^7.0",
         "symfony/http-kernel": "^6.4 || ^7.0",
-        "symfony/service-contracts": "^3.0",
-        "symfony/uid": "^6.4 || ^7.0"
+        "symfony/lock": "^6.4 || ^7.0",
+        "symfony/messenger": "^6.4 || ^7.0"
     },
     "extra": {
         "branch-alias": {

@@ -58,8 +58,8 @@ class Post implements DomainEventEmitterInterface
         $this->id = Uuid::v7();
         $this->comments = new ArrayCollection();
         $this->recordEvent(new PostCreated($this));
-        $this->setTitle($title);
-        $this->setContent($content);
+        $this->title = $title;
+        $this->content = $content;
     }
 
     public function __remove(): void

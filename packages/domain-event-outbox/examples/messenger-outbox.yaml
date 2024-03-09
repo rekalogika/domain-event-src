@@ -1,0 +1,17 @@
+framework:
+    messenger:
+        transports:
+            rekalogika.domain_event.transport:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    use_notify: true
+                    check_delayed_interval: 60000
+                retry_strategy:
+                    max_retries: 3
+                    multiplier: 2
+
+        buses:
+            rekalogika.domain_event.bus:
+                default_middleware:
+                    allow_no_handlers: true
+
