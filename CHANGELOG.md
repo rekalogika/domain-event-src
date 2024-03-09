@@ -8,6 +8,7 @@
 * test: enable `use_savepoints` to test nested transactions.
 * test: require `symfony/debug-bundle`
 * feat: allow resolving manager name from manager instance.
+* feat: transactional outbox pattern
 
 ## 2.0.1
 
