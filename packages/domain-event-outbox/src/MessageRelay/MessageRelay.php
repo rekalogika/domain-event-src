@@ -52,7 +52,7 @@ final class MessageRelay implements MessageRelayInterface
 
             foreach ($messages as $id => $envelope) {
                 $i++;
-                
+
                 $message = $envelope->getMessage();
 
                 if ($message instanceof EquatableDomainEventInterface) {
@@ -86,7 +86,9 @@ final class MessageRelay implements MessageRelayInterface
 
     private function messageHasHandlers(Envelope $envelope): bool
     {
-        /** @psalm-suppress InvalidArgument */
-        return count(iterator_to_array($this->handlersLocator->getHandlers($envelope))) > 0;
+        $handlers = $this->handlersLocator->getHandlers($envelope);
+        $handlers = $handlers instanceof \Traversable ? iterator_to_array($handlers) : $handlers;
+
+        return count($handlers) > 0;
     }
 }
