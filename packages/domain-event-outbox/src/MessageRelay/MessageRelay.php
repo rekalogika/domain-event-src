@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Outbox\MessageRelay;
 
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Rekalogika\Contracts\DomainEvent\EquatableDomainEventInterface;
 use Rekalogika\DomainEvent\Outbox\Entity\ErrorEvent;
 use Rekalogika\DomainEvent\Outbox\MessageRelayInterface;
@@ -26,13 +28,17 @@ use Symfony\Component\Messenger\Stamp\TransportNamesStamp;
 
 final class MessageRelay implements MessageRelayInterface
 {
+    private LoggerInterface $logger;
+
     public function __construct(
         private readonly OutboxReaderFactoryInterface $outboxReaderFactory,
         private readonly HandlersLocatorInterface $handlersLocator,
         private readonly MessageBusInterface $domainEventBus,
         private readonly LockFactory $lockFactory,
+        ?LoggerInterface $logger = null,
         private readonly int $limit = 100
     ) {
+        $this->logger = $logger ?? new NullLogger();
     }
 
     public function relayMessages(string $managerName): int
@@ -58,6 +64,7 @@ final class MessageRelay implements MessageRelayInterface
 
                 if ($message instanceof ErrorEvent) {
                     $outboxReader->flagError($id);
+                    $this->logger->error('Error event {id} found in the outbox, you should inspect it manually', ['id' => $id]);
                     continue;
                 }
 
@@ -78,6 +85,16 @@ final class MessageRelay implements MessageRelayInterface
                         ->with(new ObjectManagerNameStamp($managerName));
 
                     $this->domainEventBus->dispatch($envelope);
+
+                    $this->logger->info('Message relayed, message id: {id}, class: {class}', [
+                        'id' => $id,
+                        'class' => $message::class
+                    ]);
+                } else {
+                    $this->logger->info('Message relaying skipped because no handler is found, message id: {id}, class: {class}', [
+                        'id' => $id,
+                        'class' => $message::class
+                    ]);
                 }
 
                 $outboxReader->removeOutboxMessageById($id);

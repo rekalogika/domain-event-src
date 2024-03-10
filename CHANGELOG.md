@@ -11,6 +11,7 @@
 * feat: transactional outbox pattern
 * fix: serialized data corruption in database
 * fix: `DomainEventDispatchListener` event tagging
+* feat: add logging in message relaying
 
 ## 2.0.1
 
