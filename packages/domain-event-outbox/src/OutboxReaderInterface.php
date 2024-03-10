@@ -32,6 +32,11 @@ interface OutboxReaderInterface
     public function removeOutboxMessageById(int|string $id): void;
 
     /**
+     * Flags a message as errored.
+     */
+    public function flagError(int|string $id): void;
+
+    /**
      * Commits the transaction started by getOutboxMessages.
      */
     public function flush(): void;

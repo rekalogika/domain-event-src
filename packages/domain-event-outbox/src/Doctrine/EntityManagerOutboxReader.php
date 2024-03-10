@@ -14,8 +14,11 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent\Outbox\Doctrine;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Rekalogika\DomainEvent\Outbox\Entity\ErrorEvent;
 use Rekalogika\DomainEvent\Outbox\Entity\OutboxMessage;
+use Rekalogika\DomainEvent\Outbox\Exception\UnserializeFailureException;
 use Rekalogika\DomainEvent\Outbox\OutboxReaderInterface;
+use Symfony\Component\Messenger\Envelope;
 
 class EntityManagerOutboxReader implements OutboxReaderInterface
 {
@@ -33,6 +36,7 @@ class EntityManagerOutboxReader implements OutboxReaderInterface
         $queryBuilder
             ->from(OutboxMessage::class, 'o')
             ->select('o')
+            ->where('o.error = false')
             ->orderBy('o.id', 'ASC')
             ->setMaxResults($limit);
 
@@ -41,7 +45,15 @@ class EntityManagerOutboxReader implements OutboxReaderInterface
 
         foreach ($result as $row) {
             assert($row instanceof OutboxMessage);
-            yield $row->getId() => $row->getEvent();
+            
+            $id = $row->getId();
+
+            try {
+                $event = $row->getEvent();
+                yield $id => $event;
+            } catch (UnserializeFailureException) {
+                yield $id => new Envelope(new ErrorEvent());
+            }
         }
     }
 
@@ -50,6 +62,13 @@ class EntityManagerOutboxReader implements OutboxReaderInterface
         /** @var OutboxMessage */
         $object = $this->entityManager->getReference(OutboxMessage::class, $id);
         $this->entityManager->remove($object);
+    }
+
+    public function flagError(int|string $id): void
+    {
+        /** @var OutboxMessage */
+        $object = $this->entityManager->getReference(OutboxMessage::class, $id);
+        $object->setError(true);
     }
 
     public function flush(): void

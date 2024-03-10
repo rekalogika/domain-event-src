@@ -17,6 +17,7 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\Table;
 use Rekalogika\DomainEvent\Outbox\Exception\LogicException;
 use Rekalogika\DomainEvent\Outbox\Exception\UnserializeFailureException;
@@ -24,6 +25,7 @@ use Symfony\Component\Messenger\Envelope;
 
 #[Entity()]
 #[Table(name: 'rekalogika_event_outbox')]
+#[Index(columns: ['error'])]
 class OutboxMessage
 {
     #[Id]
@@ -34,9 +36,15 @@ class OutboxMessage
     #[Column(type: "text")]
     private string $event;
 
+    #[Column(type: "boolean", options: ["default" => false])]
+    private bool $error = false;
+
+    private ?Envelope $cachedResult = null;
+
     public function __construct(Envelope $event)
     {
-        $this->event = serialize($event);
+        $this->event = base64_encode(serialize($event));
+        $this->cachedResult = $event;
     }
 
     public function getId(): int
@@ -50,7 +58,12 @@ class OutboxMessage
 
     public function getEvent(): Envelope
     {
-        $result = unserialize($this->event);
+        if (null !== $this->cachedResult) {
+            return $this->cachedResult;
+        }
+
+        $decoded = base64_decode($this->event);
+        $result = unserialize($decoded);
 
         if (false === $result) {
             throw new UnserializeFailureException($this->event);
@@ -60,6 +73,18 @@ class OutboxMessage
             throw new UnserializeFailureException($this->event);
         }
 
-        return $result;
+        return $this->cachedResult = $result;
+    }
+
+    public function isError(): bool
+    {
+        return $this->error;
+    }
+
+    public function setError(bool $error): self
+    {
+        $this->error = $error;
+
+        return $this;
     }
 }
