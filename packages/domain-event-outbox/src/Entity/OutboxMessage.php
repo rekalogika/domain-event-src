@@ -25,7 +25,7 @@ use Symfony\Component\Messenger\Envelope;
 
 #[Entity()]
 #[Table(name: 'rekalogika_event_outbox')]
-#[Index(columns: ['error'])]
+#[Index(fields: ['error'])]
 class OutboxMessage
 {
     #[Id]
