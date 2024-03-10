@@ -15,6 +15,7 @@ use Rekalogika\DomainEvent\Event\DomainEventPreFlushDispatchEvent;
 use Rekalogika\DomainEvent\Outbox\Command\MessageRelayCommand;
 use Rekalogika\DomainEvent\Outbox\Doctrine\OutboxReaderFactory;
 use Rekalogika\DomainEvent\Outbox\EventListener\DomainEventDispatchListener;
+use Rekalogika\DomainEvent\Outbox\EventListener\RenameTableListener;
 use Rekalogika\DomainEvent\Outbox\Message\MessageRelayStartMessage;
 use Rekalogika\DomainEvent\Outbox\MessageHandler\MessageRelayStartMessageHandler;
 use Rekalogika\DomainEvent\Outbox\MessagePreparer\ChainMessagePreparer;
@@ -90,6 +91,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             '$domainEventBus' => service('rekalogika.domain_event.bus'),
             '$handlersLocator' => service('rekalogika.domain_event.bus.messenger.handlers_locator'),
             '$lockFactory' => service(LockFactory::class),
+            '$messengerTransport' => '%rekalogika.domain_event.outbox.messenger_transport%',
             '$logger' => service('logger'),
             '$limit' => 100,
         ]);
@@ -117,5 +119,18 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->tag('console.command', [
             'command' => 'rekalogika:domain-event:relay',
             'description' => 'Reads messages from the outbox and relays them to the message bus.',
+        ]);
+
+    $services
+        ->set(
+            'rekalogika.domain_event.outbox.rename_table',
+            RenameTableListener::class
+        )
+        ->args([
+            '$outboxTable' => '%rekalogika.domain_event.outbox.outbox_table%',
+        ])
+        ->tag('doctrine.event_listener', [
+            'event' => 'loadClassMetadata',
+            'lazy' => true,
         ]);
 };

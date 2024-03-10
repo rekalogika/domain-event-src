@@ -12,6 +12,7 @@
 * fix: serialized data corruption in database
 * fix: `DomainEventDispatchListener` event tagging
 * feat: add logging in message relaying
+* feat: configuration for outbox
 
 ## 2.0.1
 
