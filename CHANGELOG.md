@@ -9,6 +9,8 @@
 * test: require `symfony/debug-bundle`
 * feat: allow resolving manager name from manager instance.
 * feat: transactional outbox pattern
+* fix: serialized data corruption in database
+* fix: `DomainEventDispatchListener` event tagging
 
 ## 2.0.1
 

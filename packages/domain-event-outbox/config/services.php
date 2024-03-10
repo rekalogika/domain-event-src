@@ -55,7 +55,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             'event' => DomainEventPreFlushDispatchEvent::class,
             'method' => 'onPreFlushDispatch'
         ])
-        ->tag('kernel.terminate', ['method' => 'onTerminate'])
+        ->tag('kernel.event_listener', [
+            'event' => 'kernel.terminate',
+            'method' => 'onTerminate'
+        ])
         ->tag('kernel.reset', ['method' => 'reset']);;
 
     $services
