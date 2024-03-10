@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Outbox\DependencyInjection;
 
-use Rekalogika\Contracts\DomainEvent\Attribute\AsDomainEventBusListener;
+use Rekalogika\Contracts\DomainEvent\Attribute\AsPublishedDomainEventListener;
 use Rekalogika\DomainEvent\Outbox\MessagePreparerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ChildDefinition;
@@ -45,10 +45,10 @@ class RekalogikaDomainEventOutboxExtension extends Extension
             ->addTag('rekalogika.domain_event.outbox.message_preparer');
 
         $container->registerAttributeForAutoconfiguration(
-            AsDomainEventBusListener::class,
+            AsPublishedDomainEventListener::class,
             static function (
                 ChildDefinition $definition,
-                AsDomainEventBusListener $attribute,
+                AsPublishedDomainEventListener $attribute,
                 \Reflector $reflector
             ): void {
                 if (

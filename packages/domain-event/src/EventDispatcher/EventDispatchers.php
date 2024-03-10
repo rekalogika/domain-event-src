@@ -15,6 +15,9 @@ namespace Rekalogika\DomainEvent\EventDispatcher;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * Contains all the different event dispatchers used in the domain event system.
+ */
 final class EventDispatchers
 {
     public function __construct(

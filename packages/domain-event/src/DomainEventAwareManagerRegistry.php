@@ -18,20 +18,33 @@ use Doctrine\Persistence\ObjectManager;
 
 interface DomainEventAwareManagerRegistry extends ManagerRegistry
 {
+    /**
+     * Gets the real registry that is being decorated by this instance.
+     */
     public function getRealRegistry(): ManagerRegistry;
 
+    /**
+     * Gets the manager name of the given object manager.
+     */
     public function getManagerName(ObjectManager $manager): string;
 
+    /**
+     * The domain-event-aware version of `getManager()`
+     */
     public function getDomainEventAwareManager(
         ObjectManager $objectManager
     ): DomainEventAwareObjectManager;
 
     /**
+     * The domain-event-aware version of `getManagers()`
+     *
      * @return array<string,DomainEventAwareObjectManager>
      */
     public function getDomainEventAwareManagers(): array;
 
     /**
+     * The domain-event-aware version of `getManagerForClass()`
+     *
      * @param class-string $class
      * @return null|DomainEventAwareObjectManager
      */
