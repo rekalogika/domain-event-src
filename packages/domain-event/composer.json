@@ -29,7 +29,7 @@
         "doctrine/orm": "^2.16",
         "doctrine/persistence": "^3.2",
         "psr/event-dispatcher": "^1.0",
-        "rekalogika/domain-event-contracts": "^2.0.1",
+        "rekalogika/domain-event-contracts": "^2.1",
         "symfony/config": "^6.4 || ^7.0",
         "symfony/event-dispatcher": "^6.4 || ^7.0",
         "symfony/dependency-injection": "^6.4 || ^7.0",

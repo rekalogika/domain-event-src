@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent\Outbox\MessageRelay;
 
 use Rekalogika\Contracts\DomainEvent\EquatableDomainEventInterface;
+use Rekalogika\DomainEvent\Outbox\Entity\ErrorEvent;
 use Rekalogika\DomainEvent\Outbox\MessageRelayInterface;
 use Rekalogika\DomainEvent\Outbox\OutboxReaderFactoryInterface;
 use Rekalogika\DomainEvent\Outbox\Stamp\ObjectManagerNameStamp;
@@ -54,6 +55,11 @@ final class MessageRelay implements MessageRelayInterface
                 $i++;
 
                 $message = $envelope->getMessage();
+
+                if ($message instanceof ErrorEvent) {
+                    $outboxReader->flagError($id);
+                    continue;
+                }
 
                 if ($message instanceof EquatableDomainEventInterface) {
                     $signature = $message->getSignature();
