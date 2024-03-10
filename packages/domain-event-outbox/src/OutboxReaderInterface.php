@@ -15,6 +15,9 @@ namespace Rekalogika\DomainEvent\Outbox;
 
 use Symfony\Component\Messenger\Envelope;
 
+/**
+ * Manages the messages in the outbox queue.
+ */
 interface OutboxReaderInterface
 {
     /**

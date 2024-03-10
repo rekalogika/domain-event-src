@@ -16,6 +16,9 @@ namespace Rekalogika\DomainEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Rekalogika\Contracts\DomainEvent\DomainEventImmediateDispatcher;
 
+/**
+ * Installs and uninstalls the immediate domain event dispatcher.
+ */
 final class ImmediateDomainEventDispatcherInstaller
 {
     public function __construct(

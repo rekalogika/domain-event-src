@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Tests\Framework\EventListener;
 
-use Rekalogika\Contracts\DomainEvent\Attribute\AsDomainEventBusListener;
+use Rekalogika\Contracts\DomainEvent\Attribute\AsPublishedDomainEventListener;
 use Rekalogika\DomainEvent\Tests\Framework\Event2\PostChanged;
 use Rekalogika\DomainEvent\Tests\Framework\Event2\PostCreated;
 use Rekalogika\DomainEvent\Tests\Framework\Event2\PostRemoved;
@@ -31,13 +31,13 @@ final class PostEventEventBusListener
     //     $this->onCreateCalled = true;
     // }
 
-    #[AsDomainEventBusListener()]
+    #[AsPublishedDomainEventListener()]
     public function onChange(PostChanged $event): void
     {
         $this->onChangeCalled++;
     }
 
-    #[AsDomainEventBusListener()]
+    #[AsPublishedDomainEventListener()]
     public function onRemove(PostRemoved $event): void
     {
         $this->onRemoveCalled = true;

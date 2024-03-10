@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Tests\Framework\EventListener;
 
-use Rekalogika\Contracts\DomainEvent\Attribute\AsDomainEventBusListener;
+use Rekalogika\Contracts\DomainEvent\Attribute\AsPublishedDomainEventListener;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookChanged;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookCreated;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookRemoved;
@@ -31,13 +31,13 @@ final class BookEventEventBusListener
     //     $this->onCreateCalled = true;
     // }
 
-    #[AsDomainEventBusListener()]
+    #[AsPublishedDomainEventListener()]
     public function onChange(BookChanged $event): void
     {
         $this->onChangeCalled++;
     }
 
-    #[AsDomainEventBusListener()]
+    #[AsPublishedDomainEventListener()]
     public function onRemove(BookRemoved $event): void
     {
         $this->onRemoveCalled = true;

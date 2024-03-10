@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Outbox;
 
+/**
+ * Creates outbox readers.
+ */
 interface OutboxReaderFactoryInterface
 {
     public function createOutboxReader(string $managerName): OutboxReaderInterface;

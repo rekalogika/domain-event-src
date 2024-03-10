@@ -21,6 +21,9 @@ use Doctrine\Persistence\ObjectManager;
 use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
 use Rekalogika\DomainEvent\DomainEventAwareManagerRegistry;
 
+/**
+ * Listen to Doctrine events to collect domain events
+ */
 final class DoctrineEventListener
 {
     public function __construct(

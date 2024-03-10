@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Contracts\DomainEvent\Attribute;
 
 #[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
-class AsDomainEventBusListener
+class AsPublishedDomainEventListener
 {
     public function __construct(
         public ?string $event = null,
