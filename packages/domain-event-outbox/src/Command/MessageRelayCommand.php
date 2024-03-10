@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent\Outbox\Command;
 
 use Rekalogika\DomainEvent\Outbox\MessageRelayInterface;
-use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

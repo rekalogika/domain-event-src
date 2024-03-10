@@ -45,7 +45,7 @@ class EntityManagerOutboxReader implements OutboxReaderInterface
 
         foreach ($result as $row) {
             assert($row instanceof OutboxMessage);
-            
+
             $id = $row->getId();
 
             try {
