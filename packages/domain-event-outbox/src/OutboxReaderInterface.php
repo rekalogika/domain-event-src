@@ -21,7 +21,7 @@ interface OutboxReaderInterface
      * Gets messages from the outbox queue. Starting from the earlier first.
      * Should implicitly start a transaction, that will be committed using
      * `flush()`.
-     * 
+     *
      * @return iterable<int|string,Envelope>
      */
     public function getOutboxMessages(int $limit): iterable;
