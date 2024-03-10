@@ -35,6 +35,7 @@ final class MessageRelay implements MessageRelayInterface
         private readonly HandlersLocatorInterface $handlersLocator,
         private readonly MessageBusInterface $domainEventBus,
         private readonly LockFactory $lockFactory,
+        private string $messengerTransport,
         ?LoggerInterface $logger = null,
         private readonly int $limit = 100
     ) {
@@ -81,7 +82,7 @@ final class MessageRelay implements MessageRelayInterface
 
                 if ($this->messageHasHandlers($envelope)) {
                     $envelope = $envelope
-                        ->with(new TransportNamesStamp(['rekalogika.domain_event.transport']))
+                        ->with(new TransportNamesStamp([$this->messengerTransport]))
                         ->with(new ObjectManagerNameStamp($managerName));
 
                     $this->domainEventBus->dispatch($envelope);
