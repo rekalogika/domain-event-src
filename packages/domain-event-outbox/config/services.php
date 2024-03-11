@@ -91,7 +91,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             '$domainEventBus' => service('rekalogika.domain_event.bus'),
             '$handlersLocator' => service('rekalogika.domain_event.bus.messenger.handlers_locator'),
             '$lockFactory' => service(LockFactory::class),
-            '$messengerTransport' => '%rekalogika.domain_event.outbox.messenger_transport%',
             '$logger' => service('logger'),
             '$limit' => 100,
         ]);

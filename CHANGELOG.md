@@ -14,6 +14,8 @@
 * feat: add logging in message relaying
 * feat: configuration for outbox
 * refactor: use async transport by default
+* refactor: removes `messenger_transport` configuration, and let users configure
+  the routing configuration as usual
 
 ## 2.0.1
 

@@ -24,7 +24,6 @@ use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Handler\HandlersLocatorInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Messenger\Stamp\TransportNamesStamp;
 
 final class MessageRelay implements MessageRelayInterface
 {
@@ -35,7 +34,6 @@ final class MessageRelay implements MessageRelayInterface
         private readonly HandlersLocatorInterface $handlersLocator,
         private readonly MessageBusInterface $domainEventBus,
         private readonly LockFactory $lockFactory,
-        private string $messengerTransport,
         ?LoggerInterface $logger = null,
         private readonly int $limit = 100
     ) {
@@ -82,7 +80,6 @@ final class MessageRelay implements MessageRelayInterface
 
                 if ($this->messageHasHandlers($envelope)) {
                     $envelope = $envelope
-                        ->with(new TransportNamesStamp([$this->messengerTransport]))
                         ->with(new ObjectManagerNameStamp($managerName));
 
                     $this->domainEventBus->dispatch($envelope);
