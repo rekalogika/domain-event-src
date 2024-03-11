@@ -8,17 +8,23 @@ Full documentation is available at
 ## What is a Domain Event?
 
 A domain event is simply a regular event like you would normally use with
-Symfony's EventDispatcher. The difference is that a domain event is dispatched
-by your entities, as opposed to being dispatched from your controllers or other
-services.
+Symfony's EventDispatcher. The difference is that a domain event represents
+something that has happened in your domain. It has a name that is meaningful to
+the underlying business that the domain represents. A domain event is usually
+dispatched by your entities, as opposed to being dispatched from your
+controllers or other services.
 
 ## Why Use Domain Events?
 
-A domain event is dispatched from the part of your code where the event is
-actually happening. Different part of your application might call the same
-method on an entity, directly or indirectly. By using domain events, the event
-will be dispatched in all the cases. No need to make sure to dispatch the event
-from all the different places where the method is called.
+A domain event represents a business event that has happened. It is a good way
+to model 'when something happens, do this' in your domain.
+
+A domain event is raised by the part of your code where the event is actually
+happening. Different part of your application might call the same method on an
+entity. In some cases, the method is called indirectly, and the caller has no
+idea that it is being called. By using domain events, the event will be
+dispatched in all the cases. No need to make sure to dispatch the event from all
+the different places where the method is called.
 
 The application layer (controllers, services) can tell an entity to do
 something, but it cannot reliably know if the action is actually performed, or
@@ -29,12 +35,12 @@ world about it by recording a `BookRemoved` event.
 
 Some problems might tempt you to inject a service into your entity. With domain
 events, you can avoid that. Your entity can dispatch an event, and you can set
-up a listener to react to that event. The relevant services can then act on your
-entity, instead of the other way around.
+up a listener to react to that event. The relevant services can then correctly
+act on your entity, instead of the other way around.
 
 ## Features
 
-* Works out of the box. No configuration is required.
+* Works out of the box. No configuration is required for basic features.
 * Simple, unopinionated architecture. Uses plain event objects, and doesn't
   require much from your domain entities.
 * Uses standard Symfony's event dispatcher, with the same dispatching semantics
