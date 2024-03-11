@@ -90,7 +90,7 @@ final class OutboxTest extends DomainEventTestCase
     private function assertMessagesInTransport(): void
     {
         // get transport
-        $transport = $this->getContainer()->get('messenger.transport.rekalogika.domain_event.transport');
+        $transport = $this->getContainer()->get('messenger.transport.async');
         $this->assertInstanceOf(InMemoryTransport::class, $transport);
 
         // get sent messages
@@ -108,7 +108,7 @@ final class OutboxTest extends DomainEventTestCase
 
         $sentStamp = $first->last(SentStamp::class);
         $this->assertInstanceOf(SentStamp::class, $sentStamp);
-        $this->assertEquals('rekalogika.domain_event.transport', $sentStamp->getSenderAlias());
+        $this->assertEquals('async', $sentStamp->getSenderAlias());
 
         $objectManagerNameStamp = $first->last(ObjectManagerNameStamp::class);
         $this->assertInstanceOf(ObjectManagerNameStamp::class, $objectManagerNameStamp);
@@ -125,7 +125,7 @@ final class OutboxTest extends DomainEventTestCase
 
         $sentStamp = $second->last(SentStamp::class);
         $this->assertInstanceOf(SentStamp::class, $sentStamp);
-        $this->assertEquals('rekalogika.domain_event.transport', $sentStamp->getSenderAlias());
+        $this->assertEquals('async', $sentStamp->getSenderAlias());
 
         $objectManagerNameStamp = $second->last(ObjectManagerNameStamp::class);
         $this->assertInstanceOf(ObjectManagerNameStamp::class, $objectManagerNameStamp);

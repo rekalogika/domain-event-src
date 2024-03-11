@@ -1,7 +1,7 @@
 framework:
     messenger:
         transports:
-            rekalogika.domain_event.transport: "in-memory://"
+            async: "in-memory://"
 
         default_bus: messenger.bus.default
 
