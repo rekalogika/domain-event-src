@@ -1,7 +1,7 @@
 # rekalogika/domain-event-outbox
 
-Implementation of the outbox pattern on top of the `rekalogika/domain-event`
-package.
+Implementation of the transactional outbox pattern on top of the
+`rekalogika/domain-event` package.
 
 ## Documentation
 
