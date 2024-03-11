@@ -13,13 +13,14 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Exception;
 
+use Rekalogika\DomainEvent\Model\DomainEventStore;
+
 class UndispatchedEventsException extends LogicException
 {
-    /**
-     * @param array<int|string,object> $events
-     */
-    public function __construct(array $events)
+    public function __construct(DomainEventStore $preFlushEvents, DomainEventStore $postFlushEvents)
     {
-        parent::__construct(sprintf('There are still %d undispatched domain events. If you disable autodispatch, you have to dispatch them manually or clear them.', count($events)));
+        $num = count($preFlushEvents) + count($postFlushEvents);
+
+        parent::__construct(sprintf('There are still %d undispatched domain events. If you disable autodispatch, you have to dispatch them manually or clear them.', $num));
     }
 }
