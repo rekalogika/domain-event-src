@@ -25,11 +25,6 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('messenger_transport')
-                    ->info('Messenger transport ID used to send the outbox messages.')
-                    ->defaultValue('async')
-                ->end()
-
                 ->scalarNode('outbox_table')
                     ->info('Table name used to store the outbox messages.')
                     ->defaultValue('rekalogika_event_outbox')

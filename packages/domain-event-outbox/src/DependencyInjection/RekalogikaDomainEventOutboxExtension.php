@@ -47,10 +47,6 @@ class RekalogikaDomainEventOutboxExtension extends Extension
         assert(is_string($outboxTable), 'The "outbox_table" option must be a string.');
         $container->setParameter('rekalogika.domain_event.outbox.outbox_table', $outboxTable);
 
-        $messengerTransport = $config['messenger_transport'] ?? null;
-        assert(is_string($messengerTransport), 'The "messenger_transport" option must be a string.');
-        $container->setParameter('rekalogika.domain_event.outbox.messenger_transport', $messengerTransport);
-
         $container
             ->registerForAutoconfiguration(MessagePreparerInterface::class)
             ->addTag('rekalogika.domain_event.outbox.message_preparer');

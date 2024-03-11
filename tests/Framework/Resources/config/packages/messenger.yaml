@@ -11,3 +11,5 @@ framework:
                 default_middleware:
                     allow_no_handlers: true
 
+        routing:
+            'Rekalogika\DomainEvent\Tests\*': async
