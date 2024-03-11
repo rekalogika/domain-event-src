@@ -13,6 +13,7 @@
 * fix: `DomainEventDispatchListener` event tagging
 * feat: add logging in message relaying
 * feat: configuration for outbox
+* refactor: use async transport by default
 
 ## 2.0.1
 

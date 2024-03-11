@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('messenger_transport')
                     ->info('Messenger transport ID used to send the outbox messages.')
-                    ->defaultValue('rekalogika.domain_event.transport')
+                    ->defaultValue('async')
                 ->end()
 
                 ->scalarNode('outbox_table')
