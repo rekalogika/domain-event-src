@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.0
+
+* refactor: spin off `DomainEventStore` from `DomainEventAwareEntityManager` for
+  better separation of concerns & easy reuse.
+
 ## 2.1.0
 
 * feat: Transaction support.
