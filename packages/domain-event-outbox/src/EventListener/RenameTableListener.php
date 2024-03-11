@@ -17,7 +17,7 @@ use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Rekalogika\DomainEvent\Outbox\Entity\OutboxMessage;
 
 /**
- * Listen when a domain event is dispatched, and save it to the outbox table.
+ * Renames the outbox table according to the configuration.
  */
 class RenameTableListener
 {
