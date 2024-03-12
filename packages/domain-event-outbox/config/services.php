@@ -24,6 +24,7 @@ use Rekalogika\DomainEvent\Outbox\MessageRelay\MessageRelay;
 use Rekalogika\DomainEvent\Outbox\MessageRelay\MessageRelayAll;
 use Rekalogika\DomainEvent\Outbox\MessageRelayInterface;
 use Rekalogika\DomainEvent\Outbox\OutboxReaderFactoryInterface;
+use Rekalogika\DomainEvent\Outbox\Schedule\MessageRelayProvider;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -143,5 +144,16 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->args([
             '$managerRegistry' => service('doctrine'),
             '$messageRelay' => service(MessageRelayInterface::class),
+        ]);
+
+    $services
+        ->set(
+            MessageRelayProvider::class
+        )
+        ->args([
+            '$entityManagers' => '%doctrine.entity_managers%',
+        ])
+        ->tag('scheduler.schedule_provider', [
+            'name' => 'default',
         ]);
 };

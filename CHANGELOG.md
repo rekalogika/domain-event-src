@@ -7,6 +7,7 @@
 * feat: full transaction support for postFlush
 * fix: override `transactional()` and `wrapInTransaction()`
 * feat: function to relay messages from all entity managers
+* feat: add schedule to relay message every 1 hour
 
 ## 2.1.0
 
