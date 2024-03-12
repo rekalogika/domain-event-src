@@ -11,7 +11,7 @@
     ],
     "require": {
         "doctrine/doctrine-bundle": "^2.11.3 || ^2.12",
-        "doctrine/orm": "^2.16 || ^3.0 || ^3.1",
+        "doctrine/orm": "^2.16 || ^3.0",
         "doctrine/persistence": "^3.2",
         "psr/event-dispatcher": "^1.0",
         "symfony/config": "^6.4 || ^7.0",
