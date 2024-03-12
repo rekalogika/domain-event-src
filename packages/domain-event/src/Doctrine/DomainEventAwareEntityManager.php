@@ -25,6 +25,7 @@ use Rekalogika\DomainEvent\Exception\FlushNotAllowedException;
 use Rekalogika\DomainEvent\Exception\SafeguardTriggeredException;
 use Rekalogika\DomainEvent\Exception\UndispatchedEventsException;
 use Rekalogika\DomainEvent\Model\DomainEventStore;
+use Rekalogika\DomainEvent\Model\TransactionAwareDomainEventStore;
 use Symfony\Contracts\Service\ResetInterface;
 
 /**
@@ -38,7 +39,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
     private bool $autodispatch = true;
 
     private readonly DomainEventStore $preFlushDomainEvents;
-    private readonly DomainEventStore $postFlushDomainEvents;
+    private readonly TransactionAwareDomainEventStore $postFlushDomainEvents;
 
     /**
      * Safeguard for infinite loop
@@ -52,7 +53,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         parent::__construct($wrapped);
 
         $this->preFlushDomainEvents = new DomainEventStore();
-        $this->postFlushDomainEvents = new DomainEventStore();
+        $this->postFlushDomainEvents = new TransactionAwareDomainEventStore();
     }
 
     public function getObjectManager(): ObjectManager
@@ -198,8 +199,15 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         }
     }
 
+    public function beginTransaction()
+    {
+        $this->postFlushDomainEvents->beginTransaction();
+        parent::beginTransaction();
+    }
+
     public function commit(): void
     {
+        $this->postFlushDomainEvents->commit();
         parent::commit();
 
         if ($this->autodispatch && !$this->getConnection()->isTransactionActive()) {
@@ -210,8 +218,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
     public function rollback(): void
     {
         parent::rollback();
-
-        $this->clearDomainEvents();
+        $this->postFlushDomainEvents->rollback();
     }
 
     private function hasPendingEvents(): bool

@@ -22,6 +22,7 @@ use Rekalogika\Contracts\DomainEvent\DomainEventEmitterTrait;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookChanged;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookChecked;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookCreated;
+use Rekalogika\DomainEvent\Tests\Framework\Event\BookDummyChanged;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookDummyMethodCalled;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookDummyMethodForFlushCalled;
 use Rekalogika\DomainEvent\Tests\Framework\Event\BookDummyMethodForInfiniteLoopCalled;
@@ -47,6 +48,9 @@ class Book implements DomainEventEmitterInterface
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
+
+    #[ORM\Column(type: Types::STRING)]
+    private string $dummy = 'dummy';
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeInterface $lastChecked = null;
@@ -181,5 +185,22 @@ class Book implements DomainEventEmitterInterface
     public function getLastChecked(): ?\DateTimeInterface
     {
         return $this->lastChecked;
+    }
+
+    public function getDummy(): string
+    {
+        return $this->dummy;
+    }
+
+    public function setDummy(string $dummy): self
+    {
+        $previous = $this->dummy;
+        $this->dummy = $dummy;
+
+        if ($previous !== $dummy) {
+            $this->recordEvent(new BookDummyChanged($previous, $dummy));
+        }
+
+        return $this;
     }
 }

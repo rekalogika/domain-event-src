@@ -151,15 +151,8 @@ final class TransactionTest extends DomainEventTestCase
         $this->assertEquals(1, $preFlushListener->onChangeCalled());
         $this->assertEquals(0, $postFlushListener->onChangeCalled());
 
-        $events = $this->entityManager->popDomainEvents();
-        $numEvents = 0;
-        foreach ($events as $event) {
-            $numEvents++;
-        }
-
         $this->entityManager->rollback();
 
-        $this->assertGreaterThan(0, $numEvents);
         $this->assertEquals(1, $preFlushListener->onChangeCalled());
         $this->assertEquals(0, $postFlushListener->onChangeCalled());
     }

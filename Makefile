@@ -40,3 +40,7 @@ php-cs-fixer: tools/php-cs-fixer
 .PHONY: tools/php-cs-fixer
 tools/php-cs-fixer:
 	phive install php-cs-fixer
+
+.PHONY: dump
+dump:
+	tests/bin/console server:dump

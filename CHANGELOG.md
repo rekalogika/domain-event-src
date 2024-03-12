@@ -4,6 +4,7 @@
 
 * refactor: spin off `DomainEventStore` from `DomainEventAwareEntityManager` for
   better separation of concerns & easy reuse.
+* feat: full transaction support for postFlush
 
 ## 2.1.0
 
