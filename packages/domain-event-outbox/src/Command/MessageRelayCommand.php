@@ -13,10 +13,12 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Outbox\Command;
 
+use Rekalogika\DomainEvent\Outbox\MessageRelay\MessageRelayAll;
 use Rekalogika\DomainEvent\Outbox\MessageRelayInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -27,6 +29,7 @@ final class MessageRelayCommand extends Command
     public function __construct(
         private string $defaultManagerName,
         private MessageRelayInterface $messageRelay,
+        private MessageRelayAll $messageRelayAll,
     ) {
         parent::__construct();
     }
@@ -38,11 +41,25 @@ final class MessageRelayCommand extends Command
             mode: InputArgument::OPTIONAL,
             description: 'The name of the entity manager to relay messages from.',
         );
+
+        $this->addOption(
+            name: 'all',
+            shortcut: 'a',
+            mode: InputOption::VALUE_NONE,
+            description: 'Relay messages from all entity managers.',
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $managerName = $input->getArgument('managerName') ?? $this->defaultManagerName;
+        $isAll = (bool) $input->getOption('all');
+
+        if ($isAll) {
+            $this->messageRelayAll->relayAll();
+
+            return Command::SUCCESS;
+        }
 
         if (!is_string($managerName)) {
             throw new \InvalidArgumentException('The manager name must be a string.');
