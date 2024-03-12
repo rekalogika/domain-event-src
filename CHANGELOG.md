@@ -6,6 +6,7 @@
   better separation of concerns & easy reuse.
 * feat: full transaction support for postFlush
 * fix: override `transactional()` and `wrapInTransaction()`
+* feat: function to relay messages from all entity managers
 
 ## 2.1.0
 

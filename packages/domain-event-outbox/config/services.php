@@ -21,6 +21,7 @@ use Rekalogika\DomainEvent\Outbox\MessageHandler\MessageRelayStartMessageHandler
 use Rekalogika\DomainEvent\Outbox\MessagePreparer\ChainMessagePreparer;
 use Rekalogika\DomainEvent\Outbox\MessagePreparer\UserIdentifierMessagePreparer;
 use Rekalogika\DomainEvent\Outbox\MessageRelay\MessageRelay;
+use Rekalogika\DomainEvent\Outbox\MessageRelay\MessageRelayAll;
 use Rekalogika\DomainEvent\Outbox\MessageRelayInterface;
 use Rekalogika\DomainEvent\Outbox\OutboxReaderFactoryInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -114,6 +115,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->args([
             '$defaultManagerName' => '%doctrine.default_entity_manager%',
             '$messageRelay' => service(MessageRelayInterface::class),
+            '$messageRelayAll' => service('rekalogika.domain_event.outbox.message_relay_all'),
         ])
         ->tag('console.command', [
             'command' => 'rekalogika:domain-event:relay',
@@ -131,5 +133,15 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->tag('doctrine.event_listener', [
             'event' => 'loadClassMetadata',
             'lazy' => true,
+        ]);
+
+    $services
+        ->set(
+            'rekalogika.domain_event.outbox.message_relay_all',
+            MessageRelayAll::class
+        )
+        ->args([
+            '$managerRegistry' => service('doctrine'),
+            '$messageRelay' => service(MessageRelayInterface::class),
         ]);
 };
