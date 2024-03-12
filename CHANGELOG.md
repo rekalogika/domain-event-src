@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.1
+
+* feat: run message relay on `console.terminate` event
+
 ## 2.2.0
 
 * refactor: spin off `DomainEventStore` from `DomainEventAwareEntityManager` for
