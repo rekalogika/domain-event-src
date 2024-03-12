@@ -17,7 +17,7 @@ controllers or other services.
 ## Why Use Domain Events?
 
 A domain event represents a business event that has happened. It is a good way
-to model 'when something happens, do this' in your domain.
+to model the business requirements that say "when something happens, do this".
 
 A domain event is raised by the part of your code where the event is actually
 happening. Different part of your application might call the same method on an
@@ -43,13 +43,16 @@ act on your entity, instead of the other way around.
 * Works out of the box. No configuration is required for basic features.
 * Simple, unopinionated architecture. Uses plain event objects, and doesn't
   require much from your domain entities.
-* Uses standard Symfony's event dispatcher, with the same dispatching semantics
+* Uses standard Symfony's EventDispatcher, with the same dispatching semantics
   & listener registrations.
 * Transaction support.
 * Works with multiple entity managers.
-* Transactional outbox pattern support.
-* Four listening strategies: immediate, pre-flush, post-flush, and event bus.
 * Multiple events considered identical are dispatched only once.
+* Four listening strategies: immediate, pre-flush, post-flush, and event bus.
+* Uses Symfony Messenger as the event bus implementation.
+* Utilizes the transactional outbox pattern when publishing events to the event
+  bus to guarantee consistency and delivery.
+* Utilizes Symfony Scheduler to relay undelivered events to the event bus.
 * Does not require you to change how you work with entities.
 * Should work everywhere without any change: in controllers, message handlers,
   command line, etc.
