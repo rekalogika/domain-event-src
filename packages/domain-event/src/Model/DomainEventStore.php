@@ -18,7 +18,7 @@ use Rekalogika\Contracts\DomainEvent\EquatableDomainEventInterface;
 /**
  * @implements \IteratorAggregate<int|string,object>
  */
-final class DomainEventStore implements \IteratorAggregate, \Countable
+class DomainEventStore implements \IteratorAggregate, \Countable
 {
     /**
      * @var array<int|string,object>
