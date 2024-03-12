@@ -221,6 +221,50 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         $this->postFlushDomainEvents->rollback();
     }
 
+    public function transactional($func): mixed
+    {
+        if (!is_callable($func)) {
+            throw new \InvalidArgumentException('Expected argument of type "callable", got "' . gettype($func) . '"');
+        }
+
+        $this->beginTransaction();
+
+        try {
+            /** @psalm-suppress MixedAssignment */
+            $return = $func($this);
+
+            $this->flush();
+            $this->commit();
+
+            return $return ?: true;
+        } catch (\Throwable $e) {
+            $this->close();
+            $this->rollback();
+
+            throw $e;
+        }
+    }
+
+    public function wrapInTransaction(callable $func): mixed
+    {
+        $this->getConnection()->beginTransaction();
+
+        try {
+            /** @psalm-suppress MixedAssignment */
+            $return = $func($this);
+
+            $this->flush();
+            $this->commit();
+
+            return $return;
+        } catch (\Throwable $e) {
+            $this->close();
+            $this->rollback();
+
+            throw $e;
+        }
+    }
+
     private function hasPendingEvents(): bool
     {
         return count($this->preFlushDomainEvents) > 0
