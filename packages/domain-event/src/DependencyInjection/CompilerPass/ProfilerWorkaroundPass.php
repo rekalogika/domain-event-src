@@ -17,6 +17,7 @@ use Doctrine\Bundle\DoctrineBundle\Controller\ProfilerController;
 use Rekalogika\DomainEvent\DependencyInjection\Constants;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 /**
  * Workaround for this error:
@@ -34,9 +35,13 @@ final class ProfilerWorkaroundPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        $doctrine = $container->getDefinition(Constants::REAL_MANAGER_REGISTRY);
+        try {
+            $doctrine = $container->getDefinition(Constants::REAL_MANAGER_REGISTRY);
 
-        $profilerController = $container->getDefinition(ProfilerController::class);
-        $profilerController->setArgument(1, $doctrine);
+            $profilerController = $container->getDefinition(ProfilerController::class);
+            $profilerController->setArgument(1, $doctrine);
+        } catch (ServiceNotFoundException) {
+            // ignore
+        }
     }
 }

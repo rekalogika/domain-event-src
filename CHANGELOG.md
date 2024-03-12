@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.2
+
+* fix: handle case where `ProfilerController` is not available
+
 ## 2.2.1
 
 * feat: run message relay on `console.terminate` event
