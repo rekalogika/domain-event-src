@@ -183,6 +183,10 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
 
     public function flush(mixed $entity = null): void
     {
+        if ($entity !== null) {
+            throw new \InvalidArgumentException('Specifying entity to flush is not supported.');
+        }
+
         if (!$this->flushEnabled) {
             $this->clear();
             throw new FlushNotAllowedException();
@@ -192,14 +196,14 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
             $this->dispatchPreFlushDomainEvents();
         }
 
-        parent::flush($entity);
+        parent::flush();
 
         if ($this->autodispatch && !$this->getConnection()->isTransactionActive()) {
             $this->dispatchPostFlushDomainEvents();
         }
     }
 
-    public function beginTransaction()
+    public function beginTransaction(): void
     {
         $this->postFlushDomainEvents->beginTransaction();
         parent::beginTransaction();
@@ -221,7 +225,10 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         $this->postFlushDomainEvents->rollback();
     }
 
-    public function transactional($func): mixed
+    /**
+     * @deprecated Use `wrapInTransaction` instead
+     */
+    public function transactional(mixed $func): mixed
     {
         if (!is_callable($func)) {
             throw new \InvalidArgumentException('Expected argument of type "callable", got "' . gettype($func) . '"');

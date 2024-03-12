@@ -29,7 +29,11 @@ class RenameTableListener
     {
         $metadata = $event->getClassMetadata();
 
-        if ($metadata->getReflectionClass()->getName() === OutboxMessage::class) {
+        /**
+         * @psalm-suppress RedundantCondition
+         * @psalm-suppress TypeDoesNotContainNull
+         */
+        if ($metadata->getReflectionClass()?->getName() === OutboxMessage::class) {
             $metadata->setPrimaryTable(['name' => $this->outboxTable]);
         }
     }

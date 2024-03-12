@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.0
+
+* fix: ORM 3 compatibility
+
 ## 2.2.3
 
 * fix: commit & rollback without transaction no longer throw an exception

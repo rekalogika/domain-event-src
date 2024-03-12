@@ -20,7 +20,6 @@ doctrine:
             default:
                 connection: default
                 naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
-                report_fields_where_declared: true
                 mappings:
                     Book:
                         is_bundle: false
@@ -30,7 +29,6 @@ doctrine:
             other:
                 connection: other
                 naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
-                report_fields_where_declared: true
                 mappings:
                     Post:
                         is_bundle: false

@@ -41,9 +41,10 @@ final class OutboxEntityPass implements CompilerPassInterface
             }
 
             $pass = DoctrineOrmMappingsPass::createAttributeMappingDriver(
-                ['Rekalogika\DomainEvent\Outbox\Entity'],
-                [$path],
-                [$parameterKey],
+                namespaces: ['Rekalogika\DomainEvent\Outbox\Entity'],
+                directories: [$path],
+                managerParameters: [$parameterKey],
+                reportFieldsWhereDeclared: true,
             );
 
             $pass->process($container);
