@@ -23,6 +23,8 @@
     <issueHandlers>
         <MethodSignatureMismatch errorLevel="info" />
         <PropertyNotSetInConstructor errorLevel="info" />
+        <InvalidAttribute errorLevel="info" />
+        <UndefinedAttributeClass errorLevel="info" />
         <UndefinedMethod>
             <errorLevel type="suppress">
                 <file name="packages/domain-event-outbox/src/DependencyInjection/Configuration.php" />
