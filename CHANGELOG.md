@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.3
+
+* fix: commit & rollback without transaction no longer throw an exception
+
 ## 2.2.2
 
 * fix: handle case where `ProfilerController` is not available
