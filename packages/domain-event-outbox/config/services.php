@@ -62,6 +62,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             'event' => 'kernel.terminate',
             'method' => 'onTerminate'
         ])
+        ->tag('kernel.event_listener', [
+            'event' => 'console.terminate',
+            'method' => 'onTerminate'
+        ])
         ->tag('kernel.reset', ['method' => 'reset']);;
 
     $services
