@@ -77,31 +77,41 @@ class TransactionAwareDomainEventStore extends DomainEventStore
         }
     }
 
-    public function commit(): void
+    /**
+     * @return bool false if there is no transaction in progress
+     */
+    public function commit(): bool
     {
         if ($this->transactionStore === null) {
-            throw new InvalidOperationException('Cannot commit, no transaction in progress');
+            return false;
         }
 
-        try {
-            $this->transactionStore->commit();
-        } catch (InvalidOperationException) {
+        $result = $this->transactionStore->commit();
+
+        if ($result === false) {
             $transactionStore = $this->transactionStore;
             $this->transactionStore = null;
             $this->add($transactionStore->pop());
         }
+
+        return true;
     }
 
-    public function rollback(): void
+    /**
+     * @return bool false if there is no transaction in progress
+     */
+    public function rollback(): bool
     {
         if ($this->transactionStore === null) {
-            throw new InvalidOperationException('Cannot rollback, no transaction in progress');
+            return false;
         }
 
-        try {
-            $this->transactionStore->rollback();
-        } catch (InvalidOperationException) {
+        $result = $this->transactionStore->rollback();
+
+        if ($result === false) {
             $this->transactionStore = null;
         }
+
+        return true;
     }
 }
