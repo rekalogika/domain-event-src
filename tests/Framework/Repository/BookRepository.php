@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent\Tests\Framework\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Rekalogika\DomainEvent\Tests\Framework\Entity\Book;
 
@@ -32,8 +33,8 @@ class BookRepository extends ServiceEntityRepository
         parent::__construct($registry, Book::class);
     }
 
-    public function getEntityManager()
+    public function getEntityManager(): EntityManagerInterface
     {
-        return $this->_em;
+        return parent::getEntityManager();
     }
 }

@@ -28,8 +28,13 @@ class RenameTableListener
     public function loadClassMetadata(LoadClassMetadataEventArgs $event): void
     {
         $metadata = $event->getClassMetadata();
+        $reflectionClass = $metadata->getReflectionClass();
 
-        if ($metadata->getReflectionClass()->getName() === OutboxMessage::class) {
+        if ($reflectionClass === null) {
+            return;
+        }
+
+        if ($reflectionClass->getName() === OutboxMessage::class) {
             $metadata->setPrimaryTable(['name' => $this->outboxTable]);
         }
     }
