@@ -3,6 +3,7 @@
 ## 2.3.1
 
 * fix: invalid version in `composer.json`
+* build: validate monorepo in CI
 
 ## 2.3.0
 
