@@ -1,41 +1,43 @@
+PHP=php
+
 .PHONY: test
-test: clean phpstan psalm lint-container phpunit
+test: clean phpstan psalm monorepo-validate lint-container phpunit
 
 .PHONY: clean
 clean:
 	rm -rf var
 
 .PHONY: monorepo
-monorepo: validate merge
+monorepo: validate monorepo-merge
 
-.PHONY: merge
-merge:
-	vendor/bin/monorepo-builder merge
+.PHONY: monorepo-merge
+monorepo-merge:
+	$(PHP) vendor/bin/monorepo-builder merge
 
 .PHONY: validate
-validate:
-	vendor/bin/monorepo-builder validate
+monorepo-validate:
+	$(PHP) vendor/bin/monorepo-builder validate
 
 .PHONY: lint-container
 lint-container:
-	tests/bin/console lint:container
+	$(PHP) tests/bin/console lint:container
 
 .PHONY: phpstan
 phpstan:
-	vendor/bin/phpstan analyse
+	$(PHP) vendor/bin/phpstan analyse
 
 .PHONY: psalm
 psalm:
-	vendor/bin/psalm
+	$(PHP) vendor/bin/psalm
 
 .PHONY: phpunit
 phpunit: clean
 	$(eval c ?=)
-	vendor/bin/phpunit $(c)
+	$(PHP) vendor/bin/phpunit $(c)
 
 .PHONY: php-cs-fixer
 php-cs-fixer: tools/php-cs-fixer
-	$< fix --config=.php-cs-fixer.dist.php --verbose --allow-risky=yes
+	$(PHP) $< fix --config=.php-cs-fixer.dist.php --verbose --allow-risky=yes
 
 .PHONY: tools/php-cs-fixer
 tools/php-cs-fixer:
@@ -43,4 +45,4 @@ tools/php-cs-fixer:
 
 .PHONY: dump
 dump:
-	tests/bin/console server:dump
+	$(PHP) tests/bin/console server:dump
