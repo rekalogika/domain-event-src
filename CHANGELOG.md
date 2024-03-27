@@ -4,6 +4,7 @@
 
 * fix: invalid version in `composer.json`
 * build: validate monorepo in CI
+* build: update phpunit
 
 ## 2.3.0
 
