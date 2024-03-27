@@ -95,7 +95,6 @@ class Post implements DomainEventEmitterInterface
     public function setTitle(string $title): void
     {
         $this->title = $title;
-        // highlight-next-line
         $this->recordEvent(new PostChanged($this->id));
     }
 
@@ -113,7 +112,6 @@ class PostEventListener
 {
     public function __construct(private LoggerInterface $logger) {}
     
-    // highlight-next-line
     #[AsPostFlushDomainEventListener]
     public function onPostChanged(PostChanged $event) {
         $postId = $event->postId;
