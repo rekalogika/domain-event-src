@@ -65,6 +65,7 @@ act on your entity, instead of the other way around.
 
 * Support for Doctrine MongoDB ODM.
 * Support event inheritance.
+* Deprecate `__remove()` and use a method tagged with an attribute instead.
 
 ## Synopsis
 

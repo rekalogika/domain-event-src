@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.1
+
+* fix: invalid version in `composer.json`
+
 ## 2.3.0
 
 * fix: ORM 3 compatibility
