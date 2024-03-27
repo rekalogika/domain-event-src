@@ -135,6 +135,15 @@ $entityManager->flush();
 // appear in the log file
 ```
 
+## Installation
+
+Ensure that Symfony Flex is enabled (it is enabled by default). Open a command
+console, enter your project directory and execute:
+
+```bash
+composer require rekalogika/domain-event
+```
+
 ## Documentation
 
 [rekalogika.dev/domain-event](https://rekalogika.dev/domain-event).
