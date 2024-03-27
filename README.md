@@ -59,7 +59,7 @@ use Rekalogika\Contracts\DomainEvent\DomainEventEmitterTrait;
 
 class Post implements DomainEventEmitterInterface
 {
-    use DomainEventAwareEntityTrait;
+    use DomainEventEmitterTrait;
     
     // ...
 
