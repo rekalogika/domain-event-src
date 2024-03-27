@@ -1,4 +1,4 @@
-# rekalogika/domain-event-src
+# rekalogika/domain-event
 
 An implementation of domain event pattern for Symfony & Doctrine.
 
@@ -157,7 +157,7 @@ composer require rekalogika/domain-event
 
 ## Documentation
 
-[rekalogika.dev/domain-event](https://rekalogika.dev/domain-event).
+[rekalogika.dev/domain-event](https://rekalogika.dev/domain-event)
 
 ## License
 

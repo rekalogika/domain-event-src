@@ -34,9 +34,88 @@ actually removed. And if the event actually happened, the entity can tell the
 world about it by recording a `BookRemoved` event.
 
 Some problems might tempt you to inject a service into your entity. With domain
-events, you can avoid that. Your entity can dispatch an event, and you can set
+events, you can avoid that. You can make your entity dispatch an event, and set
 up a listener to react to that event. The relevant services can then correctly
 act on your entity, instead of the other way around.
+
+## Synopsis
+
+```php
+//
+// The event
+//
+
+final readonly class PostPublished
+{
+    public function __construct(public string $postId) {}
+}
+
+//
+// The entity
+//
+
+use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
+use Rekalogika\Contracts\DomainEvent\DomainEventEmitterTrait;
+
+class Post implements DomainEventEmitterInterface
+{
+    use DomainEventAwareEntityTrait;
+    
+    // ...
+
+    public function setStatus(string $status): void
+    {
+        $originalStatus = $this->status;
+        $this->status = $status;
+
+        // records the published event if the new status is published and it
+        // is different from the original status
+
+        if ($status === 'published' && $originalStatus !== $status) {
+            $this->recordEvent(new PostPublished($this->id));
+        }
+    }
+
+    // ...
+}
+
+//
+// The listener
+//
+
+use Psr\Log\LoggerInterface;
+use Rekalogika\Contracts\DomainEvent\Attribute\AsPostFlushDomainEventListener;
+
+class PostEventListener
+{
+    public function __construct(private LoggerInterface $logger) {}
+
+    // will be called after the post is published and the entity manager is
+    // flushed
+    
+    #[AsPostFlushDomainEventListener]
+    public function onPostPublished(PostPublished $event) {
+        $postId = $event->postId;
+
+        $this->logger->info("Post $postId has been published.");
+    }
+}
+
+//
+// The caller
+//
+
+use Doctrine\ORM\EntityManagerInterface;
+
+/** @var Post $post */
+/** @var EntityManagerInterface $entityManager */
+
+$post->setStatus('published');
+$entityManager->flush();
+
+// the event will be dispatched after the flush above, afterwards the listener
+// above will be called, sending a message to the logger
+```
 
 ## Features
 
@@ -65,84 +144,24 @@ act on your entity, instead of the other way around.
 
 * Support for Doctrine MongoDB ODM.
 * Support event inheritance.
+* Deprecate `__remove()` and use a method tagged with an attribute instead.
 
-## Synopsis
+## Installation
 
-```php
-//
-// The event
-//
+Ensure that Symfony Flex is enabled (it is enabled by default). Open a command
+console, enter your project directory and execute:
 
-final readonly class PostChanged
-{
-    public function __construct(public string $postId) {}
-}
-
-//
-// The entity
-//
-
-use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
-use Rekalogika\Contracts\DomainEvent\DomainEventEmitterTrait;
-
-class Post implements DomainEventEmitterInterface
-{
-    use DomainEventAwareEntityTrait;
-    
-    // ...
-
-    public function setTitle(string $title): void
-    {
-        $this->title = $title;
-        // highlight-next-line
-        $this->recordEvent(new PostChanged($this->id));
-    }
-
-    // ...
-}
-
-//
-// The listener
-//
-
-use Psr\Log\LoggerInterface;
-use Rekalogika\Contracts\DomainEvent\Attribute\AsPostFlushDomainEventListener;
-
-class PostEventListener
-{
-    public function __construct(private LoggerInterface $logger) {}
-    
-    // highlight-next-line
-    #[AsPostFlushDomainEventListener]
-    public function onPostChanged(PostChanged $event) {
-        $postId = $event->postId;
-
-        $this->logger->info("Post $postId has been changed.");
-    }
-}
-
-//
-// The caller
-//
-
-use Doctrine\ORM\EntityManagerInterface;
-
-/** @var Post $post */
-/** @var EntityManagerInterface $entityManager */
-
-$post->setTitle('New title');
-$entityManager->flush();
-// the event is dispatched after the flush above, and a message will
-// appear in the log file
+```bash
+composer require rekalogika/domain-event
 ```
 
 ## Documentation
 
-[rekalogika.dev/domain-event](https://rekalogika.dev/domain-event).
+[rekalogika.dev/domain-event](https://rekalogika.dev/domain-event)
 
 ## License
 
-**MIT**
+MIT
 
 ## Contributing
 

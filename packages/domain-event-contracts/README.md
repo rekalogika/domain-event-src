@@ -5,7 +5,7 @@ domain objects utilizing the `rekalogika/domain-event` framework.
 
 ## Documentation
 
-[rekalogika.dev/domain-event](https://rekalogika.dev/domain-event).
+[rekalogika.dev/domain-event](https://rekalogika.dev/domain-event)
 
 ## License
 
