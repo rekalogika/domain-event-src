@@ -53,7 +53,7 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
         $this->objectManagerToName = $weakMap;
 
         foreach ($decoratedObjectManagers as $name => $decoratedObjectManager) {
-            if (!is_string($name)) {
+            if (!\is_string($name)) {
                 throw new \InvalidArgumentException('Decorated object manager name must be a string');
             }
 
@@ -72,7 +72,7 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
         }
 
         return $this->objectManagerToName[$manager]
-            ?? throw new \InvalidArgumentException(sprintf('Manager "%s" is not registered', get_class($manager)));
+            ?? throw new \InvalidArgumentException(sprintf('Manager "%s" is not registered', \get_class($manager)));
     }
 
     public function getDomainEventAwareManagers(): array

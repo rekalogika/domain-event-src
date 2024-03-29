@@ -31,7 +31,7 @@ final class BookDummyMethodForNestedRecordEventListener
     {
         $bookId = $event->getId();
         $book = $this->entityManager->find(Book::class, $bookId);
-        assert($book instanceof Book);
+        \assert($book instanceof Book);
         $book->dummyMethod();
 
         $this->dummyMethodForNestedRecordEventCalled = true;

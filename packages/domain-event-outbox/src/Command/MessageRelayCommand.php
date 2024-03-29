@@ -61,7 +61,7 @@ final class MessageRelayCommand extends Command
             return Command::SUCCESS;
         }
 
-        if (!is_string($managerName)) {
+        if (!\is_string($managerName)) {
             throw new \InvalidArgumentException('The manager name must be a string.');
         }
 

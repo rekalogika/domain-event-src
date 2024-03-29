@@ -30,7 +30,7 @@ final class Entity implements DomainEventEmitterInterface
     public function __construct(
         private string $name,
     ) {
-        $this->id = \bin2hex(\random_bytes(16));
+        $this->id = bin2hex(random_bytes(16));
 
         $this->recordEvent(new EntityCreated($this));
     }
