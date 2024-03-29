@@ -29,7 +29,7 @@ final class BookDummyMethodForInfiniteLoopCalledListener
     {
         $bookId = $event->getId();
         $book = $this->entityManager->find(Book::class, $bookId);
-        assert($book instanceof Book);
+        \assert($book instanceof Book);
 
         $book->dummyMethodForInfiniteLoop();
     }

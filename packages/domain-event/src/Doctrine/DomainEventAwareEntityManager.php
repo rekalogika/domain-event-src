@@ -109,7 +109,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
 
     private function preFlushDispatch(): int
     {
-        $num = count($this->preFlushDomainEvents);
+        $num = \count($this->preFlushDomainEvents);
         $events = $this->preFlushDomainEvents->pop();
 
         foreach ($events as $event) {
@@ -127,7 +127,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
 
     public function dispatchPostFlushDomainEvents(): int
     {
-        $num = count($this->postFlushDomainEvents);
+        $num = \count($this->postFlushDomainEvents);
         $events = $this->postFlushDomainEvents->pop();
         // for safeguard we also clear preflush events here
         $this->preFlushDomainEvents->clear();
@@ -230,8 +230,8 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
      */
     public function transactional(mixed $func): mixed
     {
-        if (!is_callable($func)) {
-            throw new \InvalidArgumentException('Expected argument of type "callable", got "' . gettype($func) . '"');
+        if (!\is_callable($func)) {
+            throw new \InvalidArgumentException('Expected argument of type "callable", got "' . \gettype($func) . '"');
         }
 
         $this->beginTransaction();
@@ -274,8 +274,8 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
 
     private function hasPendingEvents(): bool
     {
-        return count($this->preFlushDomainEvents) > 0
-            || count($this->postFlushDomainEvents) > 0;
+        return \count($this->preFlushDomainEvents) > 0
+            || \count($this->postFlushDomainEvents) > 0;
     }
 
     public function __destruct()

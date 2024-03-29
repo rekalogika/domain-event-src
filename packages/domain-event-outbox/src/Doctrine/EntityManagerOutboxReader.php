@@ -41,10 +41,10 @@ class EntityManagerOutboxReader implements OutboxReaderInterface
             ->setMaxResults($limit);
 
         $result = $queryBuilder->getQuery()->getResult();
-        assert(is_array($result));
+        \assert(\is_array($result));
 
         foreach ($result as $row) {
-            assert($row instanceof OutboxMessage);
+            \assert($row instanceof OutboxMessage);
 
             $id = $row->getId();
 

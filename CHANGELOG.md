@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.2
+
+* chore: enable native_function_invocation in php-cs-fixer
+
 ## 2.3.1
 
 * fix: invalid version in `composer.json`

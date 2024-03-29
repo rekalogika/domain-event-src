@@ -26,7 +26,7 @@ final class EntityManagerDecoratorPass implements CompilerPassInterface
     public function process(ContainerBuilder $container): void
     {
         $entityManagers = $container->getParameter('doctrine.entity_managers');
-        assert(is_array($entityManagers));
+        \assert(\is_array($entityManagers));
 
         $eventDispatchers = $container->getDefinition(Constants::EVENT_DISPATCHERS);
 

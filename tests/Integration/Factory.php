@@ -22,7 +22,7 @@ class Factory
     public static function mockEntityManager(): EntityManagerInterface
     {
         $entityManager = \Mockery::mock(EntityManagerInterface::class);
-        assert($entityManager instanceof EntityManagerInterface);
+        \assert($entityManager instanceof EntityManagerInterface);
 
         return $entityManager;
     }
@@ -30,7 +30,7 @@ class Factory
     public static function mockManagerRegistry(): ManagerRegistry
     {
         $managerRegistry = \Mockery::mock(ManagerRegistry::class);
-        assert($managerRegistry instanceof ManagerRegistry);
+        \assert($managerRegistry instanceof ManagerRegistry);
 
         return $managerRegistry;
     }
@@ -38,7 +38,7 @@ class Factory
     public static function mockEventDispatcher(): EventDispatcherInterface
     {
         $eventDispatcher = \Mockery::mock(EventDispatcherInterface::class);
-        assert($eventDispatcher instanceof EventDispatcherInterface);
+        \assert($eventDispatcher instanceof EventDispatcherInterface);
 
         return $eventDispatcher;
     }

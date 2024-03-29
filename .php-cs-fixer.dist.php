@@ -30,6 +30,7 @@ return $config->setRules([
     'no_useless_else' => true,
     'no_useless_return' => true,
     'declare_strict_types' => true,
+    'native_function_invocation' => ['include' => ['@compiler_optimized']],
     'header_comment' => [
         'header' => <<<EOF
 This file is part of rekalogika/domain-event-src package.

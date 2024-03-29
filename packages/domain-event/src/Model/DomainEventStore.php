@@ -78,6 +78,6 @@ class DomainEventStore implements \IteratorAggregate, \Countable
 
     public function count(): int
     {
-        return count($this->events);
+        return \count($this->events);
     }
 }

@@ -44,7 +44,7 @@ class RekalogikaDomainEventOutboxExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $outboxTable = $config['outbox_table'] ?? null;
-        assert(is_string($outboxTable), 'The "outbox_table" option must be a string.');
+        \assert(\is_string($outboxTable), 'The "outbox_table" option must be a string.');
         $container->setParameter('rekalogika.domain_event.outbox.outbox_table', $outboxTable);
 
         $container
