@@ -26,6 +26,7 @@ use Rekalogika\DomainEvent\Exception\SafeguardTriggeredException;
 use Rekalogika\DomainEvent\Exception\UndispatchedEventsException;
 use Rekalogika\DomainEvent\Model\DomainEventStore;
 use Rekalogika\DomainEvent\Model\TransactionAwareDomainEventStore;
+use Symfony\Component\VarExporter\LazyObjectInterface;
 use Symfony\Contracts\Service\ResetInterface;
 
 /**
@@ -33,7 +34,8 @@ use Symfony\Contracts\Service\ResetInterface;
  */
 final class DomainEventAwareEntityManager extends EntityManagerDecorator implements
     DomainEventAwareEntityManagerInterface,
-    ResetInterface
+    ResetInterface,
+    LazyObjectInterface
 {
     private bool $flushEnabled = true;
     private bool $autodispatch = true;
@@ -54,6 +56,37 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
 
         $this->preFlushDomainEvents = new DomainEventStore();
         $this->postFlushDomainEvents = new TransactionAwareDomainEventStore();
+    }
+
+    public function isLazyObjectInitialized(bool $partial = false): bool
+    {
+        if ($this->wrapped instanceof LazyObjectInterface) {
+            return $this->wrapped->isLazyObjectInitialized($partial);
+        }
+
+        return true;
+    }
+
+    public function initializeLazyObject(): object
+    {
+        if ($this->wrapped instanceof LazyObjectInterface) {
+            $object = $this->wrapped->initializeLazyObject();
+
+            if ($object instanceof EntityManagerInterface) {
+                parent::__construct($object);
+            }
+        }
+
+        return $this;
+    }
+
+    public function resetLazyObject(): bool
+    {
+        if ($this->wrapped instanceof LazyObjectInterface) {
+            return $this->wrapped->resetLazyObject();
+        }
+
+        return false;
     }
 
     public function getObjectManager(): ObjectManager

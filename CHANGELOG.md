@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.3
+
+* fix: Should fix `ManagerRegistry::resetManager()`
+
 ## 2.3.2
 
 * chore: enable native_function_invocation in php-cs-fixer

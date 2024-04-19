@@ -63,11 +63,19 @@ abstract class DomainEventTestCase extends KernelTestCase
         $this->entityManager = $entityManager;
     }
 
-    public static function getEntityManager(): DomainEventAwareEntityManager
+    public static function getManagerRegistry(): ManagerRegistry
     {
         $managerRegistry = static::getContainer()->get(ManagerRegistry::class);
         self::assertInstanceOf(ManagerRegistry::class, $managerRegistry);
         self::assertInstanceOf(DomainEventAwareManagerRegistry::class, $managerRegistry);
+
+        return $managerRegistry;
+    }
+
+    public static function getEntityManager(): DomainEventAwareEntityManager
+    {
+        $managerRegistry = static::getManagerRegistry();
+
         $entityManager = $managerRegistry->getManager();
         self::assertInstanceOf(DomainEventAwareEntityManager::class, $entityManager);
 

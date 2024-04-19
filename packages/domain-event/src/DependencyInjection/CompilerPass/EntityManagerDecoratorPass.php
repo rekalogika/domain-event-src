@@ -17,6 +17,7 @@ use Rekalogika\DomainEvent\DependencyInjection\Constants;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareEntityManager;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * @internal
@@ -32,18 +33,22 @@ final class EntityManagerDecoratorPass implements CompilerPassInterface
 
         /**
          * @var string $name
-         * @var string $id
+         * @var string $serviceId
          */
-        foreach ($entityManagers as $name => $id) {
-            $service = $container->getDefinition($id);
-            $decoratedServiceId = $id . '.domain_event_aware';
+        foreach ($entityManagers as $name => $serviceId) {
+            $service = $container->getDefinition($serviceId);
+            $realServiceId = $serviceId . '.real';
 
-            $container->register($decoratedServiceId, DomainEventAwareEntityManager::class)
-                ->setDecoratedService($id)
+            $container
+                ->setDefinition($realServiceId, $service);
+
+            $container
+                ->register($serviceId, DomainEventAwareEntityManager::class)
                 ->setArguments([
-                    '$wrapped' => $service,
+                    '$wrapped' => new Reference($realServiceId),
                     '$eventDispatchers' => $eventDispatchers,
                 ])
+                ->setPublic(true)
                 ->addTag('kernel.reset', ['method' => 'reset'])
                 ->addTag('rekalogika.domain_event.entity_manager', ['name' => $name]);
         }

@@ -34,7 +34,8 @@
         "symfony/dependency-injection": "^6.4 || ^7.0",
         "symfony/event-dispatcher": "^6.4 || ^7.0",
         "symfony/http-kernel": "^6.4 || ^7.0",
-        "symfony/service-contracts": "^3.0"
+        "symfony/service-contracts": "^3.0",
+        "symfony/var-exporter": "^6.4 || ^7.0"
     },
     "extra": {
         "branch-alias": {
