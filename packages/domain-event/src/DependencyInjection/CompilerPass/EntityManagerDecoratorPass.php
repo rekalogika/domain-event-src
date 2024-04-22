@@ -20,6 +20,13 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
+ * Decorates entity managers manually instead of relying on DI's decoration.
+ * 
+ * `ManagerRegistry::resetManager()` relies on the fact that entity managers are
+ * lazy. However, when we decorate entity managers, the original entity manager
+ * won't lazy anymore. This causes `resetManager()` to fail. the workaround is to
+ * manually decorate entity managers.
+ * 
  * @internal
  */
 final class EntityManagerDecoratorPass implements CompilerPassInterface
