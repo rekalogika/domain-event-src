@@ -28,6 +28,10 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
  * accepts "Doctrine\Bundle\DoctrineBundle\Registry",
  * "Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistryImplementation"
  * passed.
+ * 
+ * fix in upstream: https://github.com/doctrine/DoctrineBundle/pull/1764
+ * 
+ * @todo remove after we bump to doctrine/doctrine-bundle 2.12
  *
  * @internal
  */
