@@ -52,7 +52,6 @@ final class BookEventPostFlushListener
         return $this->onRemoveCalled;
     }
 
-    /** @phpstan-impure */
     public function onChangeCalled(): int
     {
         return $this->onChangeCalled;
