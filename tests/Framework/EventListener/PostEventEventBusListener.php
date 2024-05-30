@@ -52,7 +52,7 @@ final class PostEventEventBusListener
     {
         return $this->onRemoveCalled;
     }
-    
+
     public function onChangeCalled(): int
     {
         return $this->onChangeCalled;

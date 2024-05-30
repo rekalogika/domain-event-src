@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.3.4
+
+* fix: collect events at the beginning of `dispatchPostFlushDomainEvents()`, fix
+  manual dispatching postFlush events without preFlush.
+
 ## 2.3.3
 
 * fix: Should fix `ManagerRegistry::resetManager()`

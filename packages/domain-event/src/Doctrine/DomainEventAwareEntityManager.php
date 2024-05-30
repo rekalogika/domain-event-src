@@ -160,6 +160,8 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
 
     public function dispatchPostFlushDomainEvents(): int
     {
+        $this->collectEvents();
+
         $num = \count($this->postFlushDomainEvents);
         $events = $this->postFlushDomainEvents->pop();
         // for safeguard we also clear preflush events here
