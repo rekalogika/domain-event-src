@@ -57,4 +57,41 @@ final class BasicDomainEventTest extends DomainEventTestCase
 
         $this->assertTrue($listener->onCreateCalled());
     }
+
+    public function testManualPreFlush(): void
+    {
+        $entityManager = static::getEntityManager();
+        $listener = static::getContainer()->get(BookEventPreFlushListener::class);
+        $this->assertInstanceOf(BookEventPreFlushListener::class, $listener);
+
+        $entityManager->setAutoDispatchDomainEvents(false);
+
+        $this->assertFalse($listener->onCreateCalled());
+
+        $book = new Book('title', 'description');
+        $entityManager->persist($book);
+        $entityManager->dispatchPreFlushDomainEvents();
+        $entityManager->flush();
+        $entityManager->clearDomainEvents();
+
+        $this->assertTrue($listener->onCreateCalled());
+    }
+
+    public function testManualPostFlush(): void
+    {
+        $entityManager = static::getEntityManager();
+        $listener = static::getContainer()->get(BookEventPostFlushListener::class);
+        $this->assertInstanceOf(BookEventPostFlushListener::class, $listener);
+
+        $entityManager->setAutoDispatchDomainEvents(false);
+
+        $this->assertFalse($listener->onCreateCalled());
+
+        $book = new Book('title', 'description');
+        $entityManager->persist($book);
+        $entityManager->flush();
+        $entityManager->dispatchPostFlushDomainEvents();
+
+        $this->assertTrue($listener->onCreateCalled());
+    }
 }
