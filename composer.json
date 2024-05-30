@@ -61,9 +61,9 @@
         }
     },
     "replace": {
-        "rekalogika/domain-event": "2.3.1",
-        "rekalogika/domain-event-contracts": "2.3.1",
-        "rekalogika/domain-event-outbox": "2.3.1"
+        "rekalogika/domain-event": "2.3.4",
+        "rekalogika/domain-event-contracts": "2.3.4",
+        "rekalogika/domain-event-outbox": "2.3.4"
     },
     "config": {
         "sort-packages": true,
