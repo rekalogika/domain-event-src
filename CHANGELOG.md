@@ -3,6 +3,7 @@
 ## 2.4.0
 
 * fix(OutboxMessage): fix ID generation strategy
+* build: include github-actions in dependabot
 
 ## 2.3.4
 
