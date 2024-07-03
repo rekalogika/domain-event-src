@@ -6,6 +6,7 @@
 * build: include github-actions in dependabot
 * fix: remove deprecated service definition
 * fix: deprecation warning
+* dep: bump psalm
 
 ## 2.3.4
 
