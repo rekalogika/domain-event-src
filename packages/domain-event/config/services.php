@@ -121,13 +121,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         'doctrine.orm.entity_manager'
     );
 
-    /** @deprecated */
-    $services->alias(
-        // @phpstan-ignore-next-line
-        ContractsDomainEventAwareEntityManagerInterface::class,
-        'doctrine.orm.entity_manager'
-    );
-
     $services
         ->set(
             Constants::MANAGER_REGISTRY,
