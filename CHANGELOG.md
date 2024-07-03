@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.0
+
+* fix(OutboxMessage): fix ID generation strategy
+
 ## 2.3.4
 
 * fix: collect events at the beginning of `dispatchPostFlushDomainEvents()`, fix
