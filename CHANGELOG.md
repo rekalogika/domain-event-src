@@ -4,6 +4,7 @@
 
 * fix(OutboxMessage): fix ID generation strategy
 * build: include github-actions in dependabot
+* fix: remove deprecated service definition
 
 ## 2.3.4
 
