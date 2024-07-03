@@ -46,7 +46,7 @@
         "symfony/yaml": "^6.4 || ^7.0",
         "symplify/monorepo-builder": "^11.2.20 || ^11.3",
         "twig/twig": "^3.0",
-        "vimeo/psalm": "^5.15"
+        "vimeo/psalm": "^5.24"
     },
     "autoload": {
         "psr-4": {

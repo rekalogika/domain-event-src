@@ -60,7 +60,11 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
 
     public function isUninitializedObject(mixed $value): bool
     {
-        return $this->wrapped->isUninitializedObject($value);
+        if (method_exists($this->wrapped, 'isUninitializedObject')) {
+            return $this->wrapped->isUninitializedObject($value);
+        }
+
+        return false;
     }
 
     public function isLazyObjectInitialized(bool $partial = false): bool

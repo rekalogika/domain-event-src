@@ -45,6 +45,21 @@
                 <file name="packages/domain-event/src/DependencyInjection/Constants.php" />
             </errorLevel>
         </MissingClassConstType>
+        <MixedInferredReturnType>
+            <errorLevel type="suppress">
+                <file name="packages/domain-event/src/Doctrine/DomainEventAwareEntityManager.php" />
+            </errorLevel>
+        </MixedInferredReturnType>
+        <MixedReturnStatement>
+            <errorLevel type="suppress">
+                <file name="packages/domain-event/src/Doctrine/DomainEventAwareEntityManager.php" />
+            </errorLevel>            
+        </MixedReturnStatement>
+        <UndefinedInterfaceMethod>
+            <errorLevel type="suppress">
+                <file name="packages/domain-event/src/Doctrine/DomainEventAwareEntityManager.php" />
+            </errorLevel>
+        </UndefinedInterfaceMethod>
     </issueHandlers>
 
 </psalm>
