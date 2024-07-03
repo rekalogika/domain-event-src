@@ -29,8 +29,8 @@ use Symfony\Component\Messenger\Envelope;
 class OutboxMessage
 {
     #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
+    #[Column]
+    #[GeneratedValue]
     private ?int $id = null;
 
     #[Column(type: "text")]
