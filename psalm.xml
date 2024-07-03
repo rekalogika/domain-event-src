@@ -40,6 +40,11 @@
                 <file name="packages/domain-event-outbox/src/EventListener/RenameTableListener.php" />
             </errorLevel>
         </TypeDoesNotContainNull>
+        <MissingClassConstType>
+            <errorLevel type="suppress">
+                <file name="packages/domain-event/src/DependencyInjection/Constants.php" />
+            </errorLevel>
+        </MissingClassConstType>
     </issueHandlers>
 
 </psalm>
