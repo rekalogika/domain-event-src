@@ -58,6 +58,11 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         $this->postFlushDomainEvents = new TransactionAwareDomainEventStore();
     }
 
+    public function isUninitializedObject(mixed $value): bool
+    {
+        return $this->wrapped->isUninitializedObject($value);
+    }
+
     public function isLazyObjectInitialized(bool $partial = false): bool
     {
         if ($this->wrapped instanceof LazyObjectInterface) {
