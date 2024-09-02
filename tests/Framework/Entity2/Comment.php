@@ -42,9 +42,8 @@ class Comment implements DomainEventEmitterInterface
         $this->id = Uuid::v7();
     }
 
-    public function __remove(): void
-    {
-    }
+    #[\Override]
+    public function __remove(): void {}
 
     public function getId(): Uuid
     {

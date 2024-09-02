@@ -20,10 +20,9 @@ use Rekalogika\DomainEvent\Outbox\OutboxReaderInterface;
 
 class OutboxReaderFactory implements OutboxReaderFactoryInterface
 {
-    public function __construct(private ManagerRegistry $managerRegistry)
-    {
-    }
+    public function __construct(private readonly ManagerRegistry $managerRegistry) {}
 
+    #[\Override]
     public function createOutboxReader(string $managerName): OutboxReaderInterface
     {
         $manager = $this->managerRegistry->getManager($managerName);
@@ -32,6 +31,6 @@ class OutboxReaderFactory implements OutboxReaderFactoryInterface
             return new EntityManagerOutboxReader($manager);
         }
 
-        throw new \InvalidArgumentException(sprintf('Object manager with name "%s" is an instance of "%s", but it is unsupported', $managerName, \get_class($manager)));
+        throw new \InvalidArgumentException(sprintf('Object manager with name "%s" is an instance of "%s", but it is unsupported', $managerName, $manager::class));
     }
 }

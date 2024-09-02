@@ -27,13 +27,14 @@ class RekalogikaDomainEventExtension extends Extension
     /**
      * @param array<array-key,mixed> $configs
      */
+    #[\Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
         $debug = (bool) $container->getParameter('kernel.debug');
 
         $loader = new PhpFileLoader(
             $container,
-            new FileLocator(__DIR__ . '/../../config')
+            new FileLocator(__DIR__ . '/../../config'),
         );
         $loader->load('services.php');
 
@@ -46,7 +47,7 @@ class RekalogikaDomainEventExtension extends Extension
             static function (
                 ChildDefinition $definition,
                 AsPostFlushDomainEventListener $attribute,
-                \Reflector $reflector
+                \Reflector $reflector,
             ): void {
                 if (
                     !$reflector instanceof \ReflectionClass
@@ -61,13 +62,15 @@ class RekalogikaDomainEventExtension extends Extension
                     if (isset($tagAttributes['method'])) {
                         throw new \LogicException(sprintf('AsPostFlushDomainEventListener attribute cannot declare a method on "%s::%s()".', $reflector->class, $reflector->name));
                     }
+
                     $tagAttributes['method'] = $reflector->getName();
                 }
+
                 $definition->addTag(
                     'kernel.event_listener',
-                    $tagAttributes
+                    $tagAttributes,
                 );
-            }
+            },
         );
 
         $container->registerAttributeForAutoconfiguration(
@@ -75,7 +78,7 @@ class RekalogikaDomainEventExtension extends Extension
             static function (
                 ChildDefinition $definition,
                 AsPreFlushDomainEventListener $attribute,
-                \Reflector $reflector
+                \Reflector $reflector,
             ): void {
                 if (
                     !$reflector instanceof \ReflectionClass
@@ -90,14 +93,15 @@ class RekalogikaDomainEventExtension extends Extension
                     if (isset($tagAttributes['method'])) {
                         throw new \LogicException(sprintf('AsPreFlushDomainEventListener attribute cannot declare a method on "%s::%s()".', $reflector->class, $reflector->name));
                     }
+
                     $tagAttributes['method'] = $reflector->getName();
                 }
 
                 $definition->addTag(
                     'kernel.event_listener',
-                    $tagAttributes
+                    $tagAttributes,
                 );
-            }
+            },
         );
 
         $container->registerAttributeForAutoconfiguration(
@@ -105,7 +109,7 @@ class RekalogikaDomainEventExtension extends Extension
             static function (
                 ChildDefinition $definition,
                 AsImmediateDomainEventListener $attribute,
-                \Reflector $reflector
+                \Reflector $reflector,
             ): void {
                 if (
                     !$reflector instanceof \ReflectionClass
@@ -120,13 +124,15 @@ class RekalogikaDomainEventExtension extends Extension
                     if (isset($tagAttributes['method'])) {
                         throw new \LogicException(sprintf('AsImmediateDomainEventListener attribute cannot declare a method on "%s::%s()".', $reflector->class, $reflector->name));
                     }
+
                     $tagAttributes['method'] = $reflector->getName();
                 }
+
                 $definition->addTag(
                     'kernel.event_listener',
-                    $tagAttributes
+                    $tagAttributes,
                 );
-            }
+            },
         );
     }
 }

@@ -26,13 +26,14 @@ class RekalogikaDomainEventOutboxExtension extends Extension
     /**
      * @param array<array-key,mixed> $configs
      */
+    #[\Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
         $debug = (bool) $container->getParameter('kernel.debug');
 
         $loader = new PhpFileLoader(
             $container,
-            new FileLocator(__DIR__ . '/../../config')
+            new FileLocator(__DIR__ . '/../../config'),
         );
         $loader->load('services.php');
 
@@ -56,7 +57,7 @@ class RekalogikaDomainEventOutboxExtension extends Extension
             static function (
                 ChildDefinition $definition,
                 AsPublishedDomainEventListener $attribute,
-                \Reflector $reflector
+                \Reflector $reflector,
             ): void {
                 if (
                     !$reflector instanceof \ReflectionClass
@@ -71,14 +72,15 @@ class RekalogikaDomainEventOutboxExtension extends Extension
                     if (isset($tagAttributes['method'])) {
                         throw new \LogicException(sprintf('AsPreFlushDomainEventListener attribute cannot declare a method on "%s::%s()".', $reflector->class, $reflector->name));
                     }
+
                     $tagAttributes['method'] = $reflector->getName();
                 }
 
                 $definition->addTag(
                     'messenger.message_handler',
-                    $tagAttributes
+                    $tagAttributes,
                 );
-            }
+            },
         );
     }
 }

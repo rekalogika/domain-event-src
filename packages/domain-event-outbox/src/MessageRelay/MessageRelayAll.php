@@ -24,8 +24,7 @@ final class MessageRelayAll
     public function __construct(
         private readonly ManagerRegistry $managerRegistry,
         private readonly MessageRelayInterface $messageRelay,
-    ) {
-    }
+    ) {}
 
     public function relayAll(): void
     {

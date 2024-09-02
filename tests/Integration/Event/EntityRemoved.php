@@ -13,6 +13,4 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Tests\Integration\Event;
 
-final class EntityRemoved extends AbstractEntityDomainEvent
-{
-}
+final class EntityRemoved extends AbstractEntityDomainEvent {}

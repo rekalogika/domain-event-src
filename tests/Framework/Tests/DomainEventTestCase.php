@@ -26,14 +26,17 @@ use Symfony\Component\HttpKernel\KernelInterface;
 abstract class DomainEventTestCase extends KernelTestCase
 {
     protected DomainEventAwareEntityManagerInterface $entityManager;
+
     protected DomainEventAwareManagerRegistry $managerRegistry;
 
     // @phpstan-ignore-next-line
+    #[\Override]
     protected static function createKernel(array $options = []): KernelInterface
     {
         return new Kernel();
     }
 
+    #[\Override]
     public function setUp(): void
     {
         parent::setUp();
@@ -82,6 +85,7 @@ abstract class DomainEventTestCase extends KernelTestCase
         return $entityManager;
     }
 
+    #[\Override]
     public function tearDown(): void
     {
         parent::tearDown();

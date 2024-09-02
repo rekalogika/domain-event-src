@@ -23,10 +23,10 @@ use Symfony\Component\Messenger\Envelope;
 class EntityManagerOutboxReader implements OutboxReaderInterface
 {
     public function __construct(
-        private EntityManagerInterface $entityManager,
-    ) {
-    }
+        private readonly EntityManagerInterface $entityManager,
+    ) {}
 
+    #[\Override]
     public function getOutboxMessages(int $limit): iterable
     {
         $this->entityManager->beginTransaction();
@@ -57,6 +57,7 @@ class EntityManagerOutboxReader implements OutboxReaderInterface
         }
     }
 
+    #[\Override]
     public function removeOutboxMessageById(int|string $id): void
     {
         /** @var OutboxMessage */
@@ -64,6 +65,7 @@ class EntityManagerOutboxReader implements OutboxReaderInterface
         $this->entityManager->remove($object);
     }
 
+    #[\Override]
     public function flagError(int|string $id): void
     {
         /** @var OutboxMessage */
@@ -71,6 +73,7 @@ class EntityManagerOutboxReader implements OutboxReaderInterface
         $object->setError(true);
     }
 
+    #[\Override]
     public function flush(): void
     {
         $this->entityManager->flush();

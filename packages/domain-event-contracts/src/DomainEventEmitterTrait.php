@@ -45,7 +45,7 @@ trait DomainEventEmitterTrait
      * @return T
      */
     protected function recordEvent(
-        object $event
+        object $event,
     ): object {
         if ($event instanceof EquatableDomainEventInterface) {
             $hash = $event->getSignature();
@@ -58,7 +58,5 @@ trait DomainEventEmitterTrait
         return DomainEventImmediateDispatcher::dispatch($event);
     }
 
-    public function __remove(): void
-    {
-    }
+    public function __remove(): void {}
 }

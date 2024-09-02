@@ -19,7 +19,7 @@ use Symfony\Component\Uid\Uuid;
 
 final class BookReviewRemoved extends AbstractBookEvent
 {
-    private Uuid $reviewId;
+    private readonly Uuid $reviewId;
 
     public function __construct(Book $book, Review $review)
     {

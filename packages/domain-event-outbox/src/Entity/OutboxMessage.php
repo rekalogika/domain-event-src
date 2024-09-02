@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Outbox\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -33,10 +34,10 @@ class OutboxMessage
     #[GeneratedValue]
     private ?int $id = null;
 
-    #[Column(type: "text")]
+    #[Column(type: Types::TEXT)]
     private string $event;
 
-    #[Column(type: "boolean", options: ["default" => false])]
+    #[Column(type: Types::BOOLEAN, options: ["default" => false])]
     private bool $error = false;
 
     private ?Envelope $cachedResult = null;

@@ -26,7 +26,7 @@ final class BasicDomainEventTest extends DomainEventTestCase
         $this->assertInstanceOf(BookEventImmediateListener::class, $listener);
 
         $this->assertFalse($listener->onCreateCalled());
-        $book = new Book('title', 'description');
+        new Book('title', 'description');
         $this->assertTrue($listener->onCreateCalled());
     }
 

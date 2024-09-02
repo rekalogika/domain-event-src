@@ -21,12 +21,11 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 final class EventDispatchers
 {
     public function __construct(
-        private EventDispatcherInterface $defaultEventDispatcher,
-        private EventDispatcherInterface $immediateEventDispatcher,
-        private EventDispatcherInterface $preFlushEventDispatcher,
-        private EventDispatcherInterface $postFlushEventDispatcher,
-    ) {
-    }
+        private readonly EventDispatcherInterface $defaultEventDispatcher,
+        private readonly EventDispatcherInterface $immediateEventDispatcher,
+        private readonly EventDispatcherInterface $preFlushEventDispatcher,
+        private readonly EventDispatcherInterface $postFlushEventDispatcher,
+    ) {}
 
     public function getDefaultEventDispatcher(): EventDispatcherInterface
     {

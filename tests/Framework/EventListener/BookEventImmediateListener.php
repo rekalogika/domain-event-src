@@ -20,6 +20,7 @@ use Rekalogika\DomainEvent\Tests\Framework\Event\BookRemoved;
 final class BookEventImmediateListener
 {
     private bool $onCreateCalled = false;
+
     private bool $onRemoveCalled = false;
 
     #[AsImmediateDomainEventListener()]

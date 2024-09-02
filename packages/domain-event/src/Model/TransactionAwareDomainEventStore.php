@@ -59,11 +59,7 @@ class TransactionAwareDomainEventStore extends DomainEventStore
     #[\Override]
     public function count(): int
     {
-        if ($this->transactionStore !== null) {
-            $countFromTransaction = parent::count();
-        } else {
-            $countFromTransaction = 0;
-        }
+        $countFromTransaction = $this->transactionStore !== null ? parent::count() : 0;
 
         return parent::count() + $countFromTransaction;
     }

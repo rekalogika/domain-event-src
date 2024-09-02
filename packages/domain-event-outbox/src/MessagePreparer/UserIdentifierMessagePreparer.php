@@ -23,10 +23,9 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  */
 class UserIdentifierMessagePreparer implements MessagePreparerInterface
 {
-    public function __construct(private TokenStorageInterface $tokenStorage)
-    {
-    }
+    public function __construct(private readonly TokenStorageInterface $tokenStorage) {}
 
+    #[\Override]
     public function prepareMessage(Envelope $envelope): ?Envelope
     {
         $user = $this->tokenStorage->getToken()?->getUser();

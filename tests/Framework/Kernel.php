@@ -36,11 +36,12 @@ class Kernel extends HttpKernelKernel
     public function __construct(
         string $environment = 'test',
         bool $debug = true,
-        private array $config = []
+        private readonly array $config = [],
     ) {
         parent::__construct($environment, $debug);
     }
 
+    #[\Override]
     public function registerBundles(): iterable
     {
         return [
@@ -56,19 +57,21 @@ class Kernel extends HttpKernelKernel
         ];
     }
 
+    #[\Override]
     public function build(ContainerBuilder $container): void
     {
         $loader = new PhpFileLoader(
             $container,
-            new FileLocator(__DIR__ . '/Resources/config')
+            new FileLocator(__DIR__ . '/Resources/config'),
         );
 
         $loader->load('services_test.php');
     }
 
+    #[\Override]
     public function getProjectDir(): string
     {
-        return \dirname(\dirname(__DIR__));
+        return \dirname(__DIR__, 2);
     }
 
     public function getConfigDir(): string
@@ -76,11 +79,12 @@ class Kernel extends HttpKernelKernel
         return __DIR__ . '/Resources/config/';
     }
 
+    #[\Override]
     public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $loader->load($this->getConfigDir() . '/packages/*' . '.yaml', 'glob');
 
-        $loader->load(function (ContainerBuilder $container) {
+        $loader->load(function (ContainerBuilder $container): void {
             $container->loadFromExtension('rekalogika_domain_event', $this->config);
         });
     }

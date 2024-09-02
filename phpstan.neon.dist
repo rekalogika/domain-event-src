@@ -14,6 +14,12 @@ parameters:
             message: '#Attribute class Override does not exist#'
             reportUnmatched: false
         - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children#'
+        -
+            message: '#Property .* is never assigned .+ so it can be removed from the property type.#'
+            reportUnmatched: false
+        -
+            message: '#has PHPDoc tag @method for method find(One)?By\(\) parameter#'
+            reportUnmatched: false
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-phpunit/rules.neon

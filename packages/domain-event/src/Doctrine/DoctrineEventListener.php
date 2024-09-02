@@ -27,9 +27,8 @@ use Rekalogika\DomainEvent\DomainEventAwareManagerRegistry;
 final class DoctrineEventListener
 {
     public function __construct(
-        private DomainEventAwareManagerRegistry $managerRegistry,
-    ) {
-    }
+        private readonly DomainEventAwareManagerRegistry $managerRegistry,
+    ) {}
 
     public function postPersist(PostPersistEventArgs $args): void
     {

@@ -17,9 +17,7 @@ use Rekalogika\DomainEvent\Tests\Integration\Model\Entity;
 
 abstract class AbstractEntityDomainEvent
 {
-    final public function __construct(private Entity $entity)
-    {
-    }
+    final public function __construct(private readonly Entity $entity) {}
 
     public function getEntity(): Entity
     {

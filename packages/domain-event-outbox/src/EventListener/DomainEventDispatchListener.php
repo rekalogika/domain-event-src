@@ -34,12 +34,12 @@ class DomainEventDispatchListener implements ResetInterface
     public array $managerNames = [];
 
     public function __construct(
-        private MessagePreparerInterface $messagePreparer,
-        private MessageBusInterface $messageBus,
-        private DomainEventAwareManagerRegistry $managerRegistry,
-    ) {
-    }
+        private readonly MessagePreparerInterface $messagePreparer,
+        private readonly MessageBusInterface $messageBus,
+        private readonly DomainEventAwareManagerRegistry $managerRegistry,
+    ) {}
 
+    #[\Override]
     public function reset(): void
     {
         $this->managerNames = [];
@@ -69,7 +69,7 @@ class DomainEventDispatchListener implements ResetInterface
 
     public function onTerminate(): void
     {
-        foreach ($this->managerNames as $managerName => $_) {
+        foreach (array_keys($this->managerNames) as $managerName) {
             $this->messageBus->dispatch(new MessageRelayStartMessage($managerName));
         }
     }

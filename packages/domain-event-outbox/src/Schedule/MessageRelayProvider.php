@@ -24,15 +24,15 @@ final class MessageRelayProvider implements ScheduleProviderInterface
      * @param array<string,string> $entityManagers
      */
     public function __construct(
-        private array $entityManagers
-    ) {
-    }
+        private readonly array $entityManagers,
+    ) {}
 
+    #[\Override]
     public function getSchedule(): Schedule
     {
         $schedule = new Schedule();
 
-        foreach ($this->entityManagers as $name => $service) {
+        foreach (array_keys($this->entityManagers) as $name) {
             $schedule->add(RecurringMessage::every('1 hour', new MessageRelayStartMessage($name)));
         }
 

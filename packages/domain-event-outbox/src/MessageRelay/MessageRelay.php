@@ -27,22 +27,19 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class MessageRelay implements MessageRelayInterface
 {
-    private LoggerInterface $logger;
-
     public function __construct(
         private readonly OutboxReaderFactoryInterface $outboxReaderFactory,
         private readonly HandlersLocatorInterface $handlersLocator,
         private readonly MessageBusInterface $domainEventBus,
         private readonly LockFactory $lockFactory,
-        ?LoggerInterface $logger = null,
-        private readonly int $limit = 100
-    ) {
-        $this->logger = $logger ?? new NullLogger();
-    }
+        private readonly LoggerInterface $logger = new NullLogger(),
+        private readonly int $limit = 100,
+    ) {}
 
+    #[\Override]
     public function relayMessages(string $managerName): int
     {
-        $lock = $this->lockFactory->createLock(__CLASS__ . '-' . $managerName);
+        $lock = $this->lockFactory->createLock(self::class . '-' . $managerName);
 
         if (!$lock->acquire()) {
             return 0;
@@ -86,12 +83,12 @@ final class MessageRelay implements MessageRelayInterface
 
                     $this->logger->info('Message relayed, message id: {id}, class: {class}', [
                         'id' => $id,
-                        'class' => $message::class
+                        'class' => $message::class,
                     ]);
                 } else {
                     $this->logger->info('Message relaying skipped because no handler is found, message id: {id}, class: {class}', [
                         'id' => $id,
-                        'class' => $message::class
+                        'class' => $message::class,
                     ]);
                 }
 
@@ -110,6 +107,6 @@ final class MessageRelay implements MessageRelayInterface
         $handlers = $this->handlersLocator->getHandlers($envelope);
         $handlers = $handlers instanceof \Traversable ? iterator_to_array($handlers) : $handlers;
 
-        return \count($handlers) > 0;
+        return $handlers !== [];
     }
 }

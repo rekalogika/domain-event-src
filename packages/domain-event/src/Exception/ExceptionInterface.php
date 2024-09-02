@@ -13,6 +13,4 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Exception;
 
-interface ExceptionInterface extends \Throwable
-{
-}
+interface ExceptionInterface extends \Throwable {}

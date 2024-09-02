@@ -15,9 +15,7 @@ namespace Rekalogika\DomainEvent\Event;
 
 class DomainEventImmediateDispatchEvent
 {
-    final public function __construct(private object $domainEvent)
-    {
-    }
+    final public function __construct(private readonly object $domainEvent) {}
 
     public function getDomainEvent(): object
     {

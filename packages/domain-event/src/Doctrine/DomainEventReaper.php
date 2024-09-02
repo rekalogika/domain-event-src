@@ -27,9 +27,8 @@ final class DomainEventReaper
      * @param iterable<DomainEventAwareEntityManagerInterface> $entityManagers
      */
     public function __construct(
-        private iterable $entityManagers,
-    ) {
-    }
+        private readonly iterable $entityManagers,
+    ) {}
 
     public function onKernelException(): void
     {

@@ -53,6 +53,7 @@ class Review implements DomainEventEmitterInterface
         $this->recordEvent(new ReviewCreated($this));
     }
 
+    #[\Override]
     public function __remove(): void
     {
         $this->recordEvent(new ReviewRemoved($this));

@@ -19,8 +19,10 @@ use Rekalogika\DomainEvent\Tests\Framework\EventListener\BookDummyChangedListene
 final class Transaction2Test extends DomainEventTestCase
 {
     private Book $book;
+
     private BookDummyChangedListener $listener;
 
+    #[\Override]
     public function setUp(): void
     {
         parent::setUp();

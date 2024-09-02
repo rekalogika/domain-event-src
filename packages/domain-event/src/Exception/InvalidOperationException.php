@@ -13,6 +13,4 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Exception;
 
-class InvalidOperationException extends LogicException
-{
-}
+class InvalidOperationException extends LogicException {}

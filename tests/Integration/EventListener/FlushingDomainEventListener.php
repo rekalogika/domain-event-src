@@ -17,12 +17,12 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class FlushingDomainEventListener
 {
-    public function __construct(private EntityManagerInterface $entityManager)
-    {
-    }
+    public function __construct(private readonly EntityManagerInterface $entityManager) {}
 
     private bool $entityCreatedHeard = false;
+
     private bool $entityRemovedHeard = false;
+
     private bool $entityNameChangedHeard = false;
 
     public function onEntityCreated(): void

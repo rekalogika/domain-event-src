@@ -40,6 +40,7 @@ final class OutboxTest extends DomainEventTestCase
         // default manager
         $book = new Book('title', 'description');
         $book->setTitle('new title');
+
         $this->entityManager->persist($book);
 
         // other manager
@@ -174,6 +175,7 @@ final class OutboxTest extends DomainEventTestCase
         $book = new Book('title', 'description');
 
         $book->setTitle('new title');
+
         $this->entityManager->persist($book);
         $this->entityManager->flush();
 

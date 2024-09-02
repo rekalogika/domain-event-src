@@ -27,13 +27,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 final class MessageRelayCommand extends Command
 {
     public function __construct(
-        private string $defaultManagerName,
-        private MessageRelayInterface $messageRelay,
-        private MessageRelayAll $messageRelayAll,
+        private readonly string $defaultManagerName,
+        private readonly MessageRelayInterface $messageRelay,
+        private readonly MessageRelayAll $messageRelayAll,
     ) {
         parent::__construct();
     }
 
+    #[\Override]
     protected function configure(): void
     {
         $this->addArgument(
@@ -50,6 +51,7 @@ final class MessageRelayCommand extends Command
         );
     }
 
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $managerName = $input->getArgument('managerName') ?? $this->defaultManagerName;

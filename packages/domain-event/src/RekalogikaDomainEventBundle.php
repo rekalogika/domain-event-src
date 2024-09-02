@@ -21,6 +21,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class RekalogikaDomainEventBundle extends Bundle
 {
+    #[\Override]
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);
@@ -29,6 +30,7 @@ class RekalogikaDomainEventBundle extends Bundle
         $container->addCompilerPass(new ProfilerWorkaroundPass());
     }
 
+    #[\Override]
     public function boot(): void
     {
         $installer = $this->container?->get(Constants::IMMEDIATE_DISPATCHER_INSTALLER);
@@ -39,6 +41,7 @@ class RekalogikaDomainEventBundle extends Bundle
         }
     }
 
+    #[\Override]
     public function shutdown(): void
     {
         $installer = $this->container?->get(Constants::IMMEDIATE_DISPATCHER_INSTALLER);

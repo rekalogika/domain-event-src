@@ -25,9 +25,7 @@ final class DomainEventImmediateDispatcher
     /**
      * Disallow instantiation
      */
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     /**
      * Called at the beginning of the request to install the event dispatcher.
@@ -51,7 +49,7 @@ final class DomainEventImmediateDispatcher
      */
     public static function dispatch(object $event): object
     {
-        if (!self::$eventDispatcher) {
+        if (self::$eventDispatcher === null) {
             throw new \RuntimeException('ImmediateDomainEventDispatcher has not been initialized');
         }
 

@@ -24,10 +24,9 @@ class ChainMessagePreparer implements MessagePreparerInterface
     /**
      * @param iterable<MessagePreparerInterface> $messagePreparers
      */
-    public function __construct(private iterable $messagePreparers)
-    {
-    }
+    public function __construct(private readonly iterable $messagePreparers) {}
 
+    #[\Override]
     public function prepareMessage(Envelope $envelope): ?Envelope
     {
         foreach ($this->messagePreparers as $messagePreparer) {

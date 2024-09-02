@@ -13,6 +13,4 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Tests\Integration\Event;
 
-final class NonEquatableEvent extends AbstractEntityDomainEvent
-{
-}
+final class NonEquatableEvent extends AbstractEntityDomainEvent {}

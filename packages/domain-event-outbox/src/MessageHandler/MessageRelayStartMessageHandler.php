@@ -21,9 +21,7 @@ use Rekalogika\DomainEvent\Outbox\MessageRelayInterface;
  */
 class MessageRelayStartMessageHandler
 {
-    public function __construct(private MessageRelayInterface $messageRelay)
-    {
-    }
+    public function __construct(private readonly MessageRelayInterface $messageRelay) {}
 
     public function __invoke(MessageRelayStartMessage $message): void
     {

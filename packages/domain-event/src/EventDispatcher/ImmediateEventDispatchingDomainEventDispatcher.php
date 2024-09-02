@@ -27,52 +27,59 @@ final class ImmediateEventDispatchingDomainEventDispatcher implements
     EventDispatcherInterface
 {
     public function __construct(
-        private EventDispatcherInterface $decorated,
-        private PsrEventDispatcherInterface $defaultEventDispatcher,
-    ) {
-    }
+        private readonly EventDispatcherInterface $decorated,
+        private readonly PsrEventDispatcherInterface $defaultEventDispatcher,
+    ) {}
 
     // @phpstan-ignore-next-line
+    #[\Override]
     public function addListener(string $eventName, callable|array $listener, int $priority = 0): void
     {
         /** @psalm-suppress MixedArgumentTypeCoercion @phpstan-ignore-next-line */
         $this->decorated->addListener($eventName, $listener, $priority);
     }
 
+    #[\Override]
     public function addSubscriber(EventSubscriberInterface $subscriber): void
     {
         $this->decorated->addSubscriber($subscriber);
     }
 
     // @phpstan-ignore-next-line
+    #[\Override]
     public function removeListener(string $eventName, callable|array $listener): void
     {
         /** @psalm-suppress MixedArgumentTypeCoercion @phpstan-ignore-next-line */
         $this->decorated->removeListener($eventName, $listener);
     }
 
+    #[\Override]
     public function removeSubscriber(EventSubscriberInterface $subscriber): void
     {
         $this->decorated->removeSubscriber($subscriber);
     }
 
+    #[\Override]
     public function getListeners(?string $eventName = null): array
     {
         return $this->decorated->getListeners($eventName);
     }
 
     // @phpstan-ignore-next-line
+    #[\Override]
     public function getListenerPriority(string $eventName, callable|array $listener): ?int
     {
         /** @psalm-suppress MixedArgumentTypeCoercion @phpstan-ignore-next-line */
         return $this->decorated->getListenerPriority($eventName, $listener);
     }
 
+    #[\Override]
     public function hasListeners(?string $eventName = null): bool
     {
         return $this->decorated->hasListeners($eventName);
     }
 
+    #[\Override]
     public function dispatch(object $event, ?string $eventName = null): object
     {
         $this->defaultEventDispatcher->dispatch(new DomainEventImmediateDispatchEvent($event));

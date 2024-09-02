@@ -29,7 +29,6 @@ class DomainEventStore implements \IteratorAggregate, \Countable
      * Adds an event to the store.
      *
      * @param object|iterable<object> $event
-     * @return void
      */
     public function add(object|iterable $event): void
     {
@@ -71,11 +70,13 @@ class DomainEventStore implements \IteratorAggregate, \Countable
     /**
      * @return \Traversable<int|string,object>
      */
+    #[\Override]
     public function getIterator(): \Traversable
     {
         yield from $this->events;
     }
 
+    #[\Override]
     public function count(): int
     {
         return \count($this->events);

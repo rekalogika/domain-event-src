@@ -19,9 +19,7 @@ namespace Rekalogika\DomainEvent\Outbox\Message;
  */
 class MessageRelayStartMessage
 {
-    public function __construct(private string $managerName)
-    {
-    }
+    public function __construct(private readonly string $managerName) {}
 
     public function getManagerName(): string
     {

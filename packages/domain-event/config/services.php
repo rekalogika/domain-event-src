@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Rekalogika\DomainEvent\Contracts\DomainEventAwareEntityManagerInterface as ContractsDomainEventAwareEntityManagerInterface;
 use Rekalogika\DomainEvent\DependencyInjection\Constants;
 use Rekalogika\DomainEvent\Doctrine\DoctrineEventListener;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistryImplementation;
@@ -52,28 +51,28 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services
         ->set(
             Constants::EVENT_DISPATCHER_IMMEDIATE,
-            EventDispatcher::class
+            EventDispatcher::class,
         )
         ->tag('event_dispatcher.dispatcher', [
-            'name' => Constants::EVENT_DISPATCHER_IMMEDIATE
+            'name' => Constants::EVENT_DISPATCHER_IMMEDIATE,
         ]);
 
     $services
         ->set(
             Constants::EVENT_DISPATCHER_PRE_FLUSH,
-            EventDispatcher::class
+            EventDispatcher::class,
         )
         ->tag('event_dispatcher.dispatcher', [
-            'name' => Constants::EVENT_DISPATCHER_PRE_FLUSH
+            'name' => Constants::EVENT_DISPATCHER_PRE_FLUSH,
         ]);
 
     $services
         ->set(
             Constants::EVENT_DISPATCHER_POST_FLUSH,
-            EventDispatcher::class
+            EventDispatcher::class,
         )
         ->tag('event_dispatcher.dispatcher', [
-            'name' => Constants::EVENT_DISPATCHER_POST_FLUSH
+            'name' => Constants::EVENT_DISPATCHER_POST_FLUSH,
         ]);
 
     //
@@ -83,7 +82,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services
         ->set(
             Constants::IMMEDIATE_EVENT_DISPATCHING_DISPATCHER,
-            ImmediateEventDispatchingDomainEventDispatcher::class
+            ImmediateEventDispatchingDomainEventDispatcher::class,
         )
         ->args([
             '$decorated' => service('.inner'),
@@ -98,7 +97,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services
         ->set(
             Constants::DOCTRINE_EVENT_LISTENER,
-            DoctrineEventListener::class
+            DoctrineEventListener::class,
         )
         ->args([
             service(DomainEventAwareManagerRegistry::class),
@@ -118,17 +117,17 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services->alias(
         DomainEventAwareEntityManagerInterface::class,
-        'doctrine.orm.entity_manager'
+        'doctrine.orm.entity_manager',
     );
 
     $services
         ->set(
             Constants::MANAGER_REGISTRY,
-            DomainEventAwareManagerRegistryImplementation::class
+            DomainEventAwareManagerRegistryImplementation::class,
         )
         ->args([
             '$wrapped' => service('.inner'),
-            '$decoratedObjectManagers' => tagged_iterator('rekalogika.domain_event.entity_manager', 'name')
+            '$decoratedObjectManagers' => tagged_iterator('rekalogika.domain_event.entity_manager', 'name'),
         ])
         ->decorate('doctrine')
         ->tag('kernel.reset', [
@@ -138,7 +137,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services
         ->alias(
             DomainEventAwareManagerRegistry::class,
-            Constants::MANAGER_REGISTRY
+            Constants::MANAGER_REGISTRY,
         );
 
     $services
@@ -158,10 +157,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services
         ->set(
             Constants::REAPER,
-            DomainEventReaper::class
+            DomainEventReaper::class,
         )
         ->args([
-            '$entityManagers' => tagged_iterator('rekalogika.domain_event.entity_manager')
+            '$entityManagers' => tagged_iterator('rekalogika.domain_event.entity_manager'),
         ])
         ->tag('kernel.event_listener', [
             'event' => 'kernel.exception',
@@ -179,7 +178,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services
         ->set(
             Constants::IMMEDIATE_DISPATCHER_INSTALLER,
-            ImmediateDomainEventDispatcherInstaller::class
+            ImmediateDomainEventDispatcherInstaller::class,
         )
         ->args([
             '$eventDispatcher' =>

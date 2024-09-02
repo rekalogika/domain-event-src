@@ -22,6 +22,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 final class OutboxEntityPass implements CompilerPassInterface
 {
+    #[\Override]
     public function process(ContainerBuilder $container): void
     {
         $entityManagers = $container->getParameter('doctrine.entity_managers');
@@ -29,9 +30,8 @@ final class OutboxEntityPass implements CompilerPassInterface
 
         /**
          * @var string $name
-         * @var string $id
          */
-        foreach ($entityManagers as $name => $id) {
+        foreach (array_keys($entityManagers) as $name) {
             $parameterKey = sprintf('rekalogika.domain_event.doctrine.orm.%s_entity_manager', $name);
             $container->setParameter($parameterKey, $name);
 

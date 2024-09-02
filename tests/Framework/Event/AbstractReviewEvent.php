@@ -19,7 +19,7 @@ use Symfony\Component\Uid\Uuid;
 
 abstract class AbstractReviewEvent implements EquatableDomainEventInterface
 {
-    private Uuid $id;
+    private readonly Uuid $id;
 
     public function __construct(Review $review)
     {
@@ -31,6 +31,7 @@ abstract class AbstractReviewEvent implements EquatableDomainEventInterface
         return $this->id;
     }
 
+    #[\Override]
     final public function getSignature(): string
     {
         return hash('xxh128', serialize($this));

@@ -19,9 +19,7 @@ use Rekalogika\DomainEvent\Tests\Framework\Event\BookDummyMethodForFlushCalled;
 
 final class BookDummyMethodForFlushListener
 {
-    public function __construct(private EntityManagerInterface $entityManager)
-    {
-    }
+    public function __construct(private readonly EntityManagerInterface $entityManager) {}
 
     #[AsPreFlushDomainEventListener()]
     public function onDummyMethodCalled(BookDummyMethodForFlushCalled $event): void

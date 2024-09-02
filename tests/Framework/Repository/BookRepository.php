@@ -33,6 +33,7 @@ class BookRepository extends ServiceEntityRepository
         parent::__construct($registry, Book::class);
     }
 
+    #[\Override]
     public function getEntityManager(): EntityManagerInterface
     {
         return parent::getEntityManager();
