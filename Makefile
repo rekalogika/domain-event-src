@@ -46,3 +46,8 @@ tools/php-cs-fixer:
 .PHONY: dump
 dump:
 	$(PHP) tests/bin/console server:dump
+
+.PHONY: rector
+rector:
+	$(PHP) vendor/bin/rector process > rector.log
+	make php-cs-fixer
