@@ -35,6 +35,7 @@ final class Entity implements DomainEventEmitterInterface
         $this->recordEvent(new EntityCreated($this));
     }
 
+    #[\Override]
     public function __remove(): void
     {
         $this->recordEvent(new EntityRemoved($this));

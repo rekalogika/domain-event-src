@@ -24,6 +24,7 @@ class OutboxReaderFactory implements OutboxReaderFactoryInterface
     {
     }
 
+    #[\Override]
     public function createOutboxReader(string $managerName): OutboxReaderInterface
     {
         $manager = $this->managerRegistry->getManager($managerName);

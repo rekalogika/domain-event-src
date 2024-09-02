@@ -28,6 +28,7 @@ final class MessageRelayProvider implements ScheduleProviderInterface
     ) {
     }
 
+    #[\Override]
     public function getSchedule(): Schedule
     {
         $schedule = new Schedule();

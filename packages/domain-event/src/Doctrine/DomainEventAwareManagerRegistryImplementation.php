@@ -65,6 +65,7 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
         }
     }
 
+    #[\Override]
     public function getManagerName(ObjectManager $manager): string
     {
         if (!$manager instanceof DomainEventAwareObjectManager) {
@@ -75,6 +76,7 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
             ?? throw new \InvalidArgumentException(sprintf('Manager "%s" is not registered', $manager::class));
     }
 
+    #[\Override]
     public function getDomainEventAwareManagers(): array
     {
         $managers = $this->getManagers();
@@ -87,6 +89,7 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
         return $domainEventAwareManagers;
     }
 
+    #[\Override]
     public function getDomainEventAwareManagerForClass(
         string $class
     ): ?DomainEventAwareObjectManager {
@@ -99,11 +102,13 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
         return $this->getDomainEventAwareManager($manager);
     }
 
+    #[\Override]
     public function getRealRegistry(): ManagerRegistry
     {
         return $this->wrapped;
     }
 
+    #[\Override]
     public function reset(): void
     {
         if ($this->wrapped instanceof ResetInterface) {
@@ -111,6 +116,7 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
         }
     }
 
+    #[\Override]
     public function getManager(?string $name = null): ObjectManager
     {
         $manager = parent::getManager($name);
@@ -118,6 +124,7 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
         return $this->getDomainEventAwareManager($manager);
     }
 
+    #[\Override]
     public function getDomainEventAwareManager(
         ObjectManager $objectManager
     ): DomainEventAwareObjectManager {
@@ -141,6 +148,7 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
     /**
      * @return array<string,ObjectManager>
      */
+    #[\Override]
     public function getManagers(): array
     {
         $managers = parent::getManagers();
@@ -152,6 +160,7 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
         return $managers;
     }
 
+    #[\Override]
     public function resetManager(?string $name = null): ObjectManager
     {
         $manager = parent::resetManager($name);
@@ -159,6 +168,7 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
         return $this->getDomainEventAwareManager($manager);
     }
 
+    #[\Override]
     public function getManagerForClass(string $class): ?ObjectManager
     {
         $manager = parent::getManagerForClass($class);
@@ -170,6 +180,7 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
         return $this->getDomainEventAwareManager($manager);
     }
 
+    #[\Override]
     public function getRepository(
         string $persistentObject,
         ?string $persistentManagerName = null

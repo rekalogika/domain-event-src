@@ -26,6 +26,7 @@ class RekalogikaDomainEventOutboxExtension extends Extension
     /**
      * @param array<array-key,mixed> $configs
      */
+    #[\Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
         $debug = (bool) $container->getParameter('kernel.debug');

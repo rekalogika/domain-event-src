@@ -41,6 +41,7 @@ class Kernel extends HttpKernelKernel
         parent::__construct($environment, $debug);
     }
 
+    #[\Override]
     public function registerBundles(): iterable
     {
         return [
@@ -56,6 +57,7 @@ class Kernel extends HttpKernelKernel
         ];
     }
 
+    #[\Override]
     public function build(ContainerBuilder $container): void
     {
         $loader = new PhpFileLoader(
@@ -66,6 +68,7 @@ class Kernel extends HttpKernelKernel
         $loader->load('services_test.php');
     }
 
+    #[\Override]
     public function getProjectDir(): string
     {
         return \dirname(__DIR__, 2);
@@ -76,6 +79,7 @@ class Kernel extends HttpKernelKernel
         return __DIR__ . '/Resources/config/';
     }
 
+    #[\Override]
     public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $loader->load($this->getConfigDir() . '/packages/*' . '.yaml', 'glob');

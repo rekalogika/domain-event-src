@@ -20,6 +20,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 
 class AccessTokenHandler implements AccessTokenHandlerInterface
 {
+    #[\Override]
     public function getUserBadgeFrom(string $accessToken): UserBadge
     {
         return match ($accessToken) {

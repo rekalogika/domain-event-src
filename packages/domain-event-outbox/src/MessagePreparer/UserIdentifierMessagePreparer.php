@@ -27,6 +27,7 @@ class UserIdentifierMessagePreparer implements MessagePreparerInterface
     {
     }
 
+    #[\Override]
     public function prepareMessage(Envelope $envelope): ?Envelope
     {
         $user = $this->tokenStorage->getToken()?->getUser();

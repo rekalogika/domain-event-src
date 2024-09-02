@@ -28,6 +28,7 @@ class ChainMessagePreparer implements MessagePreparerInterface
     {
     }
 
+    #[\Override]
     public function prepareMessage(Envelope $envelope): ?Envelope
     {
         foreach ($this->messagePreparers as $messagePreparer) {

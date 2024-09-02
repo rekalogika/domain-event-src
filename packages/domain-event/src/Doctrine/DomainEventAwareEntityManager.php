@@ -67,6 +67,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         return false;
     }
 
+    #[\Override]
     public function isLazyObjectInitialized(bool $partial = false): bool
     {
         if ($this->wrapped instanceof LazyObjectInterface) {
@@ -76,6 +77,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         return true;
     }
 
+    #[\Override]
     public function initializeLazyObject(): object
     {
         if ($this->wrapped instanceof LazyObjectInterface) {
@@ -89,6 +91,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         return $this;
     }
 
+    #[\Override]
     public function resetLazyObject(): bool
     {
         if ($this->wrapped instanceof LazyObjectInterface) {
@@ -98,11 +101,13 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         return false;
     }
 
+    #[\Override]
     public function getObjectManager(): ObjectManager
     {
         return $this->wrapped;
     }
 
+    #[\Override]
     public function reset(): void
     {
         $this->flushEnabled = true;
@@ -117,16 +122,19 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         $this->recordDomainEvent($events);
     }
 
+    #[\Override]
     public function setAutoDispatchDomainEvents(bool $autoDispatch): void
     {
         $this->autodispatch = $autoDispatch;
     }
 
+    #[\Override]
     public function isAutoDispatchDomainEvents(): bool
     {
         return $this->autodispatch;
     }
 
+    #[\Override]
     public function dispatchPreFlushDomainEvents(): int
     {
         $this->flushEnabled = false;
@@ -167,6 +175,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         return $num;
     }
 
+    #[\Override]
     public function dispatchPostFlushDomainEvents(): int
     {
         $this->collectEvents();
@@ -193,12 +202,14 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         return $num;
     }
 
+    #[\Override]
     public function clearDomainEvents(): void
     {
         $this->preFlushDomainEvents->clear();
         $this->postFlushDomainEvents->clear();
     }
 
+    #[\Override]
     public function popDomainEvents(): iterable
     {
         $events = $this->postFlushDomainEvents->pop();
@@ -207,6 +218,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         return $events;
     }
 
+    #[\Override]
     public function recordDomainEvent(object|iterable $event): void
     {
         $this->preFlushDomainEvents->add($event);
@@ -225,6 +237,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         }
     }
 
+    #[\Override]
     public function flush(mixed $entity = null): void
     {
         if ($entity !== null) {
@@ -247,12 +260,14 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         }
     }
 
+    #[\Override]
     public function beginTransaction(): void
     {
         $this->postFlushDomainEvents->beginTransaction();
         parent::beginTransaction();
     }
 
+    #[\Override]
     public function commit(): void
     {
         $this->postFlushDomainEvents->commit();
@@ -263,6 +278,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         }
     }
 
+    #[\Override]
     public function rollback(): void
     {
         parent::rollback();
@@ -296,6 +312,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         }
     }
 
+    #[\Override]
     public function wrapInTransaction(callable $func): mixed
     {
         $this->getConnection()->beginTransaction();

@@ -31,6 +31,7 @@ abstract class AbstractPostEvent implements EquatableDomainEventInterface
         return $this->id;
     }
 
+    #[\Override]
     final public function getSignature(): string
     {
         return hash('xxh128', serialize($this));

@@ -26,9 +26,9 @@ return RectorConfig::configure()
         // doctrineCodeQuality: true,
     )
     ->withPhpSets(php81: true)
-    // ->withRules([
-    //     AddOverrideAttributeToOverriddenMethodsRector::class,
-    // ])
+    ->withRules([
+        AddOverrideAttributeToOverriddenMethodsRector::class,
+    ])
     ->withSkip([
         RemoveUnusedPublicMethodParameterRector::class => [
             __DIR__ . '/tests/Integration/EventListener/*',

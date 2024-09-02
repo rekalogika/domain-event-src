@@ -73,6 +73,7 @@ class Book implements DomainEventEmitterInterface
         $this->recordEvent(new BookCreated($this));
     }
 
+    #[\Override]
     public function __remove(): void
     {
         $this->recordEvent(new BookRemoved($this));

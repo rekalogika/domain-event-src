@@ -21,6 +21,7 @@ use Rekalogika\DomainEvent\Tests\Framework\EventListener\BookDummyMethodForNeste
 
 final class PreFlushTest extends DomainEventTestCase
 {
+    #[\Override]
     public function tearDown(): void
     {
         static::getEntityManager()->clearDomainEvents();

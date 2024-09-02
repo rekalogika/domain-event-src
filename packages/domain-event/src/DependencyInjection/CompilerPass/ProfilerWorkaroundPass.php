@@ -37,6 +37,7 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
  */
 final class ProfilerWorkaroundPass implements CompilerPassInterface
 {
+    #[\Override]
     public function process(ContainerBuilder $container): void
     {
         try {

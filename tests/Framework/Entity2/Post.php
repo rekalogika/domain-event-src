@@ -58,6 +58,7 @@ class Post implements DomainEventEmitterInterface
         $this->recordEvent(new PostCreated($this));
     }
 
+    #[\Override]
     public function __remove(): void
     {
         $this->recordEvent(new PostRemoved($this));

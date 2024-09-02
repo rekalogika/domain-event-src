@@ -34,6 +34,7 @@ final class MessageRelayCommand extends Command
         parent::__construct();
     }
 
+    #[\Override]
     protected function configure(): void
     {
         $this->addArgument(
@@ -50,6 +51,7 @@ final class MessageRelayCommand extends Command
         );
     }
 
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $managerName = $input->getArgument('managerName') ?? $this->defaultManagerName;

@@ -31,6 +31,7 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 final class EntityManagerDecoratorPass implements CompilerPassInterface
 {
+    #[\Override]
     public function process(ContainerBuilder $container): void
     {
         $entityManagers = $container->getParameter('doctrine.entity_managers');

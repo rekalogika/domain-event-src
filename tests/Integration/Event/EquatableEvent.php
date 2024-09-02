@@ -18,6 +18,7 @@ use Rekalogika\Contracts\DomainEvent\EquatableDomainEventInterface;
 final class EquatableEvent extends AbstractEntityDomainEvent implements
     EquatableDomainEventInterface
 {
+    #[\Override]
     public function getSignature(): string
     {
         return sha1(serialize($this));

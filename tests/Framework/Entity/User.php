@@ -26,15 +26,18 @@ class User implements UserInterface
     ) {
     }
 
+    #[\Override]
     public function getRoles(): array
     {
         return $this->roles;
     }
 
+    #[\Override]
     public function eraseCredentials(): void
     {
     }
 
+    #[\Override]
     public function getUserIdentifier(): string
     {
         return $this->username;

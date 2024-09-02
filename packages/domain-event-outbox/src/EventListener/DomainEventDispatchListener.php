@@ -40,6 +40,7 @@ class DomainEventDispatchListener implements ResetInterface
     ) {
     }
 
+    #[\Override]
     public function reset(): void
     {
         $this->managerNames = [];

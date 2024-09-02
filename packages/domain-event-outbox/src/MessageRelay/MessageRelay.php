@@ -37,6 +37,7 @@ final class MessageRelay implements MessageRelayInterface
     ) {
     }
 
+    #[\Override]
     public function relayMessages(string $managerName): int
     {
         $lock = $this->lockFactory->createLock(self::class . '-' . $managerName);

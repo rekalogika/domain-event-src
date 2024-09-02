@@ -70,11 +70,13 @@ class DomainEventStore implements \IteratorAggregate, \Countable
     /**
      * @return \Traversable<int|string,object>
      */
+    #[\Override]
     public function getIterator(): \Traversable
     {
         yield from $this->events;
     }
 
+    #[\Override]
     public function count(): int
     {
         return \count($this->events);
