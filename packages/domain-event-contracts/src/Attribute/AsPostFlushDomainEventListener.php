@@ -20,6 +20,5 @@ class AsPostFlushDomainEventListener
         public ?string $event = null,
         public ?string $method = null,
         public int $priority = 0,
-    ) {
-    }
+    ) {}
 }

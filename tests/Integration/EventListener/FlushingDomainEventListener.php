@@ -17,9 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class FlushingDomainEventListener
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager)
-    {
-    }
+    public function __construct(private readonly EntityManagerInterface $entityManager) {}
 
     private bool $entityCreatedHeard = false;
 

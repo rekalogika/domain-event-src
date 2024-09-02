@@ -20,8 +20,7 @@ class DomainEventPreFlushDispatchEvent
     final public function __construct(
         private readonly DomainEventAwareObjectManager $objectManager,
         private readonly object $domainEvent
-    ) {
-    }
+    ) {}
 
     public function getDomainEvent(): object
     {

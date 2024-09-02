@@ -13,6 +13,4 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Tests\Framework\Event2;
 
-final class PostChanged extends AbstractPostEvent
-{
-}
+final class PostChanged extends AbstractPostEvent {}

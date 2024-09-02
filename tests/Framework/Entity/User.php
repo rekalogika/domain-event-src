@@ -23,8 +23,7 @@ class User implements UserInterface
     public function __construct(
         private readonly string $username = 'user',
         private readonly array $roles = ['ROLE_USER'],
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function getRoles(): array
@@ -33,9 +32,7 @@ class User implements UserInterface
     }
 
     #[\Override]
-    public function eraseCredentials(): void
-    {
-    }
+    public function eraseCredentials(): void {}
 
     #[\Override]
     public function getUserIdentifier(): string

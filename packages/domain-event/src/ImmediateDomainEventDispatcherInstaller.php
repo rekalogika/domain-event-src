@@ -23,8 +23,7 @@ final class ImmediateDomainEventDispatcherInstaller
 {
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
-    ) {
-    }
+    ) {}
 
     public function install(): void
     {

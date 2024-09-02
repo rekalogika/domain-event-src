@@ -28,8 +28,7 @@ final class DoctrineEventListener
 {
     public function __construct(
         private readonly DomainEventAwareManagerRegistry $managerRegistry,
-    ) {
-    }
+    ) {}
 
     public function postPersist(PostPersistEventArgs $args): void
     {

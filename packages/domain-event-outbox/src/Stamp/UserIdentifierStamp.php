@@ -17,9 +17,7 @@ use Symfony\Component\Messenger\Stamp\StampInterface;
 
 final class UserIdentifierStamp implements StampInterface
 {
-    public function __construct(private readonly string $userIdentifier)
-    {
-    }
+    public function __construct(private readonly string $userIdentifier) {}
 
     public function getUserIdentifier(): string
     {

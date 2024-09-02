@@ -17,9 +17,7 @@ use Symfony\Component\Messenger\Stamp\StampInterface;
 
 final class ObjectManagerNameStamp implements StampInterface
 {
-    public function __construct(private readonly string $objectManagerName)
-    {
-    }
+    public function __construct(private readonly string $objectManagerName) {}
 
     public function getObjectManagerName(): string
     {

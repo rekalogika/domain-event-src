@@ -29,8 +29,7 @@ final class ImmediateEventDispatchingDomainEventDispatcher implements
     public function __construct(
         private readonly EventDispatcherInterface $decorated,
         private readonly PsrEventDispatcherInterface $defaultEventDispatcher,
-    ) {
-    }
+    ) {}
 
     // @phpstan-ignore-next-line
     #[\Override]

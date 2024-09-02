@@ -16,6 +16,4 @@ namespace Rekalogika\DomainEvent\Outbox\Entity;
 /**
  * A sentinel event that represents an error in the outbox.
  */
-class ErrorEvent
-{
-}
+class ErrorEvent {}

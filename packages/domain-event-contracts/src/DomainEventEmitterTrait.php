@@ -58,7 +58,5 @@ trait DomainEventEmitterTrait
         return DomainEventImmediateDispatcher::dispatch($event);
     }
 
-    public function __remove(): void
-    {
-    }
+    public function __remove(): void {}
 }

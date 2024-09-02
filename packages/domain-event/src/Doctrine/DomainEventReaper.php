@@ -28,8 +28,7 @@ final class DomainEventReaper
      */
     public function __construct(
         private readonly iterable $entityManagers,
-    ) {
-    }
+    ) {}
 
     public function onKernelException(): void
     {

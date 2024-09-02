@@ -37,8 +37,7 @@ class DomainEventDispatchListener implements ResetInterface
         private readonly MessagePreparerInterface $messagePreparer,
         private readonly MessageBusInterface $messageBus,
         private readonly DomainEventAwareManagerRegistry $managerRegistry,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function reset(): void

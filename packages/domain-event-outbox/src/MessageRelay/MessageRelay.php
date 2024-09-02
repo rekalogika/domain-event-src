@@ -34,8 +34,7 @@ final class MessageRelay implements MessageRelayInterface
         private readonly LockFactory $lockFactory,
         private readonly LoggerInterface $logger = new NullLogger(),
         private readonly int $limit = 100
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function relayMessages(string $managerName): int

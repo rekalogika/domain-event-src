@@ -13,6 +13,4 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Tests\Framework\Event;
 
-final class ReviewCreated extends AbstractReviewEvent
-{
-}
+final class ReviewCreated extends AbstractReviewEvent {}

@@ -20,9 +20,7 @@ use Rekalogika\DomainEvent\Outbox\OutboxReaderInterface;
 
 class OutboxReaderFactory implements OutboxReaderFactoryInterface
 {
-    public function __construct(private readonly ManagerRegistry $managerRegistry)
-    {
-    }
+    public function __construct(private readonly ManagerRegistry $managerRegistry) {}
 
     #[\Override]
     public function createOutboxReader(string $managerName): OutboxReaderInterface

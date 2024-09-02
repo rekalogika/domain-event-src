@@ -25,9 +25,7 @@ final class DomainEventImmediateDispatcher
     /**
      * Disallow instantiation
      */
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     /**
      * Called at the beginning of the request to install the event dispatcher.

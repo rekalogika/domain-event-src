@@ -25,8 +25,7 @@ final class EventDispatchers
         private readonly EventDispatcherInterface $immediateEventDispatcher,
         private readonly EventDispatcherInterface $preFlushEventDispatcher,
         private readonly EventDispatcherInterface $postFlushEventDispatcher,
-    ) {
-    }
+    ) {}
 
     public function getDefaultEventDispatcher(): EventDispatcherInterface
     {

@@ -25,8 +25,7 @@ final class MessageRelayProvider implements ScheduleProviderInterface
      */
     public function __construct(
         private readonly array $entityManagers
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function getSchedule(): Schedule

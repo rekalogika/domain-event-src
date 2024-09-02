@@ -35,7 +35,5 @@ final class Constants
 
     public const REAL_MANAGER_REGISTRY = 'rekalogika.domain_event.doctrine.real';
 
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 }

@@ -24,8 +24,7 @@ class EntityManagerOutboxReader implements OutboxReaderInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function getOutboxMessages(int $limit): iterable

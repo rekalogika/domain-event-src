@@ -17,6 +17,4 @@ use Doctrine\Persistence\ObjectManager;
 
 interface DomainEventAwareObjectManager extends
     ObjectManager,
-    DomainEventManagerInterface
-{
-}
+    DomainEventManagerInterface {}

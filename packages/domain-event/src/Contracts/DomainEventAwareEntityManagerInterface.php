@@ -18,6 +18,4 @@ use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface as DomainEvent
 /**
  * @deprecated Please use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface instead
  */
-interface DomainEventAwareEntityManagerInterface extends DomainEventDomainEventAwareEntityManagerInterface
-{
-}
+interface DomainEventAwareEntityManagerInterface extends DomainEventDomainEventAwareEntityManagerInterface {}

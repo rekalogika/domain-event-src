@@ -18,8 +18,7 @@ final class BookDummyChanged
     public function __construct(
         private readonly string $previous,
         private readonly string $now
-    ) {
-    }
+    ) {}
 
     public function getPrevious(): string
     {

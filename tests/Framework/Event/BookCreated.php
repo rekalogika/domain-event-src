@@ -13,6 +13,4 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Tests\Framework\Event;
 
-final class BookCreated extends AbstractBookEvent
-{
-}
+final class BookCreated extends AbstractBookEvent {}

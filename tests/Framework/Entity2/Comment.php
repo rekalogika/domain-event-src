@@ -43,9 +43,7 @@ class Comment implements DomainEventEmitterInterface
     }
 
     #[\Override]
-    public function __remove(): void
-    {
-    }
+    public function __remove(): void {}
 
     public function getId(): Uuid
     {

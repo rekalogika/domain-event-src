@@ -19,9 +19,7 @@ use Doctrine\Persistence\ObjectRepository;
 
 abstract class AbstractManagerRegistryDecorator implements ManagerRegistry
 {
-    public function __construct(private readonly ManagerRegistry $wrapped)
-    {
-    }
+    public function __construct(private readonly ManagerRegistry $wrapped) {}
 
     #[\Override]
     public function getDefaultManagerName(): string
