@@ -29,7 +29,6 @@ class DomainEventStore implements \IteratorAggregate, \Countable
      * Adds an event to the store.
      *
      * @param object|iterable<object> $event
-     * @return void
      */
     public function add(object|iterable $event): void
     {

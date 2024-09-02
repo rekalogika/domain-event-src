@@ -46,7 +46,6 @@ interface DomainEventAwareManagerRegistry extends ManagerRegistry
      * The domain-event-aware version of `getManagerForClass()`
      *
      * @param class-string $class
-     * @return null|DomainEventAwareObjectManager
      */
     public function getDomainEventAwareManagerForClass(
         string $class
