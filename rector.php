@@ -14,7 +14,7 @@ return RectorConfig::configure()
         __DIR__ . '/tests',
     ])
     ->withImportNames(importShortClasses: false)
-    ->withCodeQualityLevel(20)
+    ->withCodeQualityLevel(40)
     ->withPreparedSets(
         deadCode: true,
         // codeQuality: true,
