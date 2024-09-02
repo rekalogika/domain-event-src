@@ -13,18 +13,17 @@ return RectorConfig::configure()
         __DIR__ . '/tests',
     ])
     ->withImportNames(importShortClasses: false)
-    ->withTypeCoverageLevel(10)
-    // ->withPreparedSets(
-    //     deadCode: true,
-    //     codeQuality: true,
-    //     codingStyle: true,
-    //     typeDeclarations: true,
-    //     privatization: true,
-    //     instanceOf: true,
-    //     strictBooleans: true,
-    //     symfonyCodeQuality: true,
-    //     doctrineCodeQuality: true,
-    // )
+    ->withPreparedSets(
+        // deadCode: true,
+        // codeQuality: true,
+        // codingStyle: true,
+        typeDeclarations: true,
+        // privatization: true,
+        // instanceOf: true,
+        // strictBooleans: true,
+        // symfonyCodeQuality: true,
+        // doctrineCodeQuality: true,
+    )
     // ->withPhpSets(php82: true)
     // ->withRules([
     //     AddOverrideAttributeToOverriddenMethodsRector::class,
