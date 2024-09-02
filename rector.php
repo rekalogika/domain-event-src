@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPublicMethodParameterRector;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\ValueObject\PhpVersion;
 
@@ -13,7 +14,7 @@ return RectorConfig::configure()
         __DIR__ . '/tests',
     ])
     ->withImportNames(importShortClasses: false)
-    ->withDeadCodeLevel(30)
+    ->withDeadCodeLevel(50)
     ->withPreparedSets(
         // deadCode: true,
         // codeQuality: true,
@@ -30,4 +31,8 @@ return RectorConfig::configure()
     //     AddOverrideAttributeToOverriddenMethodsRector::class,
     // ])
     ->withSkip([
+        RemoveUnusedPublicMethodParameterRector::class => [
+            __DIR__ . '/tests/Integration/EventListener/*',
+            __DIR__ . '/tests/Framework/EventListener/*',
+        ],
     ]);
