@@ -13,6 +13,7 @@ return RectorConfig::configure()
         __DIR__ . '/tests',
     ])
     ->withImportNames(importShortClasses: false)
+    ->withTypeCoverageLevel(10)
     // ->withPreparedSets(
     //     deadCode: true,
     //     codeQuality: true,
@@ -24,9 +25,9 @@ return RectorConfig::configure()
     //     symfonyCodeQuality: true,
     //     doctrineCodeQuality: true,
     // )
-    ->withPhpSets(php82: true)
-    ->withRules([
-        AddOverrideAttributeToOverriddenMethodsRector::class,
-    ])
+    // ->withPhpSets(php82: true)
+    // ->withRules([
+    //     AddOverrideAttributeToOverriddenMethodsRector::class,
+    // ])
     ->withSkip([
     ]);

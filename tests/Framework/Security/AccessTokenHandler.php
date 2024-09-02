@@ -25,7 +25,7 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
         return match ($accessToken) {
             'user' => new UserBadge(
                 'user',
-                fn (string $userIdentifier) => new User()
+                fn (string $userIdentifier): User => new User()
             ),
             default => throw new BadCredentialsException('Invalid credentials.'),
         };

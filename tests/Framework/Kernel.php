@@ -80,7 +80,7 @@ class Kernel extends HttpKernelKernel
     {
         $loader->load($this->getConfigDir() . '/packages/*' . '.yaml', 'glob');
 
-        $loader->load(function (ContainerBuilder $container) {
+        $loader->load(function (ContainerBuilder $container): void {
             $container->loadFromExtension('rekalogika_domain_event', $this->config);
         });
     }
