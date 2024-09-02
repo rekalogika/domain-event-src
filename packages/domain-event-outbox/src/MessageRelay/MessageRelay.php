@@ -108,6 +108,6 @@ final class MessageRelay implements MessageRelayInterface
         $handlers = $this->handlersLocator->getHandlers($envelope);
         $handlers = $handlers instanceof \Traversable ? iterator_to_array($handlers) : $handlers;
 
-        return \count($handlers) > 0;
+        return $handlers !== [];
     }
 }

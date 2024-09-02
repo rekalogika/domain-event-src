@@ -33,7 +33,7 @@ final class MessageRelayProvider implements ScheduleProviderInterface
     {
         $schedule = new Schedule();
 
-        foreach ($this->entityManagers as $name => $service) {
+        foreach (array_keys($this->entityManagers) as $name) {
             $schedule->add(RecurringMessage::every('1 hour', new MessageRelayStartMessage($name)));
         }
 

@@ -32,7 +32,7 @@ final class OutboxEntityPass implements CompilerPassInterface
          * @var string $name
          * @var string $id
          */
-        foreach ($entityManagers as $name => $id) {
+        foreach (array_keys($entityManagers) as $name) {
             $parameterKey = sprintf('rekalogika.domain_event.doctrine.orm.%s_entity_manager', $name);
             $container->setParameter($parameterKey, $name);
 

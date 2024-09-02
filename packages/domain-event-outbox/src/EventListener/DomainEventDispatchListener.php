@@ -70,7 +70,7 @@ class DomainEventDispatchListener implements ResetInterface
 
     public function onTerminate(): void
     {
-        foreach ($this->managerNames as $managerName => $_) {
+        foreach (array_keys($this->managerNames) as $managerName) {
             $this->messageBus->dispatch(new MessageRelayStartMessage($managerName));
         }
     }
