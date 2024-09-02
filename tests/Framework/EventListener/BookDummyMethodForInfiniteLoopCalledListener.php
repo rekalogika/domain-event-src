@@ -20,7 +20,7 @@ use Rekalogika\DomainEvent\Tests\Framework\Event\BookDummyMethodForInfiniteLoopC
 
 final class BookDummyMethodForInfiniteLoopCalledListener
 {
-    public function __construct(private EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
     }
 

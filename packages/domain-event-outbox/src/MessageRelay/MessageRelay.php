@@ -27,17 +27,14 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class MessageRelay implements MessageRelayInterface
 {
-    private LoggerInterface $logger;
-
     public function __construct(
         private readonly OutboxReaderFactoryInterface $outboxReaderFactory,
         private readonly HandlersLocatorInterface $handlersLocator,
         private readonly MessageBusInterface $domainEventBus,
         private readonly LockFactory $lockFactory,
-        ?LoggerInterface $logger = null,
+        private readonly LoggerInterface $logger = new NullLogger(),
         private readonly int $limit = 100
     ) {
-        $this->logger = $logger ?? new NullLogger();
     }
 
     public function relayMessages(string $managerName): int

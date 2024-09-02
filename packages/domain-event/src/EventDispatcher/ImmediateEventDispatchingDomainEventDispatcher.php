@@ -27,8 +27,8 @@ final class ImmediateEventDispatchingDomainEventDispatcher implements
     EventDispatcherInterface
 {
     public function __construct(
-        private EventDispatcherInterface $decorated,
-        private PsrEventDispatcherInterface $defaultEventDispatcher,
+        private readonly EventDispatcherInterface $decorated,
+        private readonly PsrEventDispatcherInterface $defaultEventDispatcher,
     ) {
     }
 

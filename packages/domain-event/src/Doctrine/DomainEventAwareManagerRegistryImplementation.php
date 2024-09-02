@@ -39,7 +39,7 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
      * @param iterable<DomainEventManagerInterface> $decoratedObjectManagers
      */
     public function __construct(
-        private ManagerRegistry $wrapped,
+        private readonly ManagerRegistry $wrapped,
         iterable $decoratedObjectManagers
     ) {
         parent::__construct($wrapped);

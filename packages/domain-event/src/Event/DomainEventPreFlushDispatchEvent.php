@@ -18,8 +18,8 @@ use Rekalogika\DomainEvent\DomainEventAwareObjectManager;
 class DomainEventPreFlushDispatchEvent
 {
     final public function __construct(
-        private DomainEventAwareObjectManager $objectManager,
-        private object $domainEvent
+        private readonly DomainEventAwareObjectManager $objectManager,
+        private readonly object $domainEvent
     ) {
     }
 

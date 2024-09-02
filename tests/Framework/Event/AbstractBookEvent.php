@@ -19,7 +19,7 @@ use Symfony\Component\Uid\Uuid;
 
 abstract class AbstractBookEvent implements EquatableDomainEventInterface
 {
-    private Uuid $id;
+    private readonly Uuid $id;
 
     public function __construct(Book $book)
     {

@@ -19,7 +19,7 @@ use Doctrine\Persistence\ObjectRepository;
 
 abstract class AbstractManagerRegistryDecorator implements ManagerRegistry
 {
-    public function __construct(private ManagerRegistry $wrapped)
+    public function __construct(private readonly ManagerRegistry $wrapped)
     {
     }
 

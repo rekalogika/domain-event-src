@@ -21,7 +21,7 @@ use Rekalogika\DomainEvent\Outbox\Entity\OutboxMessage;
  */
 class RenameTableListener
 {
-    public function __construct(private string $outboxTable)
+    public function __construct(private readonly string $outboxTable)
     {
     }
 

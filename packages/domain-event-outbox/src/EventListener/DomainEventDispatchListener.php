@@ -34,9 +34,9 @@ class DomainEventDispatchListener implements ResetInterface
     public array $managerNames = [];
 
     public function __construct(
-        private MessagePreparerInterface $messagePreparer,
-        private MessageBusInterface $messageBus,
-        private DomainEventAwareManagerRegistry $managerRegistry,
+        private readonly MessagePreparerInterface $messagePreparer,
+        private readonly MessageBusInterface $messageBus,
+        private readonly DomainEventAwareManagerRegistry $managerRegistry,
     ) {
     }
 

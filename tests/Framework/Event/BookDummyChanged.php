@@ -16,8 +16,8 @@ namespace Rekalogika\DomainEvent\Tests\Framework\Event;
 final class BookDummyChanged
 {
     public function __construct(
-        private string $previous,
-        private string $now
+        private readonly string $previous,
+        private readonly string $now
     ) {
     }
 

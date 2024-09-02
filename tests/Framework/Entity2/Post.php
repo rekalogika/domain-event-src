@@ -50,7 +50,6 @@ class Post implements DomainEventEmitterInterface
     public function __construct(
         #[ORM\Column]
         private ?string $title,
-
         #[ORM\Column(type: Types::TEXT)]
         private ?string $content
     ) {

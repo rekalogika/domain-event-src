@@ -23,7 +23,7 @@ use Symfony\Component\Messenger\Envelope;
 class EntityManagerOutboxReader implements OutboxReaderInterface
 {
     public function __construct(
-        private EntityManagerInterface $entityManager,
+        private readonly EntityManagerInterface $entityManager,
     ) {
     }
 

@@ -36,7 +36,7 @@ class Kernel extends HttpKernelKernel
     public function __construct(
         string $environment = 'test',
         bool $debug = true,
-        private array $config = []
+        private readonly array $config = []
     ) {
         parent::__construct($environment, $debug);
     }

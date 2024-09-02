@@ -21,8 +21,8 @@ class User implements UserInterface
      * @param list<string> $roles
      */
     public function __construct(
-        private string $username = 'user',
-        private array $roles = ['ROLE_USER'],
+        private readonly string $username = 'user',
+        private readonly array $roles = ['ROLE_USER'],
     ) {
     }
 

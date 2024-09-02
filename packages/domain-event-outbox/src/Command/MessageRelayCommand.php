@@ -27,9 +27,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 final class MessageRelayCommand extends Command
 {
     public function __construct(
-        private string $defaultManagerName,
-        private MessageRelayInterface $messageRelay,
-        private MessageRelayAll $messageRelayAll,
+        private readonly string $defaultManagerName,
+        private readonly MessageRelayInterface $messageRelay,
+        private readonly MessageRelayAll $messageRelayAll,
     ) {
         parent::__construct();
     }

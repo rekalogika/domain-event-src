@@ -22,7 +22,7 @@ final class BookDummyMethodForNestedRecordEventListener
 {
     private bool $dummyMethodForNestedRecordEventCalled = false;
 
-    public function __construct(private EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
     }
 
