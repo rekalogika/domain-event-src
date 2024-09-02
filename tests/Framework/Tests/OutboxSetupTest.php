@@ -39,6 +39,7 @@ final class OutboxSetupTest extends DomainEventTestCase
             ->setParameter(1, 'rekalogika_event_outbox');
 
         $queryBuilder->executeStatement();
+
         $result = $queryBuilder->fetchAssociative();
 
         $this->assertIsArray($result);

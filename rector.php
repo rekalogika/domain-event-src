@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
 use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
+use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
 use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPublicMethodParameterRector;
@@ -21,7 +22,7 @@ return RectorConfig::configure()
     ->withPreparedSets(
         deadCode: true,
         codeQuality: true,
-        // codingStyle: true,
+        codingStyle: true,
         typeDeclarations: true,
         // privatization: true,
         // instanceOf: true,
@@ -31,7 +32,6 @@ return RectorConfig::configure()
     )
     ->withPhpSets(php81: true)
     ->withRules([
-        NewlineAfterStatementRector::class,
         AddOverrideAttributeToOverriddenMethodsRector::class,
     ])
     ->withSkip([
@@ -43,6 +43,10 @@ return RectorConfig::configure()
 
         // makes code unreadable
         DisallowedShortTernaryRuleFixerRector::class,
+
+        MakeInheritedMethodVisibilitySameAsParentRector::class => [
+            __DIR__ . '/tests/*',
+        ],
         
         RemoveUnusedPublicMethodParameterRector::class => [
             __DIR__ . '/tests/Integration/EventListener/*',
