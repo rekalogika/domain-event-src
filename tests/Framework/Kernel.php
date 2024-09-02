@@ -36,7 +36,7 @@ class Kernel extends HttpKernelKernel
     public function __construct(
         string $environment = 'test',
         bool $debug = true,
-        private readonly array $config = []
+        private readonly array $config = [],
     ) {
         parent::__construct($environment, $debug);
     }
@@ -62,7 +62,7 @@ class Kernel extends HttpKernelKernel
     {
         $loader = new PhpFileLoader(
             $container,
-            new FileLocator(__DIR__ . '/Resources/config')
+            new FileLocator(__DIR__ . '/Resources/config'),
         );
 
         $loader->load('services_test.php');

@@ -34,7 +34,7 @@ class RekalogikaDomainEventExtension extends Extension
 
         $loader = new PhpFileLoader(
             $container,
-            new FileLocator(__DIR__ . '/../../config')
+            new FileLocator(__DIR__ . '/../../config'),
         );
         $loader->load('services.php');
 
@@ -47,7 +47,7 @@ class RekalogikaDomainEventExtension extends Extension
             static function (
                 ChildDefinition $definition,
                 AsPostFlushDomainEventListener $attribute,
-                \Reflector $reflector
+                \Reflector $reflector,
             ): void {
                 if (
                     !$reflector instanceof \ReflectionClass
@@ -68,9 +68,9 @@ class RekalogikaDomainEventExtension extends Extension
 
                 $definition->addTag(
                     'kernel.event_listener',
-                    $tagAttributes
+                    $tagAttributes,
                 );
-            }
+            },
         );
 
         $container->registerAttributeForAutoconfiguration(
@@ -78,7 +78,7 @@ class RekalogikaDomainEventExtension extends Extension
             static function (
                 ChildDefinition $definition,
                 AsPreFlushDomainEventListener $attribute,
-                \Reflector $reflector
+                \Reflector $reflector,
             ): void {
                 if (
                     !$reflector instanceof \ReflectionClass
@@ -99,9 +99,9 @@ class RekalogikaDomainEventExtension extends Extension
 
                 $definition->addTag(
                     'kernel.event_listener',
-                    $tagAttributes
+                    $tagAttributes,
                 );
-            }
+            },
         );
 
         $container->registerAttributeForAutoconfiguration(
@@ -109,7 +109,7 @@ class RekalogikaDomainEventExtension extends Extension
             static function (
                 ChildDefinition $definition,
                 AsImmediateDomainEventListener $attribute,
-                \Reflector $reflector
+                \Reflector $reflector,
             ): void {
                 if (
                     !$reflector instanceof \ReflectionClass
@@ -130,9 +130,9 @@ class RekalogikaDomainEventExtension extends Extension
 
                 $definition->addTag(
                     'kernel.event_listener',
-                    $tagAttributes
+                    $tagAttributes,
                 );
-            }
+            },
         );
     }
 }

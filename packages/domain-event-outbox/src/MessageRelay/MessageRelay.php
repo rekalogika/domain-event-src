@@ -33,7 +33,7 @@ final class MessageRelay implements MessageRelayInterface
         private readonly MessageBusInterface $domainEventBus,
         private readonly LockFactory $lockFactory,
         private readonly LoggerInterface $logger = new NullLogger(),
-        private readonly int $limit = 100
+        private readonly int $limit = 100,
     ) {}
 
     #[\Override]

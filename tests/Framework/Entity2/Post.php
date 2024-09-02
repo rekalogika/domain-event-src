@@ -51,7 +51,7 @@ class Post implements DomainEventEmitterInterface
         #[ORM\Column]
         private ?string $title,
         #[ORM\Column(type: Types::TEXT)]
-        private ?string $content
+        private ?string $content,
     ) {
         $this->id = Uuid::v7();
         $this->comments = new ArrayCollection();

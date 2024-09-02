@@ -23,7 +23,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services
         ->set(
             'debug.' . Constants::EVENT_DISPATCHER_IMMEDIATE,
-            TraceableEventDispatcher::class
+            TraceableEventDispatcher::class,
         )
         ->decorate(Constants::EVENT_DISPATCHER_IMMEDIATE)
         ->args([
@@ -38,7 +38,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services
         ->set(
             'debug.' . Constants::EVENT_DISPATCHER_PRE_FLUSH,
-            TraceableEventDispatcher::class
+            TraceableEventDispatcher::class,
         )
         ->decorate(Constants::EVENT_DISPATCHER_PRE_FLUSH)
         ->args([
@@ -53,7 +53,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services
         ->set(
             'debug.' . Constants::EVENT_DISPATCHER_POST_FLUSH,
-            TraceableEventDispatcher::class
+            TraceableEventDispatcher::class,
         )
         ->decorate(Constants::EVENT_DISPATCHER_POST_FLUSH)
         ->args([

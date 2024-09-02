@@ -9,11 +9,7 @@ $finder = PhpCsFixer\Finder::create()
 
 $config = new PhpCsFixer\Config();
 return $config->setRules([
-    'single_line_empty_body' => true,
-    'trailing_comma_in_multiline' => true,
-
-
-    '@PSR12' => true,
+    '@PER-CS2.0' => true,
     'array_syntax' => ['syntax' => 'short'],
 
     // imports

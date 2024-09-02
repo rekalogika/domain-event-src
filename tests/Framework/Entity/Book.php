@@ -66,7 +66,7 @@ class Book implements DomainEventEmitterInterface
         #[ORM\Column]
         private ?string $title,
         #[ORM\Column(type: Types::TEXT)]
-        private ?string $description
+        private ?string $description,
     ) {
         $this->id = Uuid::v7();
         $this->reviews = new ArrayCollection();
