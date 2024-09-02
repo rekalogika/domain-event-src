@@ -34,12 +34,6 @@ class Post implements DomainEventEmitterInterface
     #[ORM\Column(type: UuidType::NAME, unique: true, nullable: false)]
     private Uuid $id;
 
-    #[ORM\Column]
-    private ?string $title = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $content = null;
-
     /**
      * @var Collection<array-key,Comment>
      */
@@ -53,13 +47,16 @@ class Post implements DomainEventEmitterInterface
     )]
     private Collection $comments;
 
-    public function __construct(string $title, string $content)
-    {
+    public function __construct(
+        #[ORM\Column]
+        private ?string $title,
+
+        #[ORM\Column(type: Types::TEXT)]
+        private ?string $content
+    ) {
         $this->id = Uuid::v7();
         $this->comments = new ArrayCollection();
         $this->recordEvent(new PostCreated($this));
-        $this->title = $title;
-        $this->content = $content;
     }
 
     public function __remove(): void

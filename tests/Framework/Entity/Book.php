@@ -43,12 +43,6 @@ class Book implements DomainEventEmitterInterface
     #[ORM\Column(type: UuidType::NAME, unique: true, nullable: false)]
     private Uuid $id;
 
-    #[ORM\Column]
-    private ?string $title = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $description = null;
-
     #[ORM\Column(type: Types::STRING)]
     private string $dummy = 'dummy';
 
@@ -68,13 +62,16 @@ class Book implements DomainEventEmitterInterface
     )]
     private Collection $reviews;
 
-    public function __construct(string $title, string $description)
-    {
+    public function __construct(
+        #[ORM\Column]
+        private ?string $title,
+
+        #[ORM\Column(type: Types::TEXT)]
+        private ?string $description
+    ) {
         $this->id = Uuid::v7();
         $this->reviews = new ArrayCollection();
         $this->recordEvent(new BookCreated($this));
-        $this->title = $title;
-        $this->description = $description;
     }
 
     public function __remove(): void

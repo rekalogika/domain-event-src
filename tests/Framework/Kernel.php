@@ -68,7 +68,7 @@ class Kernel extends HttpKernelKernel
 
     public function getProjectDir(): string
     {
-        return \dirname(\dirname(__DIR__));
+        return \dirname(__DIR__, 2);
     }
 
     public function getConfigDir(): string

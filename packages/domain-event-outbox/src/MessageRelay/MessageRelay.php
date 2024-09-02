@@ -42,7 +42,7 @@ final class MessageRelay implements MessageRelayInterface
 
     public function relayMessages(string $managerName): int
     {
-        $lock = $this->lockFactory->createLock(__CLASS__ . '-' . $managerName);
+        $lock = $this->lockFactory->createLock(self::class . '-' . $managerName);
 
         if (!$lock->acquire()) {
             return 0;
