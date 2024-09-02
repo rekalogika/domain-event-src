@@ -51,7 +51,7 @@ final class DomainEventImmediateDispatcher
      */
     public static function dispatch(object $event): object
     {
-        if (!self::$eventDispatcher) {
+        if (self::$eventDispatcher === null) {
             throw new \RuntimeException('ImmediateDomainEventDispatcher has not been initialized');
         }
 
