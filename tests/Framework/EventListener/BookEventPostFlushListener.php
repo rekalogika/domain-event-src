@@ -21,7 +21,9 @@ use Rekalogika\DomainEvent\Tests\Framework\Event\BookRemoved;
 final class BookEventPostFlushListener
 {
     private bool $onCreateCalled = false;
+
     private bool $onRemoveCalled = false;
+
     private int $onChangeCalled = 0;
 
     #[AsPostFlushDomainEventListener()]

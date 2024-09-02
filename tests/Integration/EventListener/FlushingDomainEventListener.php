@@ -22,7 +22,9 @@ final class FlushingDomainEventListener
     }
 
     private bool $entityCreatedHeard = false;
+
     private bool $entityRemovedHeard = false;
+
     private bool $entityNameChangedHeard = false;
 
     public function onEntityCreated(): void

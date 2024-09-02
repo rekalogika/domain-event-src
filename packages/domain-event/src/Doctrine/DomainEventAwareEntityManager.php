@@ -38,9 +38,11 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
     LazyObjectInterface
 {
     private bool $flushEnabled = true;
+
     private bool $autodispatch = true;
 
     private readonly DomainEventStore $preFlushDomainEvents;
+
     private readonly TransactionAwareDomainEventStore $postFlushDomainEvents;
 
     /**

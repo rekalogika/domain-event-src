@@ -26,6 +26,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 abstract class DomainEventTestCase extends KernelTestCase
 {
     protected DomainEventAwareEntityManagerInterface $entityManager;
+
     protected DomainEventAwareManagerRegistry $managerRegistry;
 
     // @phpstan-ignore-next-line

@@ -62,8 +62,10 @@ class RekalogikaDomainEventExtension extends Extension
                     if (isset($tagAttributes['method'])) {
                         throw new \LogicException(sprintf('AsPostFlushDomainEventListener attribute cannot declare a method on "%s::%s()".', $reflector->class, $reflector->name));
                     }
+
                     $tagAttributes['method'] = $reflector->getName();
                 }
+
                 $definition->addTag(
                     'kernel.event_listener',
                     $tagAttributes
@@ -91,6 +93,7 @@ class RekalogikaDomainEventExtension extends Extension
                     if (isset($tagAttributes['method'])) {
                         throw new \LogicException(sprintf('AsPreFlushDomainEventListener attribute cannot declare a method on "%s::%s()".', $reflector->class, $reflector->name));
                     }
+
                     $tagAttributes['method'] = $reflector->getName();
                 }
 
@@ -121,8 +124,10 @@ class RekalogikaDomainEventExtension extends Extension
                     if (isset($tagAttributes['method'])) {
                         throw new \LogicException(sprintf('AsImmediateDomainEventListener attribute cannot declare a method on "%s::%s()".', $reflector->class, $reflector->name));
                     }
+
                     $tagAttributes['method'] = $reflector->getName();
                 }
+
                 $definition->addTag(
                     'kernel.event_listener',
                     $tagAttributes

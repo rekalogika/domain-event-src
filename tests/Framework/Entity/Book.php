@@ -173,6 +173,7 @@ class Book implements DomainEventEmitterInterface
             if ($review->getBook() === $this) {
                 $review->setBook(null);
             }
+
             $this->recordEvent(new BookReviewRemoved($this, $review));
         }
 

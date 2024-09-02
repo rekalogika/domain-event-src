@@ -19,6 +19,7 @@ use Rekalogika\DomainEvent\Tests\Integration\Event\NonEquatableEvent;
 final class EquatableEventListener
 {
     private int $equatableEventHeard = 0;
+
     private int $nonEquatableEventHeard = 0;
 
     public function onEquatableEvent(EquatableEvent $event): void
