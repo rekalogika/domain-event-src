@@ -54,7 +54,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             EventDispatcher::class
         )
         ->tag('event_dispatcher.dispatcher', [
-            'name' => Constants::EVENT_DISPATCHER_IMMEDIATE
+            'name' => Constants::EVENT_DISPATCHER_IMMEDIATE,
         ]);
 
     $services
@@ -63,7 +63,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             EventDispatcher::class
         )
         ->tag('event_dispatcher.dispatcher', [
-            'name' => Constants::EVENT_DISPATCHER_PRE_FLUSH
+            'name' => Constants::EVENT_DISPATCHER_PRE_FLUSH,
         ]);
 
     $services
@@ -72,7 +72,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             EventDispatcher::class
         )
         ->tag('event_dispatcher.dispatcher', [
-            'name' => Constants::EVENT_DISPATCHER_POST_FLUSH
+            'name' => Constants::EVENT_DISPATCHER_POST_FLUSH,
         ]);
 
     //
@@ -127,7 +127,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         )
         ->args([
             '$wrapped' => service('.inner'),
-            '$decoratedObjectManagers' => tagged_iterator('rekalogika.domain_event.entity_manager', 'name')
+            '$decoratedObjectManagers' => tagged_iterator('rekalogika.domain_event.entity_manager', 'name'),
         ])
         ->decorate('doctrine')
         ->tag('kernel.reset', [
@@ -160,7 +160,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             DomainEventReaper::class
         )
         ->args([
-            '$entityManagers' => tagged_iterator('rekalogika.domain_event.entity_manager')
+            '$entityManagers' => tagged_iterator('rekalogika.domain_event.entity_manager'),
         ])
         ->tag('kernel.event_listener', [
             'event' => 'kernel.exception',

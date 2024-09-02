@@ -9,6 +9,10 @@ $finder = PhpCsFixer\Finder::create()
 
 $config = new PhpCsFixer\Config();
 return $config->setRules([
+    'single_line_empty_body' => true,
+    'trailing_comma_in_multiline' => true,
+
+
     '@PSR12' => true,
     'array_syntax' => ['syntax' => 'short'],
 
@@ -22,7 +26,6 @@ return $config->setRules([
     'no_leading_import_slash' => true,
     'no_unneeded_import_alias' => true,
     'no_unused_imports' => true,
-    'single_line_empty_body' => true,
     'ordered_imports' => [
         'sort_algorithm' => 'alpha',
         'imports_order' => ['const', 'class', 'function']

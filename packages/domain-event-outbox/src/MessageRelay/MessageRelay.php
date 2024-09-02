@@ -83,12 +83,12 @@ final class MessageRelay implements MessageRelayInterface
 
                     $this->logger->info('Message relayed, message id: {id}, class: {class}', [
                         'id' => $id,
-                        'class' => $message::class
+                        'class' => $message::class,
                     ]);
                 } else {
                     $this->logger->info('Message relaying skipped because no handler is found, message id: {id}, class: {class}', [
                         'id' => $id,
-                        'class' => $message::class
+                        'class' => $message::class,
                     ]);
                 }
 
