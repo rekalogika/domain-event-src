@@ -5,12 +5,12 @@ declare(strict_types=1);
 use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
 use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
-use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPublicMethodParameterRector;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\Strict\Rector\Ternary\DisallowedShortTernaryRuleFixerRector;
 use Rector\ValueObject\PhpVersion;
+use Rector\Doctrine\CodeQuality\Rector\Property\ImproveDoctrineCollectionDocTypeInEntityRector;
 
 return RectorConfig::configure()
     ->withPhpVersion(PhpVersion::PHP_83)
@@ -28,7 +28,7 @@ return RectorConfig::configure()
         instanceOf: true,
         strictBooleans: true,
         symfonyCodeQuality: true,
-        // doctrineCodeQuality: true,
+        doctrineCodeQuality: true,
     )
     ->withPhpSets(php81: true)
     ->withRules([
@@ -43,6 +43,8 @@ return RectorConfig::configure()
 
         // makes code unreadable
         DisallowedShortTernaryRuleFixerRector::class,
+
+        ImproveDoctrineCollectionDocTypeInEntityRector::class,
 
         MakeInheritedMethodVisibilitySameAsParentRector::class => [
             __DIR__ . '/tests/*',
