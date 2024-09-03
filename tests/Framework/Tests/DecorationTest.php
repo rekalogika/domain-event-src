@@ -26,25 +26,25 @@ use Rekalogika\DomainEvent\Tests\Framework\Repository\BookRepository;
 final class DecorationTest extends DomainEventTestCase
 {
     /**
-     * @dataProvider entityManagerDecorationProvider
+     * @dataProvider provideEntityManagerDecorationFromContainerCases
      */
     public function testEntityManagerDecorationFromContainer(string $serviceId): void
     {
         $entityManager = static::getContainer()->get($serviceId);
-        $this->assertInstanceOf(EntityManagerInterface::class, $entityManager);
-        $this->assertInstanceOf(DomainEventAwareEntityManager::class, $entityManager);
+        self::assertInstanceOf(EntityManagerInterface::class, $entityManager);
+        self::assertInstanceOf(DomainEventAwareEntityManager::class, $entityManager);
         // @phpstan-ignore-next-line
-        $this->assertInstanceOf(DomainEventAwareEntityManagerInterface::class, $entityManager);
+        self::assertInstanceOf(DomainEventAwareEntityManagerInterface::class, $entityManager);
         // @phpstan-ignore-next-line
-        $this->assertInstanceOf(ObjectManager::class, $entityManager);
+        self::assertInstanceOf(ObjectManager::class, $entityManager);
         // @phpstan-ignore-next-line
-        $this->assertInstanceOf(DomainEventAwareObjectManager::class, $entityManager);
+        self::assertInstanceOf(DomainEventAwareObjectManager::class, $entityManager);
     }
 
     /**
      * @return array<int,array<int,string>>
      */
-    public static function entityManagerDecorationProvider(): array
+    public static function provideEntityManagerDecorationFromContainerCases(): iterable
     {
         return [
             ['doctrine.orm.entity_manager'],
@@ -59,39 +59,39 @@ final class DecorationTest extends DomainEventTestCase
     public function testEntityManagerDecorationFromRegistry(): void
     {
         $managerRegistry = static::getContainer()->get('doctrine');
-        $this->assertInstanceOf(DomainEventAwareManagerRegistry::class, $managerRegistry);
-        $this->assertInstanceOf(DomainEventAwareManagerRegistryImplementation::class, $managerRegistry);
+        self::assertInstanceOf(DomainEventAwareManagerRegistry::class, $managerRegistry);
+        self::assertInstanceOf(DomainEventAwareManagerRegistryImplementation::class, $managerRegistry);
 
-        $this->assertInstanceOf(DomainEventAwareEntityManager::class, $managerRegistry->getManager());
-        $this->assertInstanceOf(DomainEventAwareEntityManager::class, $managerRegistry->getManager('default'));
-        $this->assertInstanceOf(DomainEventAwareEntityManager::class, $managerRegistry->getManager('other'));
+        self::assertInstanceOf(DomainEventAwareEntityManager::class, $managerRegistry->getManager());
+        self::assertInstanceOf(DomainEventAwareEntityManager::class, $managerRegistry->getManager('default'));
+        self::assertInstanceOf(DomainEventAwareEntityManager::class, $managerRegistry->getManager('other'));
 
         $managers = $managerRegistry->getManagers();
 
         foreach ($managers as $manager) {
-            $this->assertInstanceOf(DomainEventAwareEntityManager::class, $manager);
+            self::assertInstanceOf(DomainEventAwareEntityManager::class, $manager);
         }
     }
 
     public function testEntityManagerDecorationFromRepository(): void
     {
         $entityManager = static::getContainer()->get('doctrine.orm.default_entity_manager');
-        $this->assertInstanceOf(DomainEventAwareEntityManager::class, $entityManager);
+        self::assertInstanceOf(DomainEventAwareEntityManager::class, $entityManager);
 
         $repository = $entityManager->getRepository(Book::class);
-        $this->assertInstanceOf(BookRepository::class, $repository);
-        $this->assertInstanceOf(DomainEventAwareEntityManager::class, $repository->getEntityManager());
+        self::assertInstanceOf(BookRepository::class, $repository);
+        self::assertInstanceOf(DomainEventAwareEntityManager::class, $repository->getEntityManager());
     }
 
     public function testGetManagerNameFromManager(): void
     {
         $managerRegistry = static::getContainer()->get('doctrine');
-        $this->assertInstanceOf(DomainEventAwareManagerRegistry::class, $managerRegistry);
+        self::assertInstanceOf(DomainEventAwareManagerRegistry::class, $managerRegistry);
 
         $entityManager = $managerRegistry->getManager();
-        $this->assertSame('default', $managerRegistry->getManagerName($entityManager));
+        self::assertSame('default', $managerRegistry->getManagerName($entityManager));
 
         $entityManager = $managerRegistry->getManager('other');
-        $this->assertSame('other', $managerRegistry->getManagerName($entityManager));
+        self::assertSame('other', $managerRegistry->getManagerName($entityManager));
     }
 }

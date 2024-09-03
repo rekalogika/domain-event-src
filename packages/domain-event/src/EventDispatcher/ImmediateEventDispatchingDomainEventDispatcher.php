@@ -31,7 +31,7 @@ final class ImmediateEventDispatchingDomainEventDispatcher implements
         private readonly PsrEventDispatcherInterface $defaultEventDispatcher,
     ) {}
 
-    // @phpstan-ignore-next-line
+    /** @phpstan-ignore-next-line */
     #[\Override]
     public function addListener(string $eventName, callable|array $listener, int $priority = 0): void
     {
@@ -45,7 +45,7 @@ final class ImmediateEventDispatchingDomainEventDispatcher implements
         $this->decorated->addSubscriber($subscriber);
     }
 
-    // @phpstan-ignore-next-line
+    /** @phpstan-ignore-next-line */
     #[\Override]
     public function removeListener(string $eventName, callable|array $listener): void
     {
@@ -65,7 +65,7 @@ final class ImmediateEventDispatchingDomainEventDispatcher implements
         return $this->decorated->getListeners($eventName);
     }
 
-    // @phpstan-ignore-next-line
+    /** @phpstan-ignore-next-line */
     #[\Override]
     public function getListenerPriority(string $eventName, callable|array $listener): ?int
     {

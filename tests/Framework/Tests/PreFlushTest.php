@@ -22,7 +22,7 @@ use Rekalogika\DomainEvent\Tests\Framework\EventListener\BookDummyMethodForNeste
 final class PreFlushTest extends DomainEventTestCase
 {
     #[\Override]
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         static::getEntityManager()->clearDomainEvents();
         parent::tearDown();
@@ -40,13 +40,13 @@ final class PreFlushTest extends DomainEventTestCase
     public function testNestedRecordEvent(): void
     {
         $dummyMethodCalledListener = static::getContainer()->get(BookDummyMethodCalledListener::class);
-        $this->assertInstanceOf(BookDummyMethodCalledListener::class, $dummyMethodCalledListener);
+        self::assertInstanceOf(BookDummyMethodCalledListener::class, $dummyMethodCalledListener);
 
         $dummyMethodForNestedRecordEventListener = static::getContainer()->get(BookDummyMethodForNestedRecordEventListener::class);
-        $this->assertInstanceOf(BookDummyMethodForNestedRecordEventListener::class, $dummyMethodForNestedRecordEventListener);
+        self::assertInstanceOf(BookDummyMethodForNestedRecordEventListener::class, $dummyMethodForNestedRecordEventListener);
 
-        $this->assertFalse($dummyMethodCalledListener->isDummyMethodCalled());
-        $this->assertFalse($dummyMethodForNestedRecordEventListener->isDummyMethodForNestedRecordEventCalled());
+        self::assertFalse($dummyMethodCalledListener->isDummyMethodCalled());
+        self::assertFalse($dummyMethodForNestedRecordEventListener->isDummyMethodForNestedRecordEventCalled());
 
         $book = new Book('title', 'description');
         static::getEntityManager()->persist($book);
@@ -54,8 +54,8 @@ final class PreFlushTest extends DomainEventTestCase
         $book->dummyMethodForNestedRecordEvent();
         static::getEntityManager()->flush();
 
-        $this->assertTrue($dummyMethodCalledListener->isDummyMethodCalled());
-        $this->assertTrue($dummyMethodForNestedRecordEventListener->isDummyMethodForNestedRecordEventCalled());
+        self::assertTrue($dummyMethodCalledListener->isDummyMethodCalled());
+        self::assertTrue($dummyMethodForNestedRecordEventListener->isDummyMethodForNestedRecordEventCalled());
     }
 
     public function testInfiniteLoopSafeguard(): void

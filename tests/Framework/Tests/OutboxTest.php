@@ -67,70 +67,70 @@ final class OutboxTest extends DomainEventTestCase
 
         // get outbox reader factory
         $outboxReaderFactory = static::getContainer()->get(OutboxReaderFactoryInterface::class);
-        $this->assertInstanceOf(OutboxReaderFactoryInterface::class, $outboxReaderFactory);
+        self::assertInstanceOf(OutboxReaderFactoryInterface::class, $outboxReaderFactory);
 
         // default manager
         $outboxReader = $outboxReaderFactory->createOutboxReader('default');
         $messages = $outboxReader->getOutboxMessages(100);
         $messages = array_values($messages instanceof \Traversable ? iterator_to_array($messages) : $messages);
-        $this->assertInstanceOf(Envelope::class, $messages[0]);
-        $this->assertInstanceOf(BookCreated::class, $messages[0]->getMessage());
-        $this->assertInstanceOf(Envelope::class, $messages[1]);
-        $this->assertInstanceOf(BookChanged::class, $messages[1]->getMessage());
+        self::assertInstanceOf(Envelope::class, $messages[0]);
+        self::assertInstanceOf(BookCreated::class, $messages[0]->getMessage());
+        self::assertInstanceOf(Envelope::class, $messages[1]);
+        self::assertInstanceOf(BookChanged::class, $messages[1]->getMessage());
 
         // other manager
         $outboxReader = $outboxReaderFactory->createOutboxReader('other');
         $messages = $outboxReader->getOutboxMessages(100);
         $messages = array_values($messages instanceof \Traversable ? iterator_to_array($messages) : $messages);
-        $this->assertInstanceOf(Envelope::class, $messages[0]);
-        $this->assertInstanceOf(PostCreated::class, $messages[0]->getMessage());
-        $this->assertInstanceOf(Envelope::class, $messages[1]);
-        $this->assertInstanceOf(PostChanged::class, $messages[1]->getMessage());
+        self::assertInstanceOf(Envelope::class, $messages[0]);
+        self::assertInstanceOf(PostCreated::class, $messages[0]->getMessage());
+        self::assertInstanceOf(Envelope::class, $messages[1]);
+        self::assertInstanceOf(PostChanged::class, $messages[1]->getMessage());
     }
 
     private function assertMessagesInTransport(): void
     {
         // get transport
         $transport = $this->getContainer()->get('messenger.transport.async');
-        $this->assertInstanceOf(InMemoryTransport::class, $transport);
+        self::assertInstanceOf(InMemoryTransport::class, $transport);
 
         // get sent messages
         $messages = $transport->getSent();
-        $this->assertCount(2, $messages);
+        self::assertCount(2, $messages);
 
         // check first message
         $first = $messages[0];
-        $this->assertInstanceOf(Envelope::class, $first);
-        $this->assertInstanceOf(BookChanged::class, $first->getMessage());
+        self::assertInstanceOf(Envelope::class, $first);
+        self::assertInstanceOf(BookChanged::class, $first->getMessage());
 
         $busNameStamp = $first->last(BusNameStamp::class);
-        $this->assertInstanceOf(BusNameStamp::class, $busNameStamp);
-        $this->assertEquals('rekalogika.domain_event.bus', $busNameStamp->getBusName());
+        self::assertInstanceOf(BusNameStamp::class, $busNameStamp);
+        self::assertEquals('rekalogika.domain_event.bus', $busNameStamp->getBusName());
 
         $sentStamp = $first->last(SentStamp::class);
-        $this->assertInstanceOf(SentStamp::class, $sentStamp);
-        $this->assertEquals('async', $sentStamp->getSenderAlias());
+        self::assertInstanceOf(SentStamp::class, $sentStamp);
+        self::assertEquals('async', $sentStamp->getSenderAlias());
 
         $objectManagerNameStamp = $first->last(ObjectManagerNameStamp::class);
-        $this->assertInstanceOf(ObjectManagerNameStamp::class, $objectManagerNameStamp);
-        $this->assertEquals('default', $objectManagerNameStamp->getObjectManagerName());
+        self::assertInstanceOf(ObjectManagerNameStamp::class, $objectManagerNameStamp);
+        self::assertEquals('default', $objectManagerNameStamp->getObjectManagerName());
 
         // check second message
         $second = $messages[1];
-        $this->assertInstanceOf(Envelope::class, $second);
-        $this->assertInstanceOf(PostChanged::class, $second->getMessage());
+        self::assertInstanceOf(Envelope::class, $second);
+        self::assertInstanceOf(PostChanged::class, $second->getMessage());
 
         $busNameStamp = $second->last(BusNameStamp::class);
-        $this->assertInstanceOf(BusNameStamp::class, $busNameStamp);
-        $this->assertEquals('rekalogika.domain_event.bus', $busNameStamp->getBusName());
+        self::assertInstanceOf(BusNameStamp::class, $busNameStamp);
+        self::assertEquals('rekalogika.domain_event.bus', $busNameStamp->getBusName());
 
         $sentStamp = $second->last(SentStamp::class);
-        $this->assertInstanceOf(SentStamp::class, $sentStamp);
-        $this->assertEquals('async', $sentStamp->getSenderAlias());
+        self::assertInstanceOf(SentStamp::class, $sentStamp);
+        self::assertEquals('async', $sentStamp->getSenderAlias());
 
         $objectManagerNameStamp = $second->last(ObjectManagerNameStamp::class);
-        $this->assertInstanceOf(ObjectManagerNameStamp::class, $objectManagerNameStamp);
-        $this->assertEquals('other', $objectManagerNameStamp->getObjectManagerName());
+        self::assertInstanceOf(ObjectManagerNameStamp::class, $objectManagerNameStamp);
+        self::assertEquals('other', $objectManagerNameStamp->getObjectManagerName());
     }
 
     public function testMessageRelay(): void
@@ -139,7 +139,7 @@ final class OutboxTest extends DomainEventTestCase
 
         // get message relay
         $messageRelay = static::getContainer()->get(MessageRelayInterface::class);
-        $this->assertInstanceOf(MessageRelayInterface::class, $messageRelay);
+        self::assertInstanceOf(MessageRelayInterface::class, $messageRelay);
 
         // relay messages
         $messageRelay->relayMessages('default');
@@ -155,7 +155,7 @@ final class OutboxTest extends DomainEventTestCase
 
         // get message bus
         $messageBus = static::getContainer()->get(MessageBusInterface::class);
-        $this->assertInstanceOf(MessageBusInterface::class, $messageBus);
+        self::assertInstanceOf(MessageBusInterface::class, $messageBus);
 
         // tell to relay messages
         $messageBus->dispatch(new MessageRelayStartMessage('default'));
@@ -196,7 +196,7 @@ final class OutboxTest extends DomainEventTestCase
 
         // get message relay
         $messageRelay = static::getContainer()->get(MessageRelayInterface::class);
-        $this->assertInstanceOf(MessageRelayInterface::class, $messageRelay);
+        self::assertInstanceOf(MessageRelayInterface::class, $messageRelay);
 
         // relay messages
         $messageRelay->relayMessages('default');

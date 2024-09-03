@@ -19,7 +19,7 @@ use Doctrine\Persistence\ManagerRegistry;
 final class OutboxSetupTest extends DomainEventTestCase
 {
     /**
-     * @dataProvider databaseSetupProvider
+     * @dataProvider provideDatabaseSetupCases
      */
     public function testDatabaseSetup(string $id): void
     {
@@ -42,15 +42,15 @@ final class OutboxSetupTest extends DomainEventTestCase
 
         $result = $queryBuilder->fetchAssociative();
 
-        $this->assertIsArray($result);
-        $this->assertArrayHasKey('name', $result);
-        $this->assertEquals('rekalogika_event_outbox', $result['name']);
+        self::assertIsArray($result);
+        self::assertArrayHasKey('name', $result);
+        self::assertEquals('rekalogika_event_outbox', $result['name']);
     }
 
     /**
      * @return iterable<array-key,array<int,string>>
      */
-    public static function databaseSetupProvider(): iterable
+    public static function provideDatabaseSetupCases(): iterable
     {
         $managerRegistry = static::getContainer()->get('doctrine');
         self::assertInstanceOf(ManagerRegistry::class, $managerRegistry);

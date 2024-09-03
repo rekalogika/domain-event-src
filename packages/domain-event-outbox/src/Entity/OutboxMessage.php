@@ -63,7 +63,12 @@ class OutboxMessage
             return $this->cachedResult;
         }
 
-        $decoded = base64_decode($this->event);
+        $decoded = base64_decode($this->event, true);
+
+        if ($decoded === false) {
+            throw new UnserializeFailureException($this->event);
+        }
+
         $result = unserialize($decoded);
 
         if (false === $result) {

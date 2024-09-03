@@ -29,7 +29,7 @@ abstract class DomainEventTestCase extends KernelTestCase
 
     protected DomainEventAwareManagerRegistry $managerRegistry;
 
-    // @phpstan-ignore-next-line
+    /** @phpstan-ignore-next-line */
     #[\Override]
     protected static function createKernel(array $options = []): KernelInterface
     {
@@ -37,14 +37,14 @@ abstract class DomainEventTestCase extends KernelTestCase
     }
 
     #[\Override]
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         // setup manager registry
 
         $managerRegistry = static::getContainer()->get('doctrine');
-        $this->assertInstanceOf(DomainEventAwareManagerRegistry::class, $managerRegistry);
+        self::assertInstanceOf(DomainEventAwareManagerRegistry::class, $managerRegistry);
 
         $this->managerRegistry = $managerRegistry;
 
@@ -53,7 +53,7 @@ abstract class DomainEventTestCase extends KernelTestCase
         $managers = $managerRegistry->getManagers();
 
         foreach ($managers as $manager) {
-            $this->assertInstanceOf(EntityManagerInterface::class, $manager);
+            self::assertInstanceOf(EntityManagerInterface::class, $manager);
             $schemaTool = new SchemaTool($manager);
             $schemaTool->createSchema($manager->getMetadataFactory()->getAllMetadata());
         }
@@ -61,7 +61,7 @@ abstract class DomainEventTestCase extends KernelTestCase
         // save entity manager to class property
 
         $entityManager = static::getContainer()->get('doctrine.orm.entity_manager');
-        $this->assertInstanceOf(DomainEventAwareEntityManagerInterface::class, $entityManager);
+        self::assertInstanceOf(DomainEventAwareEntityManagerInterface::class, $entityManager);
 
         $this->entityManager = $entityManager;
     }
@@ -86,14 +86,14 @@ abstract class DomainEventTestCase extends KernelTestCase
     }
 
     #[\Override]
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 
         $managers = $this->managerRegistry->getManagers();
 
         foreach ($managers as $manager) {
-            $this->assertInstanceOf(DomainEventAwareEntityManagerInterface::class, $manager);
+            self::assertInstanceOf(DomainEventAwareEntityManagerInterface::class, $manager);
             $manager->clearDomainEvents();
         }
     }

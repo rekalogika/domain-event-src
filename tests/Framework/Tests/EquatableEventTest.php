@@ -22,10 +22,10 @@ final class EquatableEventTest extends DomainEventTestCase
     public function testWithoutTransaction(): void
     {
         $preFlushListener = static::getContainer()->get(BookEventPreFlushListener::class);
-        $this->assertInstanceOf(BookEventPreFlushListener::class, $preFlushListener);
+        self::assertInstanceOf(BookEventPreFlushListener::class, $preFlushListener);
 
         $postFlushListener = static::getContainer()->get(BookEventPostFlushListener::class);
-        $this->assertInstanceOf(BookEventPostFlushListener::class, $postFlushListener);
+        self::assertInstanceOf(BookEventPostFlushListener::class, $postFlushListener);
 
         $book = new Book('Book A', 'Description A');
 
@@ -40,7 +40,7 @@ final class EquatableEventTest extends DomainEventTestCase
 
         $this->entityManager->flush();
 
-        $this->assertEquals(1, $preFlushListener->onChangeCalled());
-        $this->assertEquals(1, $postFlushListener->onChangeCalled());
+        self::assertEquals(1, $preFlushListener->onChangeCalled());
+        self::assertEquals(1, $postFlushListener->onChangeCalled());
     }
 }

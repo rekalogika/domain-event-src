@@ -27,7 +27,7 @@ final class IntegrationTest extends DomainEventTestCase
         ];
 
         foreach ($serviceIds as $serviceId) {
-            $this->assertInstanceOf(
+            self::assertInstanceOf(
                 EventDispatcherInterface::class,
                 static::getContainer()->get('test.' . $serviceId),
             );

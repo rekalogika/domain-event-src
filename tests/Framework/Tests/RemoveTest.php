@@ -36,7 +36,7 @@ final class RemoveTest extends DomainEventTestCase
     {
         $entitymanager = static::getEntityManager();
         $book = $entitymanager->find(Book::class, $id);
-        $this->assertInstanceOf(Book::class, $book);
+        self::assertInstanceOf(Book::class, $book);
 
         return $book;
     }
@@ -47,11 +47,11 @@ final class RemoveTest extends DomainEventTestCase
         $book = $this->findBook($id);
 
         $listener = static::getContainer()->get(BookEventImmediateListener::class);
-        $this->assertInstanceOf(BookEventImmediateListener::class, $listener);
+        self::assertInstanceOf(BookEventImmediateListener::class, $listener);
 
-        $this->assertFalse($listener->onRemoveCalled());
+        self::assertFalse($listener->onRemoveCalled());
         static::getEntityManager()->remove($book);
-        $this->assertTrue($listener->onRemoveCalled());
+        self::assertTrue($listener->onRemoveCalled());
 
         static::getEntityManager()->flush();
     }
@@ -62,18 +62,18 @@ final class RemoveTest extends DomainEventTestCase
         $book = $this->findBook($id);
 
         $preFlushListener = static::getContainer()->get(BookEventPreFlushListener::class);
-        $this->assertInstanceOf(BookEventPreFlushListener::class, $preFlushListener);
+        self::assertInstanceOf(BookEventPreFlushListener::class, $preFlushListener);
 
         $postFlushListener = static::getContainer()->get(BookEventPostFlushListener::class);
-        $this->assertInstanceOf(BookEventPostFlushListener::class, $postFlushListener);
+        self::assertInstanceOf(BookEventPostFlushListener::class, $postFlushListener);
 
-        $this->assertFalse($preFlushListener->onRemoveCalled());
-        $this->assertFalse($postFlushListener->onRemoveCalled());
+        self::assertFalse($preFlushListener->onRemoveCalled());
+        self::assertFalse($postFlushListener->onRemoveCalled());
 
         static::getEntityManager()->remove($book);
         static::getEntityManager()->flush();
 
-        $this->assertTrue($preFlushListener->onRemoveCalled());
-        $this->assertTrue($postFlushListener->onRemoveCalled());
+        self::assertTrue($preFlushListener->onRemoveCalled());
+        self::assertTrue($postFlushListener->onRemoveCalled());
     }
 }

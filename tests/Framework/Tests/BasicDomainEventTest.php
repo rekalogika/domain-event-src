@@ -23,50 +23,50 @@ final class BasicDomainEventTest extends DomainEventTestCase
     public function testImmediateListener(): void
     {
         $listener = static::getContainer()->get(BookEventImmediateListener::class);
-        $this->assertInstanceOf(BookEventImmediateListener::class, $listener);
+        self::assertInstanceOf(BookEventImmediateListener::class, $listener);
 
-        $this->assertFalse($listener->onCreateCalled());
+        self::assertFalse($listener->onCreateCalled());
         new Book('title', 'description');
-        $this->assertTrue($listener->onCreateCalled());
+        self::assertTrue($listener->onCreateCalled());
     }
 
     public function testPreFlushListener(): void
     {
         $listener = static::getContainer()->get(BookEventPreFlushListener::class);
-        $this->assertInstanceOf(BookEventPreFlushListener::class, $listener);
+        self::assertInstanceOf(BookEventPreFlushListener::class, $listener);
 
-        $this->assertFalse($listener->onCreateCalled());
+        self::assertFalse($listener->onCreateCalled());
 
         $book = new Book('title', 'description');
         static::getEntityManager()->persist($book);
         static::getEntityManager()->flush();
 
-        $this->assertTrue($listener->onCreateCalled());
+        self::assertTrue($listener->onCreateCalled());
     }
 
     public function testPostFlushListener(): void
     {
         $listener = static::getContainer()->get(BookEventPostFlushListener::class);
-        $this->assertInstanceOf(BookEventPostFlushListener::class, $listener);
+        self::assertInstanceOf(BookEventPostFlushListener::class, $listener);
 
-        $this->assertFalse($listener->onCreateCalled());
+        self::assertFalse($listener->onCreateCalled());
 
         $book = new Book('title', 'description');
         static::getEntityManager()->persist($book);
         static::getEntityManager()->flush();
 
-        $this->assertTrue($listener->onCreateCalled());
+        self::assertTrue($listener->onCreateCalled());
     }
 
     public function testManualPreFlush(): void
     {
         $entityManager = static::getEntityManager();
         $listener = static::getContainer()->get(BookEventPreFlushListener::class);
-        $this->assertInstanceOf(BookEventPreFlushListener::class, $listener);
+        self::assertInstanceOf(BookEventPreFlushListener::class, $listener);
 
         $entityManager->setAutoDispatchDomainEvents(false);
 
-        $this->assertFalse($listener->onCreateCalled());
+        self::assertFalse($listener->onCreateCalled());
 
         $book = new Book('title', 'description');
         $entityManager->persist($book);
@@ -74,24 +74,24 @@ final class BasicDomainEventTest extends DomainEventTestCase
         $entityManager->flush();
         $entityManager->clearDomainEvents();
 
-        $this->assertTrue($listener->onCreateCalled());
+        self::assertTrue($listener->onCreateCalled());
     }
 
     public function testManualPostFlush(): void
     {
         $entityManager = static::getEntityManager();
         $listener = static::getContainer()->get(BookEventPostFlushListener::class);
-        $this->assertInstanceOf(BookEventPostFlushListener::class, $listener);
+        self::assertInstanceOf(BookEventPostFlushListener::class, $listener);
 
         $entityManager->setAutoDispatchDomainEvents(false);
 
-        $this->assertFalse($listener->onCreateCalled());
+        self::assertFalse($listener->onCreateCalled());
 
         $book = new Book('title', 'description');
         $entityManager->persist($book);
         $entityManager->flush();
         $entityManager->dispatchPostFlushDomainEvents();
 
-        $this->assertTrue($listener->onCreateCalled());
+        self::assertTrue($listener->onCreateCalled());
     }
 }

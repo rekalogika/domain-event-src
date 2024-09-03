@@ -23,7 +23,7 @@ final class Transaction2Test extends DomainEventTestCase
     private BookDummyChangedListener $listener;
 
     #[\Override]
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -62,12 +62,12 @@ final class Transaction2Test extends DomainEventTestCase
 
     public function assertCountPreFlushEvents(int $expected): void
     {
-        $this->assertCount($expected, $this->listener->preFlush);
+        self::assertCount($expected, $this->listener->preFlush);
     }
 
     public function assertCountPostFlushEvents(int $expected): void
     {
-        $this->assertCount($expected, $this->listener->postFlush);
+        self::assertCount($expected, $this->listener->postFlush);
     }
 
     public function testChangeFlush(): void

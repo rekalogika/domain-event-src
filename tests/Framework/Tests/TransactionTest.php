@@ -22,10 +22,10 @@ final class TransactionTest extends DomainEventTestCase
     public function testWithoutTransaction(): void
     {
         $preFlushListener = static::getContainer()->get(BookEventPreFlushListener::class);
-        $this->assertInstanceOf(BookEventPreFlushListener::class, $preFlushListener);
+        self::assertInstanceOf(BookEventPreFlushListener::class, $preFlushListener);
 
         $postFlushListener = static::getContainer()->get(BookEventPostFlushListener::class);
-        $this->assertInstanceOf(BookEventPostFlushListener::class, $postFlushListener);
+        self::assertInstanceOf(BookEventPostFlushListener::class, $postFlushListener);
 
         $book = new Book('Book A', 'Description A');
         $this->entityManager->persist($book);
@@ -34,17 +34,17 @@ final class TransactionTest extends DomainEventTestCase
         $book->setTitle('Book B');
         $this->entityManager->flush();
 
-        $this->assertEquals(1, $preFlushListener->onChangeCalled());
-        $this->assertEquals(1, $postFlushListener->onChangeCalled());
+        self::assertEquals(1, $preFlushListener->onChangeCalled());
+        self::assertEquals(1, $postFlushListener->onChangeCalled());
     }
 
     public function testTransaction(): void
     {
         $preFlushListener = static::getContainer()->get(BookEventPreFlushListener::class);
-        $this->assertInstanceOf(BookEventPreFlushListener::class, $preFlushListener);
+        self::assertInstanceOf(BookEventPreFlushListener::class, $preFlushListener);
 
         $postFlushListener = static::getContainer()->get(BookEventPostFlushListener::class);
-        $this->assertInstanceOf(BookEventPostFlushListener::class, $postFlushListener);
+        self::assertInstanceOf(BookEventPostFlushListener::class, $postFlushListener);
 
         $book = new Book('Book A', 'Description A');
         $this->entityManager->persist($book);
@@ -55,22 +55,22 @@ final class TransactionTest extends DomainEventTestCase
         $book->setTitle('Book B');
         $this->entityManager->flush();
 
-        $this->assertEquals(1, $preFlushListener->onChangeCalled());
-        $this->assertEquals(0, $postFlushListener->onChangeCalled());
+        self::assertEquals(1, $preFlushListener->onChangeCalled());
+        self::assertEquals(0, $postFlushListener->onChangeCalled());
 
         $this->entityManager->commit();
 
-        $this->assertEquals(1, $preFlushListener->onChangeCalled());
-        $this->assertEquals(1, $postFlushListener->onChangeCalled());
+        self::assertEquals(1, $preFlushListener->onChangeCalled());
+        self::assertEquals(1, $postFlushListener->onChangeCalled());
     }
 
     public function testNestedTransaction(): void
     {
         $preFlushListener = static::getContainer()->get(BookEventPreFlushListener::class);
-        $this->assertInstanceOf(BookEventPreFlushListener::class, $preFlushListener);
+        self::assertInstanceOf(BookEventPreFlushListener::class, $preFlushListener);
 
         $postFlushListener = static::getContainer()->get(BookEventPostFlushListener::class);
-        $this->assertInstanceOf(BookEventPostFlushListener::class, $postFlushListener);
+        self::assertInstanceOf(BookEventPostFlushListener::class, $postFlushListener);
 
         $book = new Book('Book A', 'Description A');
         $this->entityManager->persist($book);
@@ -81,35 +81,35 @@ final class TransactionTest extends DomainEventTestCase
         $book->setTitle('Book B');
         $this->entityManager->flush();
 
-        $this->assertEquals(1, $preFlushListener->onChangeCalled());
-        $this->assertEquals(0, $postFlushListener->onChangeCalled());
+        self::assertEquals(1, $preFlushListener->onChangeCalled());
+        self::assertEquals(0, $postFlushListener->onChangeCalled());
 
         $this->entityManager->beginTransaction(); // second transaction
 
         $book->setTitle('Book C');
         $this->entityManager->flush();
 
-        $this->assertEquals(2, $preFlushListener->onChangeCalled());
-        $this->assertEquals(0, $postFlushListener->onChangeCalled());
+        self::assertEquals(2, $preFlushListener->onChangeCalled());
+        self::assertEquals(0, $postFlushListener->onChangeCalled());
 
         $this->entityManager->commit(); // first commit
 
-        $this->assertEquals(2, $preFlushListener->onChangeCalled());
-        $this->assertEquals(0, $postFlushListener->onChangeCalled());
+        self::assertEquals(2, $preFlushListener->onChangeCalled());
+        self::assertEquals(0, $postFlushListener->onChangeCalled());
 
         $this->entityManager->commit(); // second commit
 
-        $this->assertEquals(2, $preFlushListener->onChangeCalled());
-        $this->assertEquals(1, $postFlushListener->onChangeCalled());
+        self::assertEquals(2, $preFlushListener->onChangeCalled());
+        self::assertEquals(1, $postFlushListener->onChangeCalled());
     }
 
     public function testRollbackTransaction(): void
     {
         $preFlushListener = static::getContainer()->get(BookEventPreFlushListener::class);
-        $this->assertInstanceOf(BookEventPreFlushListener::class, $preFlushListener);
+        self::assertInstanceOf(BookEventPreFlushListener::class, $preFlushListener);
 
         $postFlushListener = static::getContainer()->get(BookEventPostFlushListener::class);
-        $this->assertInstanceOf(BookEventPostFlushListener::class, $postFlushListener);
+        self::assertInstanceOf(BookEventPostFlushListener::class, $postFlushListener);
 
         $book = new Book('Book A', 'Description A');
         $this->entityManager->persist($book);
@@ -120,24 +120,24 @@ final class TransactionTest extends DomainEventTestCase
         $book->setTitle('Book B');
         $this->entityManager->flush();
 
-        $this->assertEquals(1, $preFlushListener->onChangeCalled());
-        $this->assertEquals(0, $postFlushListener->onChangeCalled());
+        self::assertEquals(1, $preFlushListener->onChangeCalled());
+        self::assertEquals(0, $postFlushListener->onChangeCalled());
 
         $this->entityManager->rollback();
         $events = $book->popRecordedEvents();
 
-        $this->assertEmpty($events);
-        $this->assertEquals(1, $preFlushListener->onChangeCalled());
-        $this->assertEquals(0, $postFlushListener->onChangeCalled());
+        self::assertEmpty($events);
+        self::assertEquals(1, $preFlushListener->onChangeCalled());
+        self::assertEquals(0, $postFlushListener->onChangeCalled());
     }
 
     public function testEventsInQueueBeforeRollbackTransaction(): void
     {
         $preFlushListener = static::getContainer()->get(BookEventPreFlushListener::class);
-        $this->assertInstanceOf(BookEventPreFlushListener::class, $preFlushListener);
+        self::assertInstanceOf(BookEventPreFlushListener::class, $preFlushListener);
 
         $postFlushListener = static::getContainer()->get(BookEventPostFlushListener::class);
-        $this->assertInstanceOf(BookEventPostFlushListener::class, $postFlushListener);
+        self::assertInstanceOf(BookEventPostFlushListener::class, $postFlushListener);
 
         $book = new Book('Book A', 'Description A');
         $this->entityManager->persist($book);
@@ -148,12 +148,12 @@ final class TransactionTest extends DomainEventTestCase
         $book->setTitle('Book B');
         $this->entityManager->flush();
 
-        $this->assertEquals(1, $preFlushListener->onChangeCalled());
-        $this->assertEquals(0, $postFlushListener->onChangeCalled());
+        self::assertEquals(1, $preFlushListener->onChangeCalled());
+        self::assertEquals(0, $postFlushListener->onChangeCalled());
 
         $this->entityManager->rollback();
 
-        $this->assertEquals(1, $preFlushListener->onChangeCalled());
-        $this->assertEquals(0, $postFlushListener->onChangeCalled());
+        self::assertEquals(1, $preFlushListener->onChangeCalled());
+        self::assertEquals(0, $postFlushListener->onChangeCalled());
     }
 }
