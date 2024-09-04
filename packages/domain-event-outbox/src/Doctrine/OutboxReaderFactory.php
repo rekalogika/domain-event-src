@@ -31,6 +31,6 @@ class OutboxReaderFactory implements OutboxReaderFactoryInterface
             return new EntityManagerOutboxReader($manager);
         }
 
-        throw new \InvalidArgumentException(sprintf('Object manager with name "%s" is an instance of "%s", but it is unsupported', $managerName, $manager::class));
+        throw new \InvalidArgumentException(\sprintf('Object manager with name "%s" is an instance of "%s", but it is unsupported', $managerName, $manager::class));
     }
 }

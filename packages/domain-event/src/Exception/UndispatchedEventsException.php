@@ -21,6 +21,6 @@ class UndispatchedEventsException extends LogicException
     {
         $num = \count($preFlushEvents) + \count($postFlushEvents);
 
-        parent::__construct(sprintf('There are still %d undispatched domain events. If you disable autodispatch, you have to dispatch them manually or clear them.', $num));
+        parent::__construct(\sprintf('There are still %d undispatched domain events. If you disable autodispatch, you have to dispatch them manually or clear them.', $num));
     }
 }

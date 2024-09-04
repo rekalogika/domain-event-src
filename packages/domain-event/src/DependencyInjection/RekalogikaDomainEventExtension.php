@@ -60,7 +60,7 @@ class RekalogikaDomainEventExtension extends Extension
                 $tagAttributes['dispatcher'] = Constants::EVENT_DISPATCHER_POST_FLUSH;
                 if ($reflector instanceof \ReflectionMethod) {
                     if (isset($tagAttributes['method'])) {
-                        throw new \LogicException(sprintf('AsPostFlushDomainEventListener attribute cannot declare a method on "%s::%s()".', $reflector->class, $reflector->name));
+                        throw new \LogicException(\sprintf('AsPostFlushDomainEventListener attribute cannot declare a method on "%s::%s()".', $reflector->class, $reflector->name));
                     }
 
                     $tagAttributes['method'] = $reflector->getName();
@@ -91,7 +91,7 @@ class RekalogikaDomainEventExtension extends Extension
                 $tagAttributes['dispatcher'] = Constants::EVENT_DISPATCHER_PRE_FLUSH;
                 if ($reflector instanceof \ReflectionMethod) {
                     if (isset($tagAttributes['method'])) {
-                        throw new \LogicException(sprintf('AsPreFlushDomainEventListener attribute cannot declare a method on "%s::%s()".', $reflector->class, $reflector->name));
+                        throw new \LogicException(\sprintf('AsPreFlushDomainEventListener attribute cannot declare a method on "%s::%s()".', $reflector->class, $reflector->name));
                     }
 
                     $tagAttributes['method'] = $reflector->getName();
@@ -122,7 +122,7 @@ class RekalogikaDomainEventExtension extends Extension
                 $tagAttributes['dispatcher'] = Constants::EVENT_DISPATCHER_IMMEDIATE;
                 if ($reflector instanceof \ReflectionMethod) {
                     if (isset($tagAttributes['method'])) {
-                        throw new \LogicException(sprintf('AsImmediateDomainEventListener attribute cannot declare a method on "%s::%s()".', $reflector->class, $reflector->name));
+                        throw new \LogicException(\sprintf('AsImmediateDomainEventListener attribute cannot declare a method on "%s::%s()".', $reflector->class, $reflector->name));
                     }
 
                     $tagAttributes['method'] = $reflector->getName();

@@ -70,7 +70,7 @@ class RekalogikaDomainEventOutboxExtension extends Extension
                 $tagAttributes['bus'] = 'rekalogika.domain_event.bus';
                 if ($reflector instanceof \ReflectionMethod) {
                     if (isset($tagAttributes['method'])) {
-                        throw new \LogicException(sprintf('AsPreFlushDomainEventListener attribute cannot declare a method on "%s::%s()".', $reflector->class, $reflector->name));
+                        throw new \LogicException(\sprintf('AsPreFlushDomainEventListener attribute cannot declare a method on "%s::%s()".', $reflector->class, $reflector->name));
                     }
 
                     $tagAttributes['method'] = $reflector->getName();

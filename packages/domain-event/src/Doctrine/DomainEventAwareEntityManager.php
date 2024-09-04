@@ -150,7 +150,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
             ++$i;
 
             if ($i > self::$preflushLoopLimit) {
-                throw new SafeguardTriggeredException(sprintf('Pre-flush loop limit reached (%d)', self::$preflushLoopLimit));
+                throw new SafeguardTriggeredException(\sprintf('Pre-flush loop limit reached (%d)', self::$preflushLoopLimit));
             }
         } while ($num > 0);
 
