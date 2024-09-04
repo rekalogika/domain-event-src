@@ -73,7 +73,7 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
         }
 
         return $this->objectManagerToName[$manager]
-            ?? throw new \InvalidArgumentException(sprintf('Manager "%s" is not registered', $manager::class));
+            ?? throw new \InvalidArgumentException(\sprintf('Manager "%s" is not registered', $manager::class));
     }
 
     #[\Override]

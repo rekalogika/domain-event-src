@@ -17,6 +17,6 @@ class UnserializeFailureException extends RuntimeException
 {
     public function __construct(string $serializedText)
     {
-        parent::__construct(sprintf('Failed to unserialize serialized event object: "%s"', $serializedText));
+        parent::__construct(\sprintf('Failed to unserialize serialized event object: "%s"', $serializedText));
     }
 }
