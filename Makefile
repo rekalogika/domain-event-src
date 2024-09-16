@@ -8,15 +8,24 @@ clean:
 	rm -rf var
 
 .PHONY: monorepo
-monorepo: validate monorepo-merge
+monorepo: monorepo-validate monorepo-merge
+
+.PHONY: monorepo-validate
+monorepo-validate:
+	vendor/bin/monorepo-builder validate
 
 .PHONY: monorepo-merge
 monorepo-merge:
 	$(PHP) vendor/bin/monorepo-builder merge
 
-.PHONY: validate
-monorepo-validate:
-	$(PHP) vendor/bin/monorepo-builder validate
+.PHONY: monorepo-release-%
+monorepo-release-%:
+	git update-index --really-refresh > /dev/null; git diff-index --quiet HEAD || (echo "Working directory is not clean, aborting" && exit 1)
+	[ $$(git branch --show-current) == main ] || (echo "Not on main branch, aborting" && exit 1)
+	$(PHP) vendor/bin/monorepo-builder release $*
+	git switch -c release/$*
+	git add .
+	git commit -m "release: $*"
 
 .PHONY: lint-container
 lint-container:
