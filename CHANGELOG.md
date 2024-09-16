@@ -3,6 +3,7 @@
 ## 2.5.0
 
 * feat: PHP 8.4 compatibility
+* build: improve monorepo build
 
 ## 2.4.0
 
