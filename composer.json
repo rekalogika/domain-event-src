@@ -1,7 +1,6 @@
 {
     "name": "rekalogika/domain-event-src",
     "description": "Domain Event Framework for Symfony",
-    "type": "library",
     "license": "MIT",
     "authors": [
         {
@@ -9,6 +8,7 @@
             "email": "priyadi@rekalogika.com"
         }
     ],
+    "type": "library",
     "require": {
         "php": "^8.1",
         "doctrine/doctrine-bundle": "^2.11.3 || ^2.12",
@@ -61,16 +61,16 @@
             "Rekalogika\\DomainEvent\\Tests\\": "tests/"
         }
     },
-    "replace": {
-        "rekalogika/domain-event": "2.4.0",
-        "rekalogika/domain-event-contracts": "2.4.0",
-        "rekalogika/domain-event-outbox": "2.4.0"
-    },
     "config": {
         "sort-packages": true,
         "allow-plugins": {
             "symfony/runtime": true
         }
+    },
+    "replace": {
+        "rekalogika/domain-event": "2.5.0",
+        "rekalogika/domain-event-contracts": "2.5.0",
+        "rekalogika/domain-event-outbox": "2.5.0"
     },
     "minimum-stability": "stable"
 }
