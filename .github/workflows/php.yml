@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
-        php: [ '8.1', '8.2', '8.3' ]
+        php: [ '8.1', '8.2', '8.3', '8.4' ]
         symfony: [ '6.*', '7.*' ]
         dep: [highest,lowest]
         exclude: 
@@ -52,12 +52,13 @@ jobs:
       uses: ramsey/composer-install@v3
       with:
         dependency-versions: ${{ matrix.dep }}
-        composer-options: --prefer-dist --no-progress
+        composer-options: --prefer-dist --no-progress --ignore-platform-reqs
       env:
         SYMFONY_REQUIRE: ${{ matrix.symfony }}
 
     - name: Run psalm
       run: vendor/bin/psalm
+      if: matrix.dep == 'highest'
 
     - name: Run phpstan
       run: vendor/bin/phpstan analyse

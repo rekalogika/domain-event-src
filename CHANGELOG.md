@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.0
+
+* feat: PHP 8.4 compatibility
+
 ## 2.4.0
 
 * fix(OutboxMessage): fix ID generation strategy
