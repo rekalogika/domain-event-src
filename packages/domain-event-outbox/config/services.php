@@ -25,8 +25,11 @@ use Rekalogika\DomainEvent\Outbox\MessageRelay\MessageRelayAll;
 use Rekalogika\DomainEvent\Outbox\MessageRelayInterface;
 use Rekalogika\DomainEvent\Outbox\OutboxReaderFactoryInterface;
 use Rekalogika\DomainEvent\Outbox\Schedule\MessageRelayProvider;
+use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Lock\LockFactory;
+use Symfony\Component\Messenger\Event\WorkerMessageHandledEvent;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
@@ -59,11 +62,15 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             'method' => 'onPreFlushDispatch'
         ])
         ->tag('kernel.event_listener', [
-            'event' => 'kernel.terminate',
+            'event' => KernelEvents::TERMINATE,
             'method' => 'onTerminate'
         ])
         ->tag('kernel.event_listener', [
-            'event' => 'console.terminate',
+            'event' => ConsoleEvents::TERMINATE,
+            'method' => 'onTerminate'
+        ])
+        ->tag('kernel.event_listener', [
+            'event' => WorkerMessageHandledEvent::class,
             'method' => 'onTerminate'
         ])
         ->tag('kernel.reset', ['method' => 'reset']);;
