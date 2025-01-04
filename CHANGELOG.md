@@ -5,6 +5,7 @@
 * chore: static analysis fix
 * fix: change outbox primary key to bigint
 * feat: also listen to `WorkerMessageHandledEvent` for relaying messages
+* feat: CLI relay all messages, not just the first 100
 
 ## 2.5.0
 
