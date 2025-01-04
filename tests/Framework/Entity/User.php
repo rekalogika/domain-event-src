@@ -18,6 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
     /**
+     * @param non-empty-string $username
      * @param list<string> $roles
      */
     public function __construct(
