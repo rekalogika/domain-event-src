@@ -4,6 +4,7 @@
 
 * chore: static analysis fix
 * fix: change outbox primary key to bigint
+* feat: also listen to `WorkerMessageHandledEvent` for relaying messages
 
 ## 2.5.0
 
