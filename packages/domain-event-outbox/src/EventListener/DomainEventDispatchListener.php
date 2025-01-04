@@ -72,5 +72,7 @@ class DomainEventDispatchListener implements ResetInterface
         foreach (array_keys($this->managerNames) as $managerName) {
             $this->messageBus->dispatch(new MessageRelayStartMessage($managerName));
         }
+
+        $this->reset();
     }
 }
