@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.1
+
+* chore: static analysis fix
+
 ## 2.5.0
 
 * feat: PHP 8.4 compatibility
