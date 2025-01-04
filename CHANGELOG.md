@@ -3,6 +3,7 @@
 ## 2.5.1
 
 * chore: static analysis fix
+* fix: change outbox primary key to bigint
 
 ## 2.5.0
 

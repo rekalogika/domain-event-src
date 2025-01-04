@@ -30,7 +30,7 @@ use Symfony\Component\Messenger\Envelope;
 class OutboxMessage
 {
     #[Id]
-    #[Column]
+    #[Column(type: Types::BIGINT)]
     #[GeneratedValue]
     private ?int $id = null;
 
