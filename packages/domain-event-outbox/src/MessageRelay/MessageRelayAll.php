@@ -31,7 +31,9 @@ final class MessageRelayAll
         $managerNames = $this->managerRegistry->getManagerNames();
 
         foreach ($managerNames as $managerName => $serviceId) {
-            $this->messageRelay->relayMessages($managerName);
+            do {
+                $messagesRelayed = $this->messageRelay->relayMessages($managerName);
+            } while ($messagesRelayed > 0);
         }
     }
 }

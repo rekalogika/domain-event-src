@@ -67,7 +67,9 @@ final class MessageRelayCommand extends Command
             throw new \InvalidArgumentException('The manager name must be a string.');
         }
 
-        $this->messageRelay->relayMessages($managerName);
+        do {
+            $messagesRelayed = $this->messageRelay->relayMessages($managerName);
+        } while ($messagesRelayed > 0);
 
         return Command::SUCCESS;
     }
