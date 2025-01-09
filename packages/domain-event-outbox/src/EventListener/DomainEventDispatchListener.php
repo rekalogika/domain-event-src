@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent\Outbox\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Rekalogika\Contracts\DomainEvent\EquatableDomainEventInterface;
 use Rekalogika\DomainEvent\DomainEventAwareManagerRegistry;
 use Rekalogika\DomainEvent\Event\DomainEventPreFlushDispatchEvent;
 use Rekalogika\DomainEvent\Outbox\Entity\OutboxMessage;
@@ -33,6 +34,11 @@ class DomainEventDispatchListener implements ResetInterface
      */
     public array $managerNames = [];
 
+    /**
+     * @var array<string,true>
+     */
+    public array $dispatchedEquatableEvents = [];
+
     public function __construct(
         private readonly MessagePreparerInterface $messagePreparer,
         private readonly MessageBusInterface $messageBus,
@@ -48,6 +54,18 @@ class DomainEventDispatchListener implements ResetInterface
     public function onPreFlushDispatch(DomainEventPreFlushDispatchEvent $event): void
     {
         $domainEvent = $event->getDomainEvent();
+
+        // check if the same event is already dispatched
+        if ($domainEvent instanceof EquatableDomainEventInterface) {
+            $signature = $domainEvent->getSignature();
+
+            if (isset($this->dispatchedEquatableEvents[$signature])) {
+                return;
+            }
+
+            $this->dispatchedEquatableEvents[$signature] = true;
+        }
+
         $objectManager = $event->getObjectManager();
 
         if (!$objectManager instanceof EntityManagerInterface) {
