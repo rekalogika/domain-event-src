@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.2
+
+* feat(outbox): remove duplicate events in a single invocation
+
 ## 2.5.1
 
 * chore: static analysis fix
