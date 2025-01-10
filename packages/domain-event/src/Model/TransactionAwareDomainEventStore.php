@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Model;
 
-use Rekalogika\DomainEvent\Exception\InvalidOperationException;
-
 class TransactionAwareDomainEventStore extends DomainEventStore
 {
     private ?self $transactionStore = null;
@@ -34,26 +32,6 @@ class TransactionAwareDomainEventStore extends DomainEventStore
     {
         $this->transactionStore = null;
         parent::clear();
-    }
-
-    #[\Override]
-    public function pop(): iterable
-    {
-        if ($this->transactionStore !== null) {
-            throw new InvalidOperationException('Cannot pop, transaction is in progress');
-        }
-
-        return parent::pop();
-    }
-
-    #[\Override]
-    public function getIterator(): \Traversable
-    {
-        if ($this->transactionStore !== null) {
-            throw new InvalidOperationException('Cannot iterate, transaction is in progress');
-        }
-
-        return parent::getIterator();
     }
 
     #[\Override]

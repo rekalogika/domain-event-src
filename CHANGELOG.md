@@ -3,6 +3,7 @@
 ## 2.5.2
 
 * feat(outbox): remove duplicate events in a single invocation
+* fix: allows `pop()` transactions in the current transaction scope
 
 ## 2.5.1
 
