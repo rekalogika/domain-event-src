@@ -28,6 +28,7 @@ class RenameTableListener
         $metadata = $event->getClassMetadata();
         $reflectionClass = $metadata->getReflectionClass();
 
+        // @phpstan-ignore identical.alwaysFalse
         if ($reflectionClass === null) {
             return;
         }

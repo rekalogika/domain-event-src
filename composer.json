@@ -2,18 +2,18 @@
     "name": "rekalogika/domain-event-src",
     "description": "Domain Event Framework for Symfony",
     "license": "MIT",
+    "type": "library",
     "authors": [
         {
             "name": "Priyadi Iman Nurcahyo",
             "email": "priyadi@rekalogika.com"
         }
     ],
-    "type": "library",
     "require": {
         "php": "^8.1",
         "doctrine/doctrine-bundle": "^2.11.3 || ^2.12",
         "doctrine/orm": "^2.16 || ^3.0",
-        "doctrine/persistence": "^3.2",
+        "doctrine/persistence": "^3.2 || ^4.0",
         "psr/event-dispatcher": "^1.0",
         "symfony/config": "^6.4 || ^7.0",
         "symfony/dependency-injection": "^6.4 || ^7.0",
@@ -22,7 +22,8 @@
         "symfony/lock": "^6.4 || ^7.0",
         "symfony/messenger": "^6.4 || ^7.0",
         "symfony/service-contracts": "^3.0",
-        "symfony/uid": "^6.4 || ^7.0"
+        "symfony/uid": "^6.4 || ^7.0",
+        "symfony/var-exporter": "^6.4 || ^7.0"
     },
     "require-dev": {
         "bnf/phpstan-psr-container": "^1.0",
@@ -49,6 +50,12 @@
         "twig/twig": "^3.0",
         "vimeo/psalm": "^5.26"
     },
+    "replace": {
+        "rekalogika/domain-event": "2.5.1",
+        "rekalogika/domain-event-contracts": "2.5.1",
+        "rekalogika/domain-event-outbox": "2.5.1"
+    },
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "Rekalogika\\Contracts\\DomainEvent\\": "packages/domain-event-contracts/src/",
@@ -66,11 +73,5 @@
         "allow-plugins": {
             "symfony/runtime": true
         }
-    },
-    "replace": {
-        "rekalogika/domain-event": "2.5.1",
-        "rekalogika/domain-event-contracts": "2.5.1",
-        "rekalogika/domain-event-outbox": "2.5.1"
-    },
-    "minimum-stability": "stable"
+    }
 }
