@@ -62,6 +62,7 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
 
     public function isUninitializedObject(mixed $value): bool
     {
+        // @phpstan-ignore function.alreadyNarrowedType
         if (method_exists($this->wrapped, 'isUninitializedObject')) {
             return $this->wrapped->isUninitializedObject($value);
         }
