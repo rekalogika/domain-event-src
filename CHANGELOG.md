@@ -6,6 +6,7 @@
 * fix: allows `pop()` transactions in the current transaction scope
 * fix: for some reason, sometimes `kernel.reset` event gets executed before
   `WorkerMessageHandledEvent`, and therefore the relayer does not get executed.
+* deps: allow doctrine/persistence-4
 
 ## 2.5.1
 
