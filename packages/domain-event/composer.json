@@ -27,7 +27,7 @@
     "require": {
         "doctrine/doctrine-bundle": "^2.11.3 || ^2.12",
         "doctrine/orm": "^2.16 || ^3.0",
-        "doctrine/persistence": "^3.2",
+        "doctrine/persistence": "^3.2 || ^4.0",
         "psr/event-dispatcher": "^1.0",
         "rekalogika/domain-event-contracts": "^2.5.1",
         "symfony/config": "^6.4 || ^7.0",
