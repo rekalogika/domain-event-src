@@ -48,7 +48,7 @@ class DomainEventDispatchListener implements ResetInterface
     #[\Override]
     public function reset(): void
     {
-        $this->managerNames = [];
+        $this->onTerminate();
     }
 
     public function onPreFlushDispatch(DomainEventPreFlushDispatchEvent $event): void
@@ -91,6 +91,7 @@ class DomainEventDispatchListener implements ResetInterface
             $this->messageBus->dispatch(new MessageRelayStartMessage($managerName));
         }
 
-        $this->reset();
+        $this->managerNames = [];
+        $this->dispatchedEquatableEvents = [];
     }
 }

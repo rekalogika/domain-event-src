@@ -4,6 +4,8 @@
 
 * feat(outbox): remove duplicate events in a single invocation
 * fix: allows `pop()` transactions in the current transaction scope
+* fix: for some reason, sometimes `kernel.reset` event gets executed before
+  `WorkerMessageHandledEvent`, and therefore the relayer does not get executed.
 
 ## 2.5.1
 
