@@ -48,7 +48,7 @@ class DomainEventDispatchListener implements ResetInterface
     #[\Override]
     public function reset(): void
     {
-        $this->onTerminate(new \stdClass());
+        $this->onTerminate();
     }
 
     public function onPreFlushDispatch(DomainEventPreFlushDispatchEvent $event): void
