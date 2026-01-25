@@ -35,6 +35,8 @@ parameters:
             paths:
                 - tests/Framework/EventListener/BookEventEventBusListener.php
                 - tests/Framework/EventListener/PostEventEventBusListener.php
+            reportUnmatched: false
+
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-phpunit/rules.neon
