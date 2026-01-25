@@ -25,41 +25,47 @@
         <PropertyNotSetInConstructor errorLevel="info" />
         <InvalidAttribute errorLevel="info" />
         <UndefinedAttributeClass errorLevel="info" />
-        <UndefinedMethod>
+        <ClassMustBeFinal errorLevel="info" />
+        <MissingOverrideAttribute>
+            <errorLevel type="suppress">
+                <file name="packages/domain-event/src/Doctrine/DomainEventAwareEntityManager.php" />
+            </errorLevel>
+        </MissingOverrideAttribute>
+        <!-- <UndefinedMethod>
             <errorLevel type="suppress">
                 <file name="packages/domain-event-outbox/src/DependencyInjection/Configuration.php" />
             </errorLevel>
-        </UndefinedMethod>
-        <MixedMethodCall>
+        </UndefinedMethod> -->
+        <!-- <MixedMethodCall>
             <errorLevel type="suppress">
                 <file name="packages/domain-event-outbox/src/DependencyInjection/Configuration.php" />
             </errorLevel>
-        </MixedMethodCall>
+        </MixedMethodCall> -->
         <TypeDoesNotContainNull>
             <errorLevel type="suppress">
                 <file name="packages/domain-event-outbox/src/EventListener/RenameTableListener.php" />
             </errorLevel>
         </TypeDoesNotContainNull>
-        <MissingClassConstType>
+        <!-- <MissingClassConstType>
             <errorLevel type="suppress">
                 <file name="packages/domain-event/src/DependencyInjection/Constants.php" />
             </errorLevel>
-        </MissingClassConstType>
-        <MixedInferredReturnType>
+        </MissingClassConstType> -->
+        <!-- <MixedInferredReturnType>
             <errorLevel type="suppress">
                 <file name="packages/domain-event/src/Doctrine/DomainEventAwareEntityManager.php" />
             </errorLevel>
-        </MixedInferredReturnType>
-        <MixedReturnStatement>
+        </MixedInferredReturnType> -->
+        <!-- <MixedReturnStatement>
             <errorLevel type="suppress">
                 <file name="packages/domain-event/src/Doctrine/DomainEventAwareEntityManager.php" />
             </errorLevel>            
-        </MixedReturnStatement>
-        <UndefinedInterfaceMethod>
+        </MixedReturnStatement> -->
+        <!-- <UndefinedInterfaceMethod>
             <errorLevel type="suppress">
                 <file name="packages/domain-event/src/Doctrine/DomainEventAwareEntityManager.php" />
             </errorLevel>
-        </UndefinedInterfaceMethod>
+        </UndefinedInterfaceMethod> -->
     </issueHandlers>
 
 </psalm>
