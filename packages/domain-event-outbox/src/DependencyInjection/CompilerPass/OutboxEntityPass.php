@@ -44,7 +44,6 @@ final class OutboxEntityPass implements CompilerPassInterface
                 namespaces: ['Rekalogika\DomainEvent\Outbox\Entity'],
                 directories: [$path],
                 managerParameters: [$parameterKey],
-                reportFieldsWhereDeclared: true,
             );
 
             $pass->process($container);
