@@ -13,13 +13,28 @@ parameters:
         -
             message: '#Attribute class Override does not exist#'
             reportUnmatched: false
-        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children#'
+        -
+            message: '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children#'
+            reportUnmatched: false
+            paths:
+                - packages/domain-event-outbox/src/DependencyInjection/Configuration.php
+        -
+            identifier: method.nonObject
+            paths:
+                - packages/domain-event-outbox/src/DependencyInjection/Configuration.php
+            reportUnmatched: false
         -
             message: '#Property .* is never assigned .+ so it can be removed from the property type.#'
             reportUnmatched: false
+
         -
             message: '#has PHPDoc tag @method for method find(One)?By\(\) parameter#'
             reportUnmatched: false
+        -
+            identifier: property.tooWideBool
+            paths:
+                - tests/Framework/EventListener/BookEventEventBusListener.php
+                - tests/Framework/EventListener/PostEventEventBusListener.php
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-phpunit/rules.neon

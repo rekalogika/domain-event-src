@@ -43,7 +43,7 @@ final class ProfilerWorkaroundPass implements CompilerPassInterface
         try {
             $doctrine = $container->getDefinition(Constants::REAL_MANAGER_REGISTRY);
 
-            $profilerController = $container->getDefinition(ProfilerController::class);
+            $profilerController = $container->getDefinition(ProfilerController::class); // @phpstan-ignore-line
             $profilerController->setArgument(1, $doctrine);
         } catch (ServiceNotFoundException) {
             // ignore

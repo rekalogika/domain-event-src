@@ -33,6 +33,7 @@ class DomainEventStore implements \IteratorAggregate, \Countable
     public function add(object|iterable $event): void
     {
         if (is_iterable($event)) {
+            /** @var iterable<object> $event */
             foreach ($event as $anEvent) {
                 $this->add($anEvent);
             }
