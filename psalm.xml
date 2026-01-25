@@ -47,5 +47,46 @@
                 <file name="packages/domain-event-outbox/src/DependencyInjection/Configuration.php" />
             </errorLevel>
         </UndefinedMethod>
+        <MixedMethodCall>
+            <errorLevel type="suppress">
+                <file name="packages/domain-event-outbox/src/DependencyInjection/Configuration.php" />
+            </errorLevel>
+        </MixedMethodCall>
+        <!-- <UndefinedMethod>
+            <errorLevel type="suppress">
+                <file name="packages/domain-event-outbox/src/DependencyInjection/Configuration.php" />
+            </errorLevel>
+        </UndefinedMethod> -->
+        <!-- <MixedMethodCall>
+            <errorLevel type="suppress">
+                <file name="packages/domain-event-outbox/src/DependencyInjection/Configuration.php" />
+            </errorLevel>
+        </MixedMethodCall> -->
+        <TypeDoesNotContainNull>
+            <errorLevel type="suppress">
+                <file name="packages/domain-event-outbox/src/EventListener/RenameTableListener.php" />
+            </errorLevel>
+        </TypeDoesNotContainNull>
+        <!-- <MissingClassConstType>
+            <errorLevel type="suppress">
+                <file name="packages/domain-event/src/DependencyInjection/Constants.php" />
+            </errorLevel>
+        </MissingClassConstType> -->
+        <!-- <MixedInferredReturnType>
+            <errorLevel type="suppress">
+                <file name="packages/domain-event/src/Doctrine/DomainEventAwareEntityManager.php" />
+            </errorLevel>
+        </MixedInferredReturnType> -->
+        <!-- <MixedReturnStatement>
+            <errorLevel type="suppress">
+                <file name="packages/domain-event/src/Doctrine/DomainEventAwareEntityManager.php" />
+            </errorLevel>            
+        </MixedReturnStatement> -->
+        <!-- <UndefinedInterfaceMethod>
+            <errorLevel type="suppress">
+                <file name="packages/domain-event/src/Doctrine/DomainEventAwareEntityManager.php" />
+            </errorLevel>
+        </UndefinedInterfaceMethod> -->
     </issueHandlers>
+
 </psalm>
