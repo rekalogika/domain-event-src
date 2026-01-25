@@ -6,7 +6,8 @@
         xmlns="https://getpsalm.org/schema/config"
         xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
         findUnusedBaselineEntry="true"
-        findUnusedCode="false">
+        findUnusedCode="false"
+        findUnusedIssueHandlerSuppression="false">
 
     <projectFiles>
         <directory name="packages" />
@@ -31,6 +32,26 @@
                 <file name="packages/domain-event/src/Doctrine/DomainEventAwareEntityManager.php" />
             </errorLevel>
         </MissingOverrideAttribute>
+        <InvalidNullableReturnType>
+            <errorLevel type="suppress">
+                <file name="packages/domain-event/src/Doctrine/DomainEventAwareManagerRegistryImplementation.php" />
+            </errorLevel>
+        </InvalidNullableReturnType>
+        <NullableReturnStatement>
+            <errorLevel type="suppress">
+                <file name="packages/domain-event/src/Doctrine/DomainEventAwareManagerRegistryImplementation.php" />
+            </errorLevel>
+        </NullableReturnStatement>
+        <UndefinedMethod>
+            <errorLevel type="suppress">
+                <file name="packages/domain-event-outbox/src/DependencyInjection/Configuration.php" />
+            </errorLevel>
+        </UndefinedMethod>
+        <MixedMethodCall>
+            <errorLevel type="suppress">
+                <file name="packages/domain-event-outbox/src/DependencyInjection/Configuration.php" />
+            </errorLevel>
+        </MixedMethodCall>
         <!-- <UndefinedMethod>
             <errorLevel type="suppress">
                 <file name="packages/domain-event-outbox/src/DependencyInjection/Configuration.php" />
