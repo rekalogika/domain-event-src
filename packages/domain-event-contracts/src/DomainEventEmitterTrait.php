@@ -15,6 +15,8 @@ namespace Rekalogika\Contracts\DomainEvent;
 
 /**
  * Helper trait to implement DomainEventEmitterInterface.
+ *
+ * @phpstan-require-implements DomainEventEmitterInterface
  */
 trait DomainEventEmitterTrait
 {
