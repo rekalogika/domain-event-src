@@ -60,6 +60,7 @@
         <MissingOverrideAttribute>
             <errorLevel type="suppress">
                 <file name="tests/Framework/Entity/User.php" />
+                <file name="packages/domain-event/src/Doctrine/DomainEventAwareEntityManager.php" />
             </errorLevel>
         </MissingOverrideAttribute>
     </issueHandlers>
