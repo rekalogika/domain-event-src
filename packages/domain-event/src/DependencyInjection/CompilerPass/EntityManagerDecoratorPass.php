@@ -15,6 +15,7 @@ namespace Rekalogika\DomainEvent\DependencyInjection\CompilerPass;
 
 use Rekalogika\DomainEvent\DependencyInjection\Constants;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareEntityManager;
+use Rekalogika\DomainEvent\Doctrine\LazyDomainEventAwareEntityManager;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -34,6 +35,12 @@ final class EntityManagerDecoratorPass implements CompilerPassInterface
     #[\Override]
     public function process(ContainerBuilder $container): void
     {
+        if (\PHP_VERSION_ID < 80400) {
+            $decoratorClass = LazyDomainEventAwareEntityManager::class;
+        } else {
+            $decoratorClass = DomainEventAwareEntityManager::class;
+        }
+
         $entityManagers = $container->getParameter('doctrine.entity_managers');
         \assert(\is_array($entityManagers));
 
@@ -50,8 +57,8 @@ final class EntityManagerDecoratorPass implements CompilerPassInterface
             $container
                 ->setDefinition($realServiceId, $service);
 
-            $container
-                ->register($serviceId, DomainEventAwareEntityManager::class)
+            $decoratorDefinition = $container
+                ->register($serviceId, $decoratorClass)
                 ->setArguments([
                     '$wrapped' => new Reference($realServiceId),
                     '$eventDispatchers' => $eventDispatchers,
@@ -59,6 +66,10 @@ final class EntityManagerDecoratorPass implements CompilerPassInterface
                 ->setPublic(true)
                 ->addTag('kernel.reset', ['method' => 'reset'])
                 ->addTag('rekalogika.domain_event.entity_manager', ['name' => $name]);
+
+            if (\PHP_VERSION_ID >= 80400) {
+                $decoratorDefinition->setLazy(true);
+            }
         }
     }
 }
