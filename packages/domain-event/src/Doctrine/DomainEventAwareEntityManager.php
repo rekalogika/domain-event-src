@@ -32,10 +32,9 @@ use Symfony\Contracts\Service\ResetInterface;
 /**
  * Decorates entity manager so it dispatches domain events after flush.
  */
-final class DomainEventAwareEntityManager extends EntityManagerDecorator implements
+class DomainEventAwareEntityManager extends EntityManagerDecorator implements
     DomainEventAwareEntityManagerInterface,
-    ResetInterface,
-    LazyObjectInterface
+    ResetInterface
 {
     private bool $flushEnabled = true;
 
@@ -65,40 +64,6 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
         // @phpstan-ignore function.alreadyNarrowedType
         if (method_exists($this->wrapped, 'isUninitializedObject')) {
             return $this->wrapped->isUninitializedObject($value);
-        }
-
-        return false;
-    }
-
-    #[\Override]
-    public function isLazyObjectInitialized(bool $partial = false): bool
-    {
-        if ($this->wrapped instanceof LazyObjectInterface) {
-            return $this->wrapped->isLazyObjectInitialized($partial);
-        }
-
-        return true;
-    }
-
-    #[\Override]
-    public function initializeLazyObject(): object
-    {
-        if ($this->wrapped instanceof LazyObjectInterface) {
-            $object = $this->wrapped->initializeLazyObject();
-
-            if ($object instanceof EntityManagerInterface) {
-                parent::__construct($object);
-            }
-        }
-
-        return $this;
-    }
-
-    #[\Override]
-    public function resetLazyObject(): bool
-    {
-        if ($this->wrapped instanceof LazyObjectInterface) {
-            return $this->wrapped->resetLazyObject();
         }
 
         return false;
@@ -350,5 +315,40 @@ final class DomainEventAwareEntityManager extends EntityManagerDecorator impleme
                 $this->postFlushDomainEvents,
             );
         }
+    }
+
+    //
+    // LazyObjectInterface methods
+    //
+
+    public function isLazyObjectInitialized(bool $partial = false): bool
+    {
+        if ($this->wrapped instanceof LazyObjectInterface) {
+            return $this->wrapped->isLazyObjectInitialized($partial);
+        }
+
+        return true;
+    }
+
+    public function initializeLazyObject(): object
+    {
+        if ($this->wrapped instanceof LazyObjectInterface) {
+            $object = $this->wrapped->initializeLazyObject();
+
+            if ($object instanceof EntityManagerInterface) {
+                parent::__construct($object);
+            }
+        }
+
+        return $this;
+    }
+
+    public function resetLazyObject(): bool
+    {
+        if ($this->wrapped instanceof LazyObjectInterface) {
+            return $this->wrapped->resetLazyObject();
+        }
+
+        return false;
     }
 }
