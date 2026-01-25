@@ -35,11 +35,11 @@
         "doctrine/persistence": "^3.2 || ^4.0",
         "rekalogika/domain-event": "^2.5.2",
         "rekalogika/domain-event-contracts": "^2.5.2",
-        "symfony/config": "^6.4 || ^7.0",
-        "symfony/dependency-injection": "^6.4 || ^7.0",
-        "symfony/http-kernel": "^6.4 || ^7.0",
-        "symfony/lock": "^6.4 || ^7.0",
-        "symfony/messenger": "^6.4 || ^7.0"
+        "symfony/config": "^7.4",
+        "symfony/dependency-injection": "^7.4",
+        "symfony/http-kernel": "^7.4",
+        "symfony/lock": "^7.4",
+        "symfony/messenger": "^7.4"
     },
     "extra": {
         "branch-alias": {
