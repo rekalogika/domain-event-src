@@ -32,6 +32,8 @@ class User implements UserInterface
         return $this->roles;
     }
 
+    public function eraseCredentials(): void {}
+
     #[\Override]
     public function getUserIdentifier(): string
     {
