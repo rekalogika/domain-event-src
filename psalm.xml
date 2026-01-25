@@ -63,6 +63,12 @@
                 <file name="packages/domain-event/src/Doctrine/DomainEventAwareEntityManager.php" />
             </errorLevel>
         </MissingOverrideAttribute>
+        <LessSpecificImplementedReturnType>
+            <errorLevel type="suppress">
+                <file name="tests/Framework/Repository/BookRepository.php" />
+                <file name="tests/Framework/Repository/ReviewRepository.php" />
+            </errorLevel>
+        </LessSpecificImplementedReturnType>
     </issueHandlers>
 
 </psalm>
