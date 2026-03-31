@@ -33,9 +33,6 @@ class User implements UserInterface
     }
 
     #[\Override]
-    public function eraseCredentials(): void {}
-
-    #[\Override]
     public function getUserIdentifier(): string
     {
         return $this->username;

@@ -21,6 +21,11 @@ abstract class AbstractManagerRegistryDecorator implements ManagerRegistry
 {
     public function __construct(private readonly ManagerRegistry $wrapped) {}
 
+    public function getName(): string
+    {
+        return $this->wrapped->getName();
+    }
+
     #[\Override]
     public function getDefaultManagerName(): string
     {
