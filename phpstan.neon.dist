@@ -36,6 +36,11 @@ parameters:
                 - tests/Framework/EventListener/BookEventEventBusListener.php
                 - tests/Framework/EventListener/PostEventEventBusListener.php
             reportUnmatched: false
+        -
+            identifier: argument.unknown
+            paths:
+                - packages/domain-event-outbox/src/DependencyInjection/CompilerPass/OutboxEntityPass.php
+            reportUnmatched: false
 
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon

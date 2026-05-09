@@ -1,0 +1,33 @@
+doctrine:
+    dbal:
+        connections:
+            default:
+                driver: pdo_sqlite
+                memory: true
+                charset: UTF8
+            other:
+                driver: pdo_sqlite
+                memory: true
+                charset: UTF8
+
+    orm:
+        default_entity_manager: default
+        entity_managers:
+            default:
+                connection: default
+                naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+                mappings:
+                    Book:
+                        is_bundle: false
+                        type: attribute
+                        dir: "%kernel.project_dir%/tests/Framework/Entity"
+                        prefix: 'Rekalogika\DomainEvent\Tests\Framework\Entity'
+            other:
+                connection: other
+                naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+                mappings:
+                    Post:
+                        is_bundle: false
+                        type: attribute
+                        dir: "%kernel.project_dir%/tests/Framework/Entity2"
+                        prefix: 'Rekalogika\DomainEvent\Tests\Framework\Entity2'

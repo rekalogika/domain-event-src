@@ -2,28 +2,28 @@
     "name": "rekalogika/domain-event-src",
     "description": "Domain Event Framework for Symfony",
     "license": "MIT",
+    "type": "library",
     "authors": [
         {
             "name": "Priyadi Iman Nurcahyo",
             "email": "priyadi@rekalogika.com"
         }
     ],
-    "type": "library",
     "require": {
         "php": "^8.1",
-        "doctrine/doctrine-bundle": "^2.11.3 || ^2.12",
+        "doctrine/doctrine-bundle": "^2.18.2 || ^3.0",
         "doctrine/orm": "^2.16 || ^3.0",
         "doctrine/persistence": "^3.2 || ^4.0",
         "psr/event-dispatcher": "^1.0",
-        "symfony/config": "^7.4",
-        "symfony/dependency-injection": "^7.4",
-        "symfony/event-dispatcher": "^7.4",
-        "symfony/http-kernel": "^7.4",
-        "symfony/lock": "^7.4",
-        "symfony/messenger": "^7.4",
+        "symfony/config": "^7.4 || ^8.0",
+        "symfony/dependency-injection": "^7.4 || ^8.0",
+        "symfony/event-dispatcher": "^7.4 || ^8.0",
+        "symfony/http-kernel": "^7.4 || ^8.0",
+        "symfony/lock": "^7.4 || ^8.0",
+        "symfony/messenger": "^7.4 || ^8.0",
         "symfony/service-contracts": "^3.0",
-        "symfony/uid": "^7.4",
-        "symfony/var-exporter": "^7.4"
+        "symfony/uid": "^7.4 || ^8.0",
+        "symfony/var-exporter": "^7.4 || ^8.0"
     },
     "require-dev": {
         "bnf/phpstan-psr-container": "^1.1",
@@ -35,20 +35,25 @@
         "phpunit/phpunit": "^10.2",
         "psalm/plugin-phpunit": "^0.18.4 || ^0.19.0",
         "rector/rector": "^2.0",
-        "symfony/debug-bundle": "^7.4",
-        "symfony/doctrine-bridge": "^7.4",
-        "symfony/framework-bundle": "^7.4",
-        "symfony/monolog-bundle": "^3.0",
-        "symfony/runtime": "^7.4",
-        "symfony/scheduler": "^7.4",
-        "symfony/security-bundle": "^7.4",
-        "symfony/stopwatch": "^7.4",
-        "symfony/twig-bundle": "^7.4",
-        "symfony/web-profiler-bundle": "^7.4",
-        "symfony/yaml": "^7.4",
+        "symfony/debug-bundle": "^7.4 || ^8.0",
+        "symfony/doctrine-bridge": "^7.4 || ^8.0",
+        "symfony/framework-bundle": "^7.4 || ^8.0",
+        "symfony/monolog-bundle": "^3.0 || ^4.0",
+        "symfony/runtime": "^7.4 || ^8.0",
+        "symfony/scheduler": "^7.4 || ^8.0",
+        "symfony/security-bundle": "^7.4 || ^8.0",
+        "symfony/stopwatch": "^7.4 || ^8.0",
+        "symfony/twig-bundle": "^7.4 || ^8.0",
+        "symfony/web-profiler-bundle": "^7.4 || ^8.0",
+        "symfony/yaml": "^7.4 || ^8.0",
         "symplify/monorepo-builder": "^11.2.20 || ^11.3",
         "twig/twig": "^3.0",
         "vimeo/psalm": "^6.14"
+    },
+    "replace": {
+        "rekalogika/domain-event": "2.5.2",
+        "rekalogika/domain-event-contracts": "2.5.2",
+        "rekalogika/domain-event-outbox": "2.5.2"
     },
     "autoload": {
         "psr-4": {
@@ -67,11 +72,6 @@
         "allow-plugins": {
             "symfony/runtime": true
         }
-    },
-    "replace": {
-        "rekalogika/domain-event": "2.5.2",
-        "rekalogika/domain-event-contracts": "2.5.2",
-        "rekalogika/domain-event-outbox": "2.5.2"
     },
     "minimum-stability": "stable"
 }

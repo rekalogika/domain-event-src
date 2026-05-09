@@ -30,16 +30,16 @@
         }
     },
     "require": {
-        "doctrine/doctrine-bundle": "^2.11.3 || ^2.12",
+        "doctrine/doctrine-bundle": "^2.18.2 || ^3.0",
         "doctrine/orm": "^2.16 || ^3.0",
         "doctrine/persistence": "^3.2 || ^4.0",
         "rekalogika/domain-event": "^2.5.2",
         "rekalogika/domain-event-contracts": "^2.5.2",
-        "symfony/config": "^7.4",
-        "symfony/dependency-injection": "^7.4",
-        "symfony/http-kernel": "^7.4",
-        "symfony/lock": "^7.4",
-        "symfony/messenger": "^7.4"
+        "symfony/config": "^7.4 || ^8.0",
+        "symfony/dependency-injection": "^7.4 || ^8.0",
+        "symfony/http-kernel": "^7.4 || ^8.0",
+        "symfony/lock": "^7.4 || ^8.0",
+        "symfony/messenger": "^7.4 || ^8.0"
     },
     "extra": {
         "branch-alias": {

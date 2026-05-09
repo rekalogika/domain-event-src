@@ -13,12 +13,9 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Doctrine;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\VarExporter\LazyObjectInterface;
 
 /**
  * Decorates entity manager so it dispatches domain events after flush.
  */
-final class LazyDomainEventAwareEntityManager extends DomainEventAwareEntityManager implements LazyObjectInterface
-{
-}
+final class LazyDomainEventAwareEntityManager extends DomainEventAwareEntityManager implements LazyObjectInterface {}

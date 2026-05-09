@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Tests\Framework;
 
+use Composer\InstalledVersions;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Rekalogika\DomainEvent\Outbox\RekalogikaDomainEventOutboxBundle;
 use Rekalogika\DomainEvent\RekalogikaDomainEventBundle;
@@ -83,6 +84,14 @@ class Kernel extends HttpKernelKernel
     public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $loader->load($this->getConfigDir() . '/packages/*' . '.yaml', 'glob');
+
+        $doctrineBundleVersion = InstalledVersions::getVersion('doctrine/doctrine-bundle');
+        
+        if (null !== $doctrineBundleVersion && version_compare($doctrineBundleVersion, '3.0.0', '>=')) {
+            $loader->load($this->getConfigDir() . '/packages/doctrine/3.yaml');
+        } else {
+            $loader->load($this->getConfigDir() . '/packages/doctrine/2.yaml');
+        }
 
         $loader->load(function (ContainerBuilder $container): void {
             $container->loadFromExtension('rekalogika_domain_event', $this->config);

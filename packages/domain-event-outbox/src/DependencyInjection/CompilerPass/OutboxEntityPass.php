@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\Outbox\DependencyInjection\CompilerPass;
 
+use Composer\InstalledVersions;
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -28,6 +29,12 @@ final class OutboxEntityPass implements CompilerPassInterface
         $entityManagers = $container->getParameter('doctrine.entity_managers');
         \assert(\is_array($entityManagers));
 
+        // doctrine-bundle 2.x defaults `reportFieldsWhereDeclared` to false,
+        // which crashes on ORM 3.x. The argument was removed in bundle 3.x.
+        $bundleVersion = InstalledVersions::getVersion('doctrine/doctrine-bundle');
+        $passReportFieldsWhereDeclared = null !== $bundleVersion
+            && version_compare($bundleVersion, '3.0.0', '<');
+
         /**
          * @var string $name
          */
@@ -40,12 +47,21 @@ final class OutboxEntityPass implements CompilerPassInterface
                 throw new \RuntimeException('Entity path not found');
             }
 
-            $pass = DoctrineOrmMappingsPass::createAttributeMappingDriver(
-                namespaces: ['Rekalogika\DomainEvent\Outbox\Entity'],
-                directories: [$path],
-                managerParameters: [$parameterKey],
-                reportFieldsWhereDeclared: true,
-            );
+            if ($passReportFieldsWhereDeclared) {
+                /** @psalm-suppress InvalidNamedArgument doctrine-bundle 2.x only */
+                $pass = DoctrineOrmMappingsPass::createAttributeMappingDriver(
+                    namespaces: ['Rekalogika\DomainEvent\Outbox\Entity'],
+                    directories: [$path],
+                    managerParameters: [$parameterKey],
+                    reportFieldsWhereDeclared: true,
+                );
+            } else {
+                $pass = DoctrineOrmMappingsPass::createAttributeMappingDriver(
+                    namespaces: ['Rekalogika\DomainEvent\Outbox\Entity'],
+                    directories: [$path],
+                    managerParameters: [$parameterKey],
+                );
+            }
 
             $pass->process($container);
 

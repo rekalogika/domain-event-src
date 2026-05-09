@@ -52,41 +52,23 @@
                 <file name="packages/domain-event-outbox/src/DependencyInjection/Configuration.php" />
             </errorLevel>
         </MixedMethodCall>
-        <!-- <UndefinedMethod>
-            <errorLevel type="suppress">
-                <file name="packages/domain-event-outbox/src/DependencyInjection/Configuration.php" />
-            </errorLevel>
-        </UndefinedMethod> -->
-        <!-- <MixedMethodCall>
-            <errorLevel type="suppress">
-                <file name="packages/domain-event-outbox/src/DependencyInjection/Configuration.php" />
-            </errorLevel>
-        </MixedMethodCall> -->
         <TypeDoesNotContainNull>
             <errorLevel type="suppress">
                 <file name="packages/domain-event-outbox/src/EventListener/RenameTableListener.php" />
             </errorLevel>
         </TypeDoesNotContainNull>
-        <!-- <MissingClassConstType>
+        <MissingOverrideAttribute>
             <errorLevel type="suppress">
-                <file name="packages/domain-event/src/DependencyInjection/Constants.php" />
-            </errorLevel>
-        </MissingClassConstType> -->
-        <!-- <MixedInferredReturnType>
-            <errorLevel type="suppress">
+                <file name="tests/Framework/Entity/User.php" />
                 <file name="packages/domain-event/src/Doctrine/DomainEventAwareEntityManager.php" />
             </errorLevel>
-        </MixedInferredReturnType> -->
-        <!-- <MixedReturnStatement>
+        </MissingOverrideAttribute>
+        <LessSpecificImplementedReturnType>
             <errorLevel type="suppress">
-                <file name="packages/domain-event/src/Doctrine/DomainEventAwareEntityManager.php" />
-            </errorLevel>            
-        </MixedReturnStatement> -->
-        <!-- <UndefinedInterfaceMethod>
-            <errorLevel type="suppress">
-                <file name="packages/domain-event/src/Doctrine/DomainEventAwareEntityManager.php" />
+                <file name="tests/Framework/Repository/BookRepository.php" />
+                <file name="tests/Framework/Repository/ReviewRepository.php" />
             </errorLevel>
-        </UndefinedInterfaceMethod> -->
+        </LessSpecificImplementedReturnType>
     </issueHandlers>
 
 </psalm>
