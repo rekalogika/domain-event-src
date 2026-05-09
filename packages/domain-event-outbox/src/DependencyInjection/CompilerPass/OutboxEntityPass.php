@@ -48,11 +48,12 @@ final class OutboxEntityPass implements CompilerPassInterface
             }
 
             if ($passReportFieldsWhereDeclared) {
+                /** @psalm-suppress InvalidNamedArgument doctrine-bundle 2.x only */
                 $pass = DoctrineOrmMappingsPass::createAttributeMappingDriver(
                     namespaces: ['Rekalogika\DomainEvent\Outbox\Entity'],
                     directories: [$path],
                     managerParameters: [$parameterKey],
-                    reportFieldsWhereDeclared: true,
+                    reportFieldsWhereDeclared: true, // @phpstan-ignore argument.unknown
                 );
             } else {
                 $pass = DoctrineOrmMappingsPass::createAttributeMappingDriver(
