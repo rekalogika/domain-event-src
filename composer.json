@@ -32,7 +32,7 @@
         "phpstan/phpstan": "^2.1.37",
         "phpstan/phpstan-deprecation-rules": "^2.0.3",
         "phpstan/phpstan-phpunit": "^2.0.12",
-        "phpunit/phpunit": "^10.2",
+        "phpunit/phpunit": "^10.2 || ^13.0",
         "psalm/plugin-phpunit": "^0.18.4 || ^0.19.0",
         "rector/rector": "^2.0",
         "symfony/debug-bundle": "^7.4 || ^8.0",
