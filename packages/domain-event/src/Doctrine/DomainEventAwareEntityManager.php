@@ -15,6 +15,8 @@ namespace Rekalogika\DomainEvent\Doctrine;
 
 use Doctrine\ORM\Decorator\EntityManagerDecorator;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\PersistentCollection;
+use Doctrine\ORM\UnitOfWork;
 use Doctrine\Persistence\ObjectManager;
 use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
 use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
@@ -195,14 +197,110 @@ class DomainEventAwareEntityManager extends EntityManagerDecorator implements
 
     private function collectEvents(): void
     {
-        foreach ($this->getUnitOfWork()->getIdentityMap() as $entities) {
+        $unitOfWork = $this->getUnitOfWork();
+
+        /** @var array<int,true> */
+        $visited = [];
+
+        foreach ($unitOfWork->getIdentityMap() as $entities) {
             foreach ($entities as $entity) {
-                if ($entity instanceof DomainEventEmitterInterface) {
-                    $events = $entity->popRecordedEvents();
-                    $this->recordDomainEvent($events);
+                $this->collectEventsFromEntity($entity, $visited, false);
+            }
+        }
+
+        // entities with post-insert ID generators are not in the identity map
+        foreach ($unitOfWork->getScheduledEntityInsertions() as $entity) {
+            $this->collectEventsFromEntity($entity, $visited, true);
+        }
+    }
+
+    /**
+     * Collects events from the entity, and from new entities reachable from it
+     * that will be persisted by cascade during flush.
+     *
+     * @param array<int,true> $visited
+     */
+    private function collectEventsFromEntity(
+        object $entity,
+        array &$visited,
+        bool $isNew,
+    ): void {
+        $oid = spl_object_id($entity);
+
+        if (isset($visited[$oid])) {
+            return;
+        }
+
+        $visited[$oid] = true;
+
+        if ($entity instanceof DomainEventEmitterInterface) {
+            $this->recordDomainEvent($entity->popRecordedEvents());
+        }
+
+        if (!$isNew && !$this->isCascadePersistedOnFlush($entity)) {
+            return;
+        }
+
+        $unitOfWork = $this->getUnitOfWork();
+        $metadata = $this->getClassMetadata($entity::class);
+
+        foreach ($metadata->associationMappings as $association) {
+            if (!$association->isCascadePersist()) {
+                continue;
+            }
+
+            /** @var mixed */
+            $value = $metadata->getFieldValue($entity, $association->fieldName);
+
+            if ($value instanceof PersistentCollection) {
+                // unwrap so that we don't initialize the collection
+                $value = $value->unwrap();
+            }
+
+            if (!is_iterable($value)) {
+                $value = [$value];
+            }
+
+            /** @var mixed $related */
+            foreach ($value as $related) {
+                if (
+                    \is_object($related)
+                    && $unitOfWork->getEntityState($related, UnitOfWork::STATE_NEW) === UnitOfWork::STATE_NEW
+                ) {
+                    $this->collectEventsFromEntity($related, $visited, true);
                 }
             }
         }
+    }
+
+    /**
+     * Whether the unit of work will cascade persist the associations of the
+     * managed entity during flush. Mirrors UnitOfWork::computeChangeSets().
+     */
+    private function isCascadePersistedOnFlush(object $entity): bool
+    {
+        $unitOfWork = $this->getUnitOfWork();
+
+        if (
+            $this->isUninitializedObject($entity)
+            || $unitOfWork->isReadOnly($entity)
+            || $unitOfWork->isScheduledForDelete($entity)
+        ) {
+            return false;
+        }
+
+        if ($unitOfWork->isScheduledForInsert($entity)) {
+            return true;
+        }
+
+        $metadata = $this->getClassMetadata($entity::class);
+
+        if ($metadata->isReadOnly) {
+            return false;
+        }
+
+        return $metadata->isChangeTrackingDeferredImplicit()
+            || $unitOfWork->isScheduledForDirtyCheck($entity);
     }
 
     #[\Override]

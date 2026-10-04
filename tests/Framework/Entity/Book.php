@@ -62,6 +62,16 @@ class Book implements DomainEventEmitterInterface
     )]
     private Collection $reviews;
 
+    /**
+     * @var Collection<array-key,Note>
+     */
+    #[ORM\OneToMany(
+        targetEntity: Note::class,
+        mappedBy: 'book',
+        cascade: ['persist'],
+    )]
+    private Collection $notes;
+
     public function __construct(
         #[ORM\Column]
         private ?string $title,
@@ -70,6 +80,7 @@ class Book implements DomainEventEmitterInterface
     ) {
         $this->id = Uuid::v7();
         $this->reviews = new ArrayCollection();
+        $this->notes = new ArrayCollection();
         $this->recordEvent(new BookCreated($this));
     }
 
@@ -175,6 +186,24 @@ class Book implements DomainEventEmitterInterface
             }
 
             $this->recordEvent(new BookReviewRemoved($this, $review));
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<array-key,Note>
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setBook($this);
         }
 
         return $this;
