@@ -37,8 +37,19 @@ final class DoctrineEventListener
 
     public function preRemove(PreRemoveEventArgs $args): void
     {
-        $this->processRemove($args->getObject());
-        $this->collectEvents($args->getObject(), $args->getObjectManager());
+        $entity = $args->getObject();
+        $objectManager = $this->managerRegistry
+            ->getDomainEventAwareManager($args->getObjectManager());
+
+        // orphans are already processed before flush
+        if (
+            !$objectManager instanceof DomainEventAwareEntityManager
+            || !$objectManager->isRemovedEarly($entity)
+        ) {
+            $this->processRemove($entity);
+        }
+
+        $this->collectEvents($entity, $args->getObjectManager());
     }
 
     public function postRemove(PostRemoveEventArgs $args): void

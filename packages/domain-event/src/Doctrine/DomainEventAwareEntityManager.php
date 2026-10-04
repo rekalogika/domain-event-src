@@ -47,6 +47,13 @@ class DomainEventAwareEntityManager extends EntityManagerDecorator implements
     private readonly TransactionAwareDomainEventStore $postFlushDomainEvents;
 
     /**
+     * Entities whose `__remove()` has been called before flush
+     *
+     * @var \WeakMap<object,true>
+     */
+    private \WeakMap $earlyRemovals;
+
+    /**
      * Safeguard for infinite loop
      */
     public static int $preflushLoopLimit = 100;
@@ -59,6 +66,16 @@ class DomainEventAwareEntityManager extends EntityManagerDecorator implements
 
         $this->preFlushDomainEvents = new DomainEventStore();
         $this->postFlushDomainEvents = new TransactionAwareDomainEventStore();
+        $this->earlyRemovals = self::createWeakMap();
+    }
+
+    /**
+     * @return \WeakMap<object,true>
+     */
+    private static function createWeakMap(): \WeakMap
+    {
+        /** @var \WeakMap<object,true> */
+        return new \WeakMap();
     }
 
     public function isUninitializedObject(mixed $value): bool
@@ -212,6 +229,10 @@ class DomainEventAwareEntityManager extends EntityManagerDecorator implements
         foreach ($unitOfWork->getScheduledEntityInsertions() as $entity) {
             $this->collectEventsFromEntity($entity, $visited, true);
         }
+
+        foreach ($this->getOrphans() as $orphan) {
+            $this->processEarlyRemoval($orphan);
+        }
     }
 
     /**
@@ -237,7 +258,7 @@ class DomainEventAwareEntityManager extends EntityManagerDecorator implements
             $this->recordDomainEvent($entity->popRecordedEvents());
         }
 
-        if (!$isNew && !$this->isCascadePersistedOnFlush($entity)) {
+        if (!$isNew && !$this->isChangeSetComputedOnFlush($entity)) {
             return;
         }
 
@@ -274,10 +295,11 @@ class DomainEventAwareEntityManager extends EntityManagerDecorator implements
     }
 
     /**
-     * Whether the unit of work will cascade persist the associations of the
-     * managed entity during flush. Mirrors UnitOfWork::computeChangeSets().
+     * Whether the unit of work will compute the change set of the managed
+     * entity during flush, including cascade persisting its associations and
+     * detecting its orphans. Mirrors UnitOfWork::computeChangeSets().
      */
-    private function isCascadePersistedOnFlush(object $entity): bool
+    private function isChangeSetComputedOnFlush(object $entity): bool
     {
         $unitOfWork = $this->getUnitOfWork();
 
@@ -303,6 +325,125 @@ class DomainEventAwareEntityManager extends EntityManagerDecorator implements
             || $unitOfWork->isScheduledForDirtyCheck($entity);
     }
 
+    /**
+     * Returns the entities that will be removed by orphan removal during
+     * flush. The unit of work removes them only after the pre-flush events
+     * are dispatched.
+     *
+     * @return iterable<object>
+     */
+    private function getOrphans(): iterable
+    {
+        $unitOfWork = $this->getUnitOfWork();
+
+        // orphans removed from collections are scheduled immediately by
+        // PersistentCollection, and unscheduled if added to another collection
+        /** @var array<int,object> */
+        $orphans = (new \ReflectionProperty(UnitOfWork::class, 'orphanRemovals'))
+            ->getValue($unitOfWork);
+
+        yield from $orphans;
+
+        // orphans of to-one associations are detected when computing the
+        // change sets, see UnitOfWork::computeChangeSet()
+        foreach ($unitOfWork->getIdentityMap() as $className => $entities) {
+            $metadata = $this->getClassMetadata($className);
+            $associations = [];
+
+            foreach ($metadata->associationMappings as $association) {
+                if ($association->isToOne() && $association->orphanRemoval) {
+                    $associations[] = $association;
+                }
+            }
+
+            if ($associations === []) {
+                continue;
+            }
+
+            foreach ($entities as $entity) {
+                if (
+                    $unitOfWork->isScheduledForInsert($entity)
+                    || !$this->isChangeSetComputedOnFlush($entity)
+                ) {
+                    continue;
+                }
+
+                $originalData = $unitOfWork->getOriginalEntityData($entity);
+
+                foreach ($associations as $association) {
+                    /** @var mixed */
+                    $original = $originalData[$association->fieldName] ?? null;
+
+                    if (
+                        \is_object($original)
+                        && $original !== $metadata->getFieldValue($entity, $association->fieldName)
+                    ) {
+                        yield $original;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Calls `__remove()` on an entity that will be removed during flush, and
+     * on the entities that will be removed with it by cascade. Mirrors
+     * UnitOfWork::doRemove().
+     */
+    private function processEarlyRemoval(object $entity): void
+    {
+        $unitOfWork = $this->getUnitOfWork();
+
+        if (
+            isset($this->earlyRemovals[$entity])
+            || $unitOfWork->getEntityState($entity, UnitOfWork::STATE_NEW) !== UnitOfWork::STATE_MANAGED
+        ) {
+            return;
+        }
+
+        $this->earlyRemovals[$entity] = true;
+
+        if ($entity instanceof DomainEventEmitterInterface) {
+            $entity->__remove();
+            $this->recordDomainEvent($entity->popRecordedEvents());
+        }
+
+        $metadata = $this->getClassMetadata($entity::class);
+
+        foreach ($metadata->associationMappings as $association) {
+            if (!$association->isCascadeRemove()) {
+                continue;
+            }
+
+            /** @var mixed */
+            $value = $metadata->getFieldValue($entity, $association->fieldName);
+
+            // initializing collections is intended, the unit of work will do
+            // the same
+            if (!is_iterable($value)) {
+                $value = [$value];
+            }
+
+            /** @var mixed $related */
+            foreach ($value as $related) {
+                if (\is_object($related)) {
+                    $this->processEarlyRemoval($related);
+                }
+            }
+        }
+    }
+
+    /**
+     * Whether `__remove()` has been called on the entity before flush, so
+     * that it is not called again when the entity is removed during flush.
+     *
+     * @internal
+     */
+    public function isRemovedEarly(object $entity): bool
+    {
+        return isset($this->earlyRemovals[$entity]);
+    }
+
     #[\Override]
     public function flush(mixed $entity = null): void
     {
@@ -319,7 +460,11 @@ class DomainEventAwareEntityManager extends EntityManagerDecorator implements
             $this->dispatchPreFlushDomainEvents();
         }
 
-        parent::flush();
+        try {
+            parent::flush();
+        } finally {
+            $this->earlyRemovals = self::createWeakMap();
+        }
 
         if ($this->autodispatch && !$this->getConnection()->isTransactionActive()) {
             $this->dispatchPostFlushDomainEvents();

@@ -72,6 +72,13 @@ class Book implements DomainEventEmitterInterface
     )]
     private Collection $notes;
 
+    #[ORM\OneToOne(
+        targetEntity: Cover::class,
+        cascade: ['persist'],
+        orphanRemoval: true,
+    )]
+    private ?Cover $cover = null;
+
     public function __construct(
         #[ORM\Column]
         private ?string $title,
@@ -205,6 +212,18 @@ class Book implements DomainEventEmitterInterface
             $this->notes[] = $note;
             $note->setBook($this);
         }
+
+        return $this;
+    }
+
+    public function getCover(): ?Cover
+    {
+        return $this->cover;
+    }
+
+    public function setCover(?Cover $cover): self
+    {
+        $this->cover = $cover;
 
         return $this;
     }
