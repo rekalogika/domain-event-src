@@ -15,6 +15,7 @@ namespace Rekalogika\DomainEvent\Tests\Framework\Tests;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareEntityManager;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareManagerRegistryImplementation;
 use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
@@ -25,9 +26,7 @@ use Rekalogika\DomainEvent\Tests\Framework\Repository\BookRepository;
 
 final class DecorationTest extends DomainEventTestCase
 {
-    /**
-     * @dataProvider entityManagerDecorationProvider
-     */
+    #[DataProvider('entityManagerDecorationProvider')]
     public function testEntityManagerDecorationFromContainer(string $serviceId): void
     {
         $entityManager = static::getContainer()->get($serviceId);

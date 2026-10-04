@@ -15,12 +15,11 @@ namespace Rekalogika\DomainEvent\Tests\Framework\Tests;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class OutboxSetupTest extends DomainEventTestCase
 {
-    /**
-     * @dataProvider databaseSetupProvider
-     */
+    #[DataProvider('databaseSetupProvider')]
     public function testDatabaseSetup(string $id): void
     {
         $managerRegistry = static::getContainer()->get('doctrine');
