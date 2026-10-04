@@ -15,8 +15,11 @@ namespace Rekalogika\DomainEvent\Tests\Framework\Tests;
 
 use Rekalogika\DomainEvent\Outbox\OutboxReaderFactoryInterface;
 use Rekalogika\DomainEvent\Tests\Framework\Entity\Book;
+use Rekalogika\DomainEvent\Tests\Framework\Entity\Cover;
 use Rekalogika\DomainEvent\Tests\Framework\Entity\Review;
+use Rekalogika\DomainEvent\Tests\Framework\Event\CoverRemoved;
 use Rekalogika\DomainEvent\Tests\Framework\Event\ReviewRemoved;
+use Rekalogika\DomainEvent\Tests\Framework\EventListener\ChildEntityPostFlushListener;
 use Rekalogika\DomainEvent\Tests\Framework\EventListener\ChildEntityPreFlushListener;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Uid\Uuid;
@@ -32,6 +35,29 @@ final class CascadeRemoveTest extends DomainEventTestCase
         $this->assertInstanceOf(ChildEntityPreFlushListener::class, $listener);
 
         return $listener;
+    }
+
+    private function getPostFlushListener(): ChildEntityPostFlushListener
+    {
+        $listener = static::getContainer()->get(ChildEntityPostFlushListener::class);
+        $this->assertInstanceOf(ChildEntityPostFlushListener::class, $listener);
+
+        return $listener;
+    }
+
+    /**
+     * Persists a book with a cover, and returns the book's ID.
+     */
+    private function persistBookWithCover(): Uuid
+    {
+        $book = new Book('title', 'description');
+        $book->setCover(new Cover());
+
+        static::getEntityManager()->persist($book);
+        static::getEntityManager()->flush();
+        static::getEntityManager()->clear();
+
+        return $book->getId();
     }
 
     /**
@@ -151,5 +177,104 @@ final class CascadeRemoveTest extends DomainEventTestCase
         static::getEntityManager()->flush();
 
         $this->assertSame(1, $this->getListener()->count(ReviewRemoved::class));
+    }
+
+    public function testOrphanRemovalRemovesEntity(): void
+    {
+        $book = $this->findBook($this->persistBookWithReview());
+        $reviewId = $this->getFirstReview($book)->getId();
+
+        $book->getReviews()->clear();
+        static::getEntityManager()->flush();
+        static::getEntityManager()->clear();
+
+        $this->assertNull(static::getEntityManager()->find(Review::class, $reviewId));
+    }
+
+    /**
+     * Moving the entity to another collection cancels the orphan removal.
+     */
+    public function testOrphanMovedToAnotherCollection(): void
+    {
+        $otherBook = new Book('other title', 'other description');
+        static::getEntityManager()->persist($otherBook);
+        static::getEntityManager()->flush();
+        $otherBookId = $otherBook->getId();
+
+        $book = $this->findBook($this->persistBookWithReview());
+        $otherBook = $this->findBook($otherBookId);
+        $review = $this->getFirstReview($book);
+        $reviewId = $review->getId();
+
+        $book->removeReview($review);
+        $otherBook->addReview($review);
+        static::getEntityManager()->flush();
+        static::getEntityManager()->clear();
+
+        $this->assertSame(0, $this->getListener()->count(ReviewRemoved::class));
+
+        $review = static::getEntityManager()->find(Review::class, $reviewId);
+        $this->assertInstanceOf(Review::class, $review);
+        $this->assertSame($otherBookId->toRfc4122(), $review->getBook()?->getId()->toRfc4122());
+    }
+
+    /**
+     * Orphan removal of to-one associations is detected while computing the
+     * change sets during flush.
+     */
+    public function testToOneOrphanRemoval(): void
+    {
+        $book = $this->findBook($this->persistBookWithCover());
+        $coverId = $book->getCover()?->getId();
+        $this->assertNotNull($coverId);
+
+        $book->setCover(null);
+        static::getEntityManager()->flush();
+        static::getEntityManager()->clear();
+
+        $this->assertSame(1, $this->getListener()->count(CoverRemoved::class));
+        $this->assertNull(static::getEntityManager()->find(Cover::class, $coverId));
+    }
+
+    public function testToOneOrphanRemovalOutbox(): void
+    {
+        $book = $this->findBook($this->persistBookWithCover());
+
+        $book->setCover(new Cover());
+        static::getEntityManager()->flush();
+
+        $this->assertSame(1, $this->countOutboxMessages(CoverRemoved::class));
+    }
+
+    /**
+     * __remove() must be called only once, even though preRemove is still
+     * triggered during flush.
+     */
+    public function testOrphanRemovalCallsRemoveOnce(): void
+    {
+        $book = $this->findBook($this->persistBookWithCover());
+
+        $book->setCover(null);
+        static::getEntityManager()->flush();
+
+        $this->assertSame(1, $this->getPostFlushListener()->count(CoverRemoved::class));
+    }
+
+    public function testCascadeRemoveCallsRemoveOnce(): void
+    {
+        $book = new Book('title', 'description');
+        $book->setCover(new Cover());
+        static::getEntityManager()->persist($book);
+        static::getEntityManager()->flush();
+
+        // the cover association has no cascade remove, so remove it explicitly
+        $cover = $book->getCover();
+        $this->assertInstanceOf(Cover::class, $cover);
+
+        static::getEntityManager()->remove($book);
+        static::getEntityManager()->remove($cover);
+        static::getEntityManager()->flush();
+
+        $this->assertSame(1, $this->getPostFlushListener()->count(CoverRemoved::class));
     }
 }

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\DomainEvent\Tests\Framework\EventListener;
 
 use Rekalogika\Contracts\DomainEvent\Attribute\AsPreFlushDomainEventListener;
+use Rekalogika\DomainEvent\Tests\Framework\Event\CoverRemoved;
 use Rekalogika\DomainEvent\Tests\Framework\Event\NoteCreated;
 use Rekalogika\DomainEvent\Tests\Framework\Event\ReviewCreated;
 use Rekalogika\DomainEvent\Tests\Framework\Event\ReviewRemoved;
@@ -21,7 +22,7 @@ use Rekalogika\DomainEvent\Tests\Framework\Event\ReviewRemoved;
 final class ChildEntityPreFlushListener
 {
     /**
-     * @var list<ReviewCreated|ReviewRemoved|NoteCreated>
+     * @var list<ReviewCreated|ReviewRemoved|NoteCreated|CoverRemoved>
      */
     public array $events = [];
 
@@ -39,6 +40,12 @@ final class ChildEntityPreFlushListener
 
     #[AsPreFlushDomainEventListener()]
     public function onNoteCreated(NoteCreated $event): void
+    {
+        $this->events[] = $event;
+    }
+
+    #[AsPreFlushDomainEventListener()]
+    public function onCoverRemoved(CoverRemoved $event): void
     {
         $this->events[] = $event;
     }
