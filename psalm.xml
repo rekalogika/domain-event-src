@@ -63,6 +63,12 @@
                 <file name="packages/domain-event/src/Doctrine/DomainEventAwareEntityManager.php" />
             </errorLevel>
         </MissingOverrideAttribute>
+        <DeprecatedInterface>
+            <errorLevel type="suppress">
+                <file name="packages/domain-event/src/RekalogikaDomainEventBundle.php" />
+                <file name="packages/domain-event-outbox/src/RekalogikaDomainEventOutboxBundle.php" />
+            </errorLevel>
+        </DeprecatedInterface>
         <LessSpecificImplementedReturnType>
             <errorLevel type="suppress">
                 <file name="tests/Framework/Repository/BookRepository.php" />

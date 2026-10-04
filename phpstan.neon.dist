@@ -41,6 +41,11 @@ parameters:
             paths:
                 - packages/domain-event-outbox/src/DependencyInjection/CompilerPass/OutboxEntityPass.php
             reportUnmatched: false
+        -
+            identifier: return.deprecatedInterface
+            paths:
+                - tests/Framework/Kernel.php
+            reportUnmatched: false
 
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
