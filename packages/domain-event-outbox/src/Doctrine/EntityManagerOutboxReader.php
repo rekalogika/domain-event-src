@@ -37,7 +37,7 @@ class EntityManagerOutboxReader implements OutboxReaderInterface
             ->from(OutboxMessage::class, 'o')
             ->select('o')
             ->where('o.error = false')
-            ->orderBy('o.id', 'ASC')
+            ->orderBy('o.id', \SortDirection::Ascending)
             ->setMaxResults($limit);
 
         $result = $queryBuilder->getQuery()->getResult();
