@@ -37,10 +37,15 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
 
     /**
      * @param iterable<DomainEventManagerInterface> $decoratedObjectManagers
+     * @param ManagerRegistry|null $realEntityManagerRegistry A registry whose
+     * managers are the real, undecorated entity managers. Used to reset the
+     * real entity managers in place, so that a closed entity manager gets
+     * reopened by `resetManager()`.
      */
     public function __construct(
         private readonly ManagerRegistry $wrapped,
         iterable $decoratedObjectManagers,
+        private readonly ?ManagerRegistry $realEntityManagerRegistry = null,
     ) {
         parent::__construct($wrapped);
 
@@ -111,6 +116,12 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
     #[\Override]
     public function reset(): void
     {
+        // reopens closed real entity managers in place, the decorators hold
+        // the same instances
+        if ($this->realEntityManagerRegistry instanceof ResetInterface) {
+            $this->realEntityManagerRegistry->reset();
+        }
+
         if ($this->wrapped instanceof ResetInterface) {
             $this->wrapped->reset();
         }
@@ -163,6 +174,10 @@ final class DomainEventAwareManagerRegistryImplementation extends AbstractManage
     #[\Override]
     public function resetManager(?string $name = null): ObjectManager
     {
+        // resetting the decorator alone recreates it around the same, possibly
+        // closed, real entity manager. so we reset the real one in place first.
+        $this->realEntityManagerRegistry?->resetManager($name);
+
         $manager = parent::resetManager($name);
 
         return $this->getDomainEventAwareManager($manager);

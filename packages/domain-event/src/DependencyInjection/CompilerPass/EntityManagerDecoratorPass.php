@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\DomainEvent\DependencyInjection\CompilerPass;
 
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Rekalogika\DomainEvent\DependencyInjection\Constants;
 use Rekalogika\DomainEvent\Doctrine\DomainEventAwareEntityManager;
 use Rekalogika\DomainEvent\Doctrine\LazyDomainEventAwareEntityManager;
@@ -27,6 +28,12 @@ use Symfony\Component\DependencyInjection\Reference;
  * lazy. However, when we decorate entity managers, the original entity manager
  * won't lazy anymore. This causes `resetManager()` to fail. the workaround is to
  * manually decorate entity managers.
+ *
+ * The real entity managers are kept public under `<id>.real`, and a separate
+ * Doctrine registry pointing to them is registered. Our manager registry uses
+ * it to reset the real entity manager in place when an entity manager is
+ * reset, so that a closed entity manager gets reopened. Otherwise, resetting
+ * the decorator recreates it around the same closed instance.
  *
  * @internal
  */
@@ -46,6 +53,8 @@ final class EntityManagerDecoratorPass implements CompilerPassInterface
 
         $eventDispatchers = $container->getDefinition(Constants::EVENT_DISPATCHERS);
 
+        $realEntityManagers = [];
+
         /**
          * @var string $name
          * @var string $serviceId
@@ -53,6 +62,10 @@ final class EntityManagerDecoratorPass implements CompilerPassInterface
         foreach ($entityManagers as $name => $serviceId) {
             $service = $container->getDefinition($serviceId);
             $realServiceId = $serviceId . '.real';
+            $realEntityManagers[$name] = $realServiceId;
+
+            // must be public so that the registry can reset it
+            $service->setPublic(true);
 
             $container
                 ->setDefinition($realServiceId, $service);
@@ -71,5 +84,22 @@ final class EntityManagerDecoratorPass implements CompilerPassInterface
                 $decoratorDefinition->setLazy(true);
             }
         }
+
+        $container
+            ->register(Constants::REAL_ENTITY_MANAGER_REGISTRY, Registry::class)
+            ->setArguments([
+                new Reference('service_container'),
+                '%doctrine.connections%',
+                $realEntityManagers,
+                '%doctrine.default_connection%',
+                '%doctrine.default_entity_manager%',
+            ]);
+
+        $container
+            ->getDefinition(Constants::MANAGER_REGISTRY)
+            ->setArgument(
+                '$realEntityManagerRegistry',
+                new Reference(Constants::REAL_ENTITY_MANAGER_REGISTRY),
+            );
     }
 }
