@@ -70,9 +70,9 @@
         }
     },
     "replace": {
-        "rekalogika/domain-event": "3.0.2",
-        "rekalogika/domain-event-contracts": "3.0.2",
-        "rekalogika/domain-event-outbox": "3.0.2"
+        "rekalogika/domain-event": "3.0.4",
+        "rekalogika/domain-event-contracts": "3.0.4",
+        "rekalogika/domain-event-outbox": "3.0.4"
     },
     "minimum-stability": "stable"
 }
