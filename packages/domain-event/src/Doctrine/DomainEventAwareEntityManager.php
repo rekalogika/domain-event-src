@@ -233,6 +233,14 @@ class DomainEventAwareEntityManager extends EntityManagerDecorator implements
 
         $visited[$oid] = true;
 
+        // An uninitialized lazy object has not run any code, so it cannot have
+        // recorded any events. Popping them would initialize it, causing an
+        // extra query per reference, and an EntityNotFoundException if its row
+        // no longer exists.
+        if ($this->isUninitializedObject($entity)) {
+            return;
+        }
+
         if ($entity instanceof DomainEventEmitterInterface) {
             $this->recordDomainEvent($entity->popRecordedEvents());
         }
